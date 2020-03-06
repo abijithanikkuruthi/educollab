@@ -3,11 +3,17 @@
     <li class="list-group-item">
         <div class="row">
             <div class="col-2">
-                Display Profile Pic + Name
+              {% if changelog.member.image %}
+                <img height="48px" width="48px" class="rounded-circle mt-auto"
+                    src="{{comment.member.image.url }}" />
+              {% endif %}
             </div>
             <div class="col-10">
-                {{comment.comment}}
-                {{comment.created_on}}
+                <p class="font-weight-bold"> {{comment.member.full_name}} </p>
+                <div class="shadow-sm p-3 mb-5 bg-white rounded" >
+                  {{comment.comment}}
+                </div>
+                <p><small> {{comment.created_on}} </small></p>
             </div>
         </div>
     </li>
@@ -15,8 +21,13 @@
     <li class="list-group-item">
         <form method="post" action="{% url 'curriculum_comment_create' c_id=changelog.id %}">
             {% csrf_token %}
-            <input type="text" name="comment" />
-            <input type="submit" value="Comment">
+            <div>
+              <input class="shadow-sm p-3 mb-100 bg-white rounded" type="text" name="comment" />
+            </div>
+            <div class="ml-auto col-4 text-right" >
+              <input class="btn btn-primary" type="submit" value="Send"/>
+            </div>
         </form>
     </li>
+
 </ul>
