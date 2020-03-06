@@ -5,9 +5,10 @@
             <div class="container">
                 <div class="row">
                     <div class="col-2 col-sm-1 text-center align-self-center p-0">
+                      {% if changelog.member.image %}
                         <img height="48px" width="48px" class="rounded-circle mt-auto"
                             src="{{changelog.member.image.url }}" />
-
+                      {% endif %}
                     </div>
                     <div class="col-10 col-sm-11">
                         <h4>{{ changelog.member.full_name}}</h4>
