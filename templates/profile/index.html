@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="main-left-sidebar">
+                <div class="user-profile">
+                    {% if member.image %}
+                        <img class="user-pro-img" src="{{member.image.url}}">
+                    {% else %}
+                        <img class="user-pro-img" src="/media/avatar.png">
+                    {% endif %}
+                    <div class="user-pro-status">
+                        <div>{{member.designation}}</div>
+                        <div class="user-pro-uni"><b>{{member.institution}}</b></div>
+                    </div>
+                    <div class="user-pro-email">
+                        {{member.email}}
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+        <div class="col-lg-9">
+            <div><b>{{member.full_name}}'s Activity</b></div>
+            <div>
+                {% if is_my_profile %}
+                    <span class="btn">edit profile button</span>
+                {% endif %}
+            </div>
+            {% for c in changelogs %}
+                {{ c }}
+                {{ c.likes }}
+                {{ c.comments }}
+			{% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -3,16 +3,27 @@ from django.shortcuts import render, redirect
 from .utils import check_user_id, create_member_obj, add_comment
 from .forms import SignUpForm
 from app.models import Field, Subject, ChangeLog
-from app import curriculum, subject, home
+from app import curriculum, subject, home, profile
 
 def index(request):
     if not request.user.is_authenticated:
-        return redirect('login')
+        return render(request, 'index.html', {})
     return home.feed(request)
 
-def profile(request):
-    return render(request, 'profile.html', {})
+def myprofile(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return profile.view_profile(request, request.user.username)
 
+def profile_edit(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return profile.edit_profile(request)
+
+def profile_user(request, uname):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return profile.view_profile(request, uname)
 
 def signup(request):
     if request.user.is_authenticated:

@@ -68,3 +68,40 @@ class BitForm(forms.Form):
             "placeholder": "Text Content"
         })
     )
+
+class ProfileForm(forms.Form):
+    full_name = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Full name"
+        })
+    )
+
+    email = forms.EmailField(
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Email"
+        })
+    )
+
+    institution = forms.CharField(
+        max_length=100,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Institution"
+        })
+    )
+
+    designation = forms.CharField(
+        max_length=1000,
+        widget=forms.TextInput(attrs={
+            "class": "form-control",
+            "placeholder": "Designation"
+        })
+    )
+
+    image = forms.FileField(
+        required=False
+    )

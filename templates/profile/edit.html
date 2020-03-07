@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+{{ form.non_field_errors }}
+    <div class="container">
+        <form method="post" enctype="multipart/form-data" action="{% url 'profile_edit' %}">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-row">
+                <label>{{ field.label_tag }}</label>
+                {{ field }}
+            </div>
+            {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            {% endfor %}
+            <div class="submit-row">
+                <label>&nbsp;</label>
+                <input type="submit" value="{{type}} Curriculum">
+            </div>
+        </form>
+    </div>
+
+{% endblock %} 

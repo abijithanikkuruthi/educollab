@@ -935,3 +935,40 @@ h1, h2, h3, h4, h5, h6 {
 .login .form-row label {
   margin-bottom: 0;
 }
+
+.main-left-sidebar {
+  float: left;
+  width: 100%;
+}
+
+.user-profile {
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+  margin-top: 200px;
+}
+
+.user-pro-img {
+  width: 80%;
+  text-align: center;
+  margin-bottom: 28px;
+  margin-top: -125px;
+  position: relative;
+  border-radius: 50%;
+}
+
+.user-pro-status {
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 27px;
+  font-size: 19px;
+}
+
+.user-pro-uni {
+  color: #000;
+}
+
+.user-pro-email {
+  padding: 10px;
+  font-size: 15px;
+} 
