@@ -2,27 +2,13 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from .utils import check_user_id, create_member_obj, add_comment
 from .forms import SignUpForm
-from datetime import datetime
 from app.models import Field, Subject, ChangeLog
-from app import curriculum
-
-# Create your views here.
-
+from app import curriculum, subject, home
 
 def index(request):
-    current_user = request.user
-    if current_user.id:
-        check_user_id(current_user)
-        # TODO: filter only based on subscriptiuos of user
-        changelogs = ChangeLog.objects.all
-        context = {
-            "changelogs": changelogs,
-            "current_user": current_user
-        }
-        return render(request, 'feeds/index.html', context)
-    else:
-        return render(request, 'index.html', {})
-
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return home.feed(request)
 
 def profile(request):
     return render(request, 'profile.html', {})
@@ -51,12 +37,10 @@ def explore(request):
     return render(request, 'explore.html', {"fields": fields})
 
 
-def subject(request, sid):
-    subject = Subject.objects.filter(id=sid).first()
-    context = {
-        'subject': subject
-    }
-    return render(request, 'subject.html', context)
+def subject_index(request, sid):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return subject.showsubject(request, sid)
 
 
 def curriculum_index(request):
@@ -82,10 +66,12 @@ def curriculum_update(request, c_id):
         return redirect('login')
     return curriculum.updatecurriculum(request, c_id)
 
+
 def curriculum_comment_create(request, c_id):
     if not request.user.is_authenticated:
         return redirect('login')
     return add_comment(request, "changelog", c_id)
+
 
 def create_bit(request, c_id):
     if not request.user.is_authenticated:
@@ -97,6 +83,7 @@ def update_bit(request, c_id, b_id):
     if not request.user.is_authenticated:
         return redirect('login')
     return curriculum.updatebit(request, c_id, b_id)
+
 
 def comment(request, c_type, c_id):
     if not request.user.is_authenticated:

@@ -6,7 +6,7 @@ urlpatterns = [
     path('explore/', views.explore),
     path('signup/', views.signup),
     path('profile/', views.profile),
-    path('subjects/<sid>', views.subject, name="subjects"),
+    path('subject/<sid>', views.subject_index, name="subjects"),
     path('curriculum/', views.curriculum_index, name="curriculum_index"),
     path('curriculum/new', views.curriculum_create, name="curriculum_create"),
     path('curriculum/<int:c_id>', views.curriculum_show, name="curriculum_show"),

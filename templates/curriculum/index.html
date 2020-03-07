@@ -1,11 +1,41 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
+<style>
+table, th, td {
+  border: 1px solid rgb(71, 70, 70);
+  border-collapse: collapse;
+}
+
+th, td{
+    padding:10px;
+}
+</style>
 <div class="container">
 
     My Curricula
 
     <a class="btn btn-primary" href="{% url 'curriculum_create' %}" role="button">Create New Curriculum</a>
+
+    <div class="row w-100">
+        <table style="margin-top:20px">
+            <tr>
+                <th>Curriculum ID</th>
+                <th>Curriculum Subject</th>
+                <th>Curriculum Title</th>
+                <th>Curriculum Description</th>
+            </tr>
+            {% for curriculum in curriculums  %}
+            <tr>
+                <td>{{curriculum.id}}</td>
+                <td><a href="/curriculum/{{curriculum.id}}">{{curriculum.subject}}</a></td>
+                <td>{{curriculum.title}}</td>
+                <td>{{curriculum.description}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
 
 </div>
 {% endblock %}

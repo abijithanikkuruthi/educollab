@@ -5,13 +5,22 @@
             <div class="container">
                 <div class="row">
                     <div class="col-2 col-sm-1 text-center align-self-center p-0">
-                      {% if changelog.member.image %}
+                        {% if changelog.member.image.url != '' %}
                         <img height="48px" width="48px" class="rounded-circle mt-auto"
                             src="{{changelog.member.image.url }}" />
-                      {% endif %}
+                        {% else %}
+                        <img height="48px" width="48px" class="rounded-circle mt-auto"
+                            src="media/avatar.png" />
+                        {% endif %}
                     </div>
                     <div class="col-10 col-sm-11">
-                        <h4>{{ changelog.member.full_name}}</h4>
+                        {% if changelog.member.full_name != '' %}
+                            <h4>{{ changelog.member.full_name}}</h4>
+                        {% elif changelog.member.username != '' %}
+                            <h4>Super user - {{changelog.member.username}}</h4>
+                        {% else %}
+                            <h4>John Doe (no info available)</h4>
+                        {% endif %}
                         {{changelog.created_on}}
                     </div>
                 </div>
@@ -57,8 +66,11 @@
                     {% if changelog.bit %}
                     <a href="{% url 'bit_show' c_id=changelog.bit.curriculum.id b_id=changelog.bit.id %}"
                         class="btn btn-primary">Go</a>
-                    {% else %}
+                    {% elif changelog.curriculum.id %}
                     <a href="{% url 'curriculum_show' c_id=changelog.curriculum.id %}" class="btn btn-primary">Go</a>
+                    {% else%}
+                    <!-- Curriculum doesn't exist anymore -->
+                    <a href="#" class="btn btn-primary">Don't go</a>
                     {% endif %}
                 </div>
             </div>

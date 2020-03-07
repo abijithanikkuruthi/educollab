@@ -2,7 +2,25 @@
 {% load static %}
 {% block content %}
 <div class="container">
-    Show The Curriculum
+    <div class="row">
+        <form class="form-inline col-12" method="post">
+                {% csrf_token %}
+            <button class="btn btn-outline-dark col-2" type="submit">{{button_status}}</button>
+        </form>
+    </div>
+
+    <!-- Shittiest HTML ever ahead -->
+    <br /><br />
+    <h6>{{sub_status}}</h6>
+    <br />
+    Show the Curriculum Here!
+    <ul>
+        <li><b>Curriculum ID: </b>{{curriculum.id}}</li>
+        <li><b>Curriculum Subject: </b> {{curriculum.subject}}</li>
+        <li><b>Curriculum Title: </b> {{curriculum.title}}</li>
+        <li><b>Curriculum Description: </b> {{curriculum.description}}</li>
+    </ul>
+
 </div>
 <script>
     //  subject filter scripts based on field and topic

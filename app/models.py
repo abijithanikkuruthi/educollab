@@ -70,9 +70,10 @@ class ChangeLog(models.Model):
     created_on = models.DateTimeField(auto_now_add=True)
     member = models.ForeignKey(Member, related_name='changelog', on_delete=models.CASCADE)
     description = models.CharField(max_length=1000)
-    operation = models.CharField(max_length=100, null=True, blank=True)
+    operation = models.CharField(max_length=100, null=True, default=None)
     curriculum = models.ForeignKey(Curriculum, related_name='changelog', on_delete=models.CASCADE, null=True, default=None)
     bit = models.ForeignKey(Bit, related_name='changelog', on_delete=models.CASCADE, null=True, default=None)
+    subject = models.ForeignKey(Subject, related_name='changelog', on_delete=models.CASCADE, null=True, default=None)
 
     def __str__(self):
         return self.description

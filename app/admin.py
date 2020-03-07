@@ -9,12 +9,12 @@ class UpvoteAdmin(admin.ModelAdmin):
 admin.site.register(Upvote, UpvoteAdmin)
 
 class ChangeLogAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created_on', 'member', 'description')
+    list_display = ('id', 'created_on', 'member', 'description', 'curriculum', 'bit', 'subject', 'operation')
 
 admin.site.register(ChangeLog, ChangeLogAdmin)
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created_on', 'last_modified', 'member', 'curriculum', 'bit', 'comment')
+    list_display = ('id', 'created_on', 'last_modified', 'member', 'curriculum', 'bit', 'comment', 'changelog',)
 
 admin.site.register(Comment, CommentAdmin)
 
