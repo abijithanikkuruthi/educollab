@@ -79,7 +79,7 @@ def showcurriculum(request, c_id):
     user_subscription = Subscription.objects.filter(
         member=request.user.id, curriculum=curriculum, subject__isnull=True).exclude(curriculum__isnull=True)
 
-    if request.method == 'POST':
+    if request.method == 'POST' and '_subscribe' in request.POST:
         """
         Filtering user subscription by only
         allowing records with curriculums not
@@ -91,8 +91,8 @@ def showcurriculum(request, c_id):
             user_subscription.delete()
 
             # Updating Change Log for the change
-            reason = 'Unsubscribed from Curriculum' + \
-                str(curriculum.id) + ' + more details'
+            reason = 'Unsubscribed from Curriculum ' + \
+                str(curriculum.title) + ' + more details'
             log_obj = ChangeLog(
                 member=Member(id=request.user.id),
                 description=reason,
@@ -115,8 +115,8 @@ def showcurriculum(request, c_id):
             sub_obj.save()
 
             # Updating Change Log for the change
-            reason = 'Subscribed to Curriculum' + \
-                str(curriculum.id) + ' + more details'
+            reason = 'Subscribed to Curriculum ' + \
+                str(curriculum.title) + ' + more details'
             log_obj = ChangeLog(
                 member=Member(id=request.user.id),
                 description=reason,
@@ -135,6 +135,8 @@ def showcurriculum(request, c_id):
                    'button_status': button_status}
         return render(request, 'curriculum/show.html', context)
 
+    elif request.method == 'POST' and '_teach' in request.POST:
+        pass
     else:
         """
         Assuming the other request would be
