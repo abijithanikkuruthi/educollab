@@ -1,5 +1,14 @@
 <aside>
-    <h4>John Doe</h4>
-    <p>Personal Information.</p>
-    <!-- TODO: Add more profile information and styling -->
+    <div class="col-12">
+        <div class="w-100 text-center">
+            {% if member.image %}
+            <img class="feed-profile-image rounded-circle" src="{{member.image.url}}">
+        {% else %}
+            <img class="feed-profile-image  rounded-circle" src="/media/avatar.png">
+        {% endif %}
+        </div>
+        <h4>Hi {{member.full_name}},</h4>
+        <p>welcome to your EduCollab. profile! Check out your feed to keep up to date and see what the community is working on.</p>
+    </div>
+    <p></p>
 </aside>

@@ -8,13 +8,13 @@ def feed(request):
         check_user_id(current_user)
 
         member = Member.objects.filter(u_id=current_user).first()
-
         # TODO: filter only based on subscriptiuos of user
         changelogs = ChangeLog.objects.filter(member=member)
         print(changelogs)
         context = {
             "changelogs": changelogs,
-            "current_user": current_user
+            "current_user": current_user,
+            "member": member
         }
         return render(request, 'feeds/index.html', context)
     else:
