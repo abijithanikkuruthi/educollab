@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container pt-4">
+    <div class="container">
+        <div class="row pt-4">
+            <div class="col-12">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2>Your Subscriptions</h2>
+                    </div>
+                </div>
+                <div class="container">
+                    {% for sub in subscriptions %}
+                    <div class=" card">
+                        <div class="card-body">
+                            <div class="row">
+                                {% if sub.subject %}
+                                    {% include "./_subject.html" %}
+                                {% else %}
+                                    {% include "./_curriculum.html" %}
+                                {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
