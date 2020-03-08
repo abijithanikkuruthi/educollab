@@ -5,13 +5,15 @@
     <div class="row">
         <form class="form-inline col-12" method="post">
                 {% csrf_token %}
-            <button class="btn btn-outline-dark col-2" type="submit">{{button_status}}</button>
+            <button class="btn btn-outline-dark col-2" name="_subscribe" type="submit">{{subscribe_button_status}}</button>
+            <button class="btn btn-outline-dark col-2" name="_teach" type="submit" style="margin-left: 20px">{{teach_button_status}}</button>
         </form>
     </div>
-
+    
     <!-- Shittiest HTML ever ahead -->
     <br /><br />
     <h6>{{sub_status}}</h6>
+    <h6>{{teach_status}}</h6>
     <br />
     Show the Curriculum Here!
     <ul>

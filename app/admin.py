@@ -29,7 +29,7 @@ class SubscriptionAdmin(admin.ModelAdmin):
 admin.site.register(Subscription, SubscriptionAdmin)
 
 class TeachAdmin(admin.ModelAdmin):
-    list_display = ('id', 'member', 'curriculum')
+    list_display = ('id', 'member', 'curriculum', 'subject')
 
 admin.site.register(Teach, TeachAdmin)
 

@@ -1,12 +1,6 @@
-from django.contrib.auth import login, authenticate
-from django.contrib.auth.models import User
 from django.shortcuts import render, redirect, get_object_or_404
-from .utils import check_user_id
-from .forms import SignUpForm, CurriculumForm, BitForm
-from datetime import datetime
-from app.models import Field, Subject, Topic, Curriculum, Member, Bit, ChangeLog, Subscription
-from educollab import settings
-import os
+from .forms import CurriculumForm, BitForm
+from app.models import Field, Subject, Topic, Curriculum, Member, Bit, ChangeLog, Subscription, Teach
 
 
 def createcurriculum(request):
@@ -69,17 +63,32 @@ def indexcurriculum(request):
 
 
 def showcurriculum(request, c_id):
+    """
+    Here we define all functionalities
+    for each curriculum page.
+
+    """
+
+    # Current user
+    current_user = Member(id=request.user.id)
 
     # Shitty solution for now
     if not Curriculum.objects.filter(id=c_id):
         return render(request, 'registration/login.html', {})
 
+    # Fetch all records for curriculum with id=c_id
     curriculum = get_object_or_404(Curriculum, id=c_id)
 
+    # Check if user is subscribed to the curriculum with id=c_id
     user_subscription = Subscription.objects.filter(
         member=request.user.id, curriculum=curriculum, subject__isnull=True).exclude(curriculum__isnull=True)
 
-    if request.method == 'POST':
+    # Fetch all curriculums taught by user for the subject of
+    # current curriculum. (Shouldn't be more than 1)
+    user_teach = Teach.objects.filter(
+        member=request.user.id, subject=curriculum.subject)
+
+    if request.method == 'POST' and '_subscribe' in request.POST:
         """
         Filtering user subscription by only
         allowing records with curriculums not
@@ -91,10 +100,10 @@ def showcurriculum(request, c_id):
             user_subscription.delete()
 
             # Updating Change Log for the change
-            reason = 'Unsubscribed from Curriculum' + \
-                str(curriculum.id) + ' + more details'
+            reason = 'Unsubscribed from Curriculum ' + \
+                str(curriculum.title) + ' + more details'
             log_obj = ChangeLog(
-                member=Member(id=request.user.id),
+                member=current_user,
                 description=reason,
                 curriculum=Curriculum(id=curriculum.id),
                 bit=None,
@@ -104,21 +113,21 @@ def showcurriculum(request, c_id):
             log_obj.save()
 
             sub_status = 'Unsubscribed!'
-            button_status = 'Subscribe'
+            subscribe_button_status = 'Subscribe'
 
         else:
             sub_obj = Subscription(
-                member=Member(id=request.user.id),
+                member=current_user,
                 subject=None,
                 curriculum=Curriculum(id=curriculum.id)
             )
             sub_obj.save()
 
             # Updating Change Log for the change
-            reason = 'Subscribed to Curriculum' + \
-                str(curriculum.id) + ' + more details'
+            reason = 'Subscribed to Curriculum ' + \
+                str(curriculum.title) + ' + more details'
             log_obj = ChangeLog(
-                member=Member(id=request.user.id),
+                member=current_user,
                 description=reason,
                 curriculum=Curriculum(id=curriculum.id),
                 bit=None,
@@ -128,11 +137,114 @@ def showcurriculum(request, c_id):
             log_obj.save()
 
             sub_status = 'Subscribed!'
-            button_status = 'Unsubscribe'
+            subscribe_button_status = 'Unsubscribe'
+
+         # Teach button
+        if user_teach:
+            if user_teach.first().curriculum.id == c_id:
+                teach_button_status = 'UnTeach'
+            else:
+                teach_button_status = 'Teach'
+        else:
+            teach_button_status = 'Teach'
 
         context = {'curriculum': curriculum,
                    'sub_status': sub_status,
-                   'button_status': button_status}
+                   'subscribe_button_status': subscribe_button_status,
+                   'teach_button_status': teach_button_status,}
+        return render(request, 'curriculum/show.html', context)
+
+    elif request.method == 'POST' and '_teach' in request.POST:
+        """
+        """
+        if user_teach:
+            if user_teach.first().curriculum.id == c_id:
+                user_teach.delete()
+
+                # Updating Change Log for the change
+                reason = str(current_user) + 'is not teaching' + \
+                    str(curriculum.title) + ' at their university - ' + \
+                    str(current_user.institution) + 'anymore'
+
+                log_obj = ChangeLog(
+                    member=current_user,
+                    description=reason,
+                    curriculum=None,
+                    bit=None,
+                    subject=None,
+                    operation=None,
+                )
+                log_obj.save()
+
+                teach_status = 'Not Teaching Anymore!'
+                teach_button_status = 'Teach'
+
+            else:
+                user_teach.delete()
+
+                # Adding the curriculum for teaching
+                teach_obj = Teach(
+                    member=current_user,
+                    curriculum=curriculum,
+                    subject = curriculum.subject
+                )
+                teach_obj.save()
+
+                # Updating Change Log for the change
+                reason = str(current_user) + 'is teaching' + \
+                    str(curriculum.title) + ' at their university - ' + \
+                    str(current_user.institution)
+
+                log_obj = ChangeLog(
+                    member=current_user,
+                    description=reason,
+                    curriculum=None,
+                    bit=None,
+                    subject=None,
+                    operation=None,
+                )
+                log_obj.save()
+
+                teach_status = 'Teaching!'
+                teach_button_status = 'UnTeach'
+
+        else:
+            # Adding the curriculum for teaching
+            teach_obj = Teach(
+                member=current_user,
+                curriculum=curriculum,
+                subject = curriculum.subject
+            )
+            teach_obj.save()
+
+            # Updating Change Log for the change
+            reason = str(current_user) + 'is teaching' + \
+                str(curriculum.title) + ' at their university - ' + \
+                str(current_user.institution)
+
+            log_obj = ChangeLog(
+                member=current_user,
+                description=reason,
+                curriculum=None,
+                bit=None,
+                subject=None,
+                operation=None,
+            )
+            log_obj.save()
+
+            teach_status = 'Teaching!'
+            teach_button_status = 'UnTeach'
+
+        # Subscribe button
+        if user_subscription:
+            subscribe_button_status = 'Unsubscribe'
+        else:
+            subscribe_button_status = 'Subscribe'
+
+        context = {'curriculum': curriculum,
+                'teach_status': teach_status,
+                'teach_button_status': teach_button_status,
+                'subscribe_button_status': subscribe_button_status,}
         return render(request, 'curriculum/show.html', context)
 
     else:
@@ -140,15 +252,27 @@ def showcurriculum(request, c_id):
         Assuming the other request would be
         GET request to load the page, placeholder
         text for button can be set
+
         """
 
+        # Subscribe button
         if user_subscription:
-            button_status = 'Unsubscribe'
+            subscribe_button_status = 'Unsubscribe'
         else:
-            button_status = 'Subscribe'
+            subscribe_button_status = 'Subscribe'
+
+        # Teach button
+        if user_teach:
+            if user_teach.first().curriculum.id == c_id:
+                teach_button_status = 'UnTeach'
+            else:
+                teach_button_status = 'Teach'
+        else:
+            teach_button_status = 'Teach'
 
         context = {'curriculum': curriculum,
-                   'button_status': button_status}
+                   'subscribe_button_status': subscribe_button_status,
+                   'teach_button_status': teach_button_status,}
         return render(request, 'curriculum/show.html', context)
 
 
