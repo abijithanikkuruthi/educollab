@@ -32,10 +32,10 @@
                 {% endif %}
             </div>
             {% for c in changelogs %}
-                {{ c }}
-                {{ c.likes }}
-                {{ c.comments }}
-			{% endfor %}
+                <b>Change: </b>{{ c }} <br /> 
+                <b> Likes: </b>{{ c.likes }} | <b>Comments: </b>{{ c.comments }} <br />
+            {% endfor %}
+            <br /><br /><br /><br />    
         </div>
     </div>
 </div>
