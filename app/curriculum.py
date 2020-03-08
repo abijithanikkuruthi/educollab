@@ -156,15 +156,19 @@ def showcurriculum(request, c_id):
 
     elif request.method == 'POST' and '_teach' in request.POST:
         """
+        Filtering teach for current user for the
+        associated subject. User is only allowed to
+        follow one curriculum from one subject.
+        
         """
         if user_teach:
             if user_teach.first().curriculum.id == c_id:
                 user_teach.delete()
 
                 # Updating Change Log for the change
-                reason = str(current_user) + 'is not teaching' + \
+                reason = str(current_user) + 'is not teaching ' + \
                     str(curriculum.title) + ' at their university - ' + \
-                    str(current_user.institution) + 'anymore'
+                    str(current_user.institution) + ' anymore'
 
                 log_obj = ChangeLog(
                     member=current_user,
@@ -191,7 +195,7 @@ def showcurriculum(request, c_id):
                 teach_obj.save()
 
                 # Updating Change Log for the change
-                reason = str(current_user) + 'is teaching' + \
+                reason = str(current_user) + 'is teaching ' + \
                     str(curriculum.title) + ' at their university - ' + \
                     str(current_user.institution)
 
@@ -218,7 +222,7 @@ def showcurriculum(request, c_id):
             teach_obj.save()
 
             # Updating Change Log for the change
-            reason = str(current_user) + 'is teaching' + \
+            reason = str(current_user) + 'is teaching ' + \
                 str(curriculum.title) + ' at their university - ' + \
                 str(current_user.institution)
 
