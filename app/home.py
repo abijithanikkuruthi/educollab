@@ -38,6 +38,6 @@ def feed(request):
     context = {
         "changelogs": changelogs,
         "current_user": current_user,
-        "member": member
+        "member": current_user
     }
     return render(request, 'feeds/index.html', context)
