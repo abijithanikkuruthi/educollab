@@ -173,7 +173,7 @@ def showcurriculum(request, c_id):
                 log_obj = ChangeLog(
                     member=current_user,
                     description=reason,
-                    curriculum=None,
+                    curriculum=curriculum,
                     bit=None,
                     subject=None,
                     operation=None,
@@ -202,7 +202,7 @@ def showcurriculum(request, c_id):
                 log_obj = ChangeLog(
                     member=current_user,
                     description=reason,
-                    curriculum=None,
+                    curriculum=curriculum,
                     bit=None,
                     subject=None,
                     operation=None,
@@ -229,7 +229,7 @@ def showcurriculum(request, c_id):
             log_obj = ChangeLog(
                 member=current_user,
                 description=reason,
-                curriculum=None,
+                curriculum=curriculum,
                 bit=None,
                 subject=None,
                 operation=None,
