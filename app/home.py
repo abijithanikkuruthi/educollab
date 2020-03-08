@@ -27,8 +27,6 @@ def feed(request):
             print("No Changelog")
             changelogs = []
 
-        member = Member.objects.filter(u_id=current_user).first()
-
     # Only distinct feeds allowed
     changelogs = sorted(list(set(chain(changelog_sub, changelog_curriculum))),
                         key=lambda instance: instance.created_on, reverse=True)
