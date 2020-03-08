@@ -1,10 +1,10 @@
 {% if changelog.is_upvoted %}
-    <form method="post" action="{% url 'downvote' u_type='changelog' u_id=changelog.id %}">
+    <form method="post" action="{% url 'feeds_upvote_delete' u_id=changelog.id %}">
     {% csrf_token %}
         <input class="btn btn-sm btn-secondary" type="submit" value="Remove upvote">{{ changelog.upvote.all|length }}
     </form>
     {% else %}
-    <form method="post" action="{% url 'upvote' u_type='changelog' u_id=changelog.id %}">
+    <form method="post" action="{% url 'feeds_upvote_create' u_id=changelog.id %}">
     {% csrf_token %}
         <input class="btn btn-sm btn-secondary" type="submit" value="Upvote">{{ changelog.upvote.all|length }}
     </form>

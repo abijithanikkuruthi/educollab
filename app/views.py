@@ -78,11 +78,20 @@ def curriculum_update(request, c_id):
     return curriculum.updatecurriculum(request, c_id)
 
 
-def curriculum_comment_create(request, c_id):
+def feeds_comment_create(request, c_id):
     if not request.user.is_authenticated:
         return redirect('login')
     return add_comment(request, "changelog", c_id)
 
+def feeds_upvote_create(request, u_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return add_upvote(request, "changelog", u_id)
+
+def feeds_upvote_delete(request, u_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return remove_upvote(request, "changelog", u_id)
 
 def create_bit(request, c_id):
     if not request.user.is_authenticated:
