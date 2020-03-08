@@ -30,7 +30,7 @@ def view_profile(request, uname):
         
     #     c_list.append(c_obj)
 
-    changelogs = ChangeLog.objects.filter(member=user_details.id)
+    changelogs = ChangeLog.objects.filter(member=user_details.id).order_by('-created_on')
 
     for c in changelogs:
         c.likes = len(Upvote.objects.filter(changelog=c))
