@@ -107,7 +107,7 @@ def showcurriculum(request, c_id):
                 description=reason,
                 curriculum=Curriculum(id=curriculum.id),
                 bit=None,
-                subject=None,
+                subject=curriculum.subject,
                 operation=None,
             )
             log_obj.save()
@@ -131,7 +131,7 @@ def showcurriculum(request, c_id):
                 description=reason,
                 curriculum=Curriculum(id=curriculum.id),
                 bit=None,
-                subject=None,
+                subject=curriculum.subject,
                 operation=None,
             )
             log_obj.save()
@@ -301,6 +301,7 @@ def updatecurriculum(request, c_id):
             member=Member(id=request.user.id),
             description='Curriculum Updated + more details ',
             curriculum=Curriculum(id=curriculum.id),
+            subject=curriculum.subject,
             operation='update'
         )
         log_obj.save()
@@ -347,6 +348,8 @@ def createbit(request, c_id):
         log_obj = ChangeLog(
             member=Member(id=request.user.id),
             description='Bit Added + more details ',
+            curriculum=curriculum,
+            subject=curriculum.subject,
             bit=Bit(id=b_obj.id),
             operation='create'
         )
@@ -387,6 +390,8 @@ def updatebit(request, c_id, b_id):
             member=Member(id=request.user.id),
             description='Bit Updated + more details ',
             bit=Bit(id=bit.id),
+            curriculum=curriculum,
+            subject=curriculum.subject,
             operation='update'
         )
         log_obj.save()
