@@ -23,6 +23,15 @@
                 {% endfor %}
             </div>
         </div>
+        <div class="col-8">
+            {% if not changelogs  %}
+                <h5>No Feeds for now. Please subscribe to subjects or curriculums :) </h5>
+            {% else %}
+                {% for changelog in changelogs %}
+                  {% include "feeds/_feed.html" %}
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
 </div>
 {% endblock %}

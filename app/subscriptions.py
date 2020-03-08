@@ -43,6 +43,8 @@ def curriculum_subscription_create(request, cid):
     # Updating Change Log for the change TODO: not sure about this
     reason = 'Subscribed to Curriculum ' + \
         str(curriculum.title) + ' + more details'
+    # TODO Add stuff decoartate the objects curriculum + title
+    # and all other stuff
     log_obj = ChangeLog(
         member=current_user,
         description=reason,
@@ -73,6 +75,8 @@ def subject_subscription_create(request, sid):
 
     # Updating Change Log for the change
     reason = 'Subscribed to ' + str(subject) + ' + more details'
+    # TODO Add stuff decoartate the objects curriculum + title
+    # and all other stuff
     log_obj = ChangeLog(
         member=Member(id=request.user.id),
         description=reason,
@@ -109,6 +113,8 @@ def subscription_delete(request, sid):
     # Updating Change Log for the change
     reason = 'Unsubscribed from ' + \
         str(subObject) + ' + more details'
+    # TODO Add stuff decoartate the objects curriculum + title
+    # and all other stuff
     log_obj = ChangeLog(
         member=Member(id=request.user.id),
         description=reason,

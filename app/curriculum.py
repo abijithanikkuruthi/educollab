@@ -95,7 +95,7 @@ def showcurriculum(request, c_id):
         being NULL and subjects being NULL
 
         """
-         # Teach button
+        # Teach button
         if user_teach:
             if user_teach.first().curriculum.id == c_id:
                 teach_button_status = 'UnTeach'
@@ -107,25 +107,29 @@ def showcurriculum(request, c_id):
         context = {'curriculum': curriculum,
                    'sub_status': sub_status,
                    'subscribe_button_status': subscribe_button_status,
-                   'teach_button_status': teach_button_status,}
+                   'teach_button_status': teach_button_status, }
         return render(request, 'curriculum/show.html', context)
 
     elif request.method == 'POST' and '_teach' in request.POST:
         """
+        Filtering teach for current user for the
+        associated subject. User is only allowed to
+        follow one curriculum from one subject.
+
         """
         if user_teach:
             if user_teach.first().curriculum.id == c_id:
                 user_teach.delete()
 
                 # Updating Change Log for the change
-                reason = str(current_user) + 'is not teaching' + \
+                reason = str(current_user) + 'is not teaching ' + \
                     str(curriculum.title) + ' at their university - ' + \
-                    str(current_user.institution) + 'anymore'
+                    str(current_user.institution) + ' anymore'
 
                 log_obj = ChangeLog(
                     member=current_user,
                     description=reason,
-                    curriculum=None,
+                    curriculum=curriculum,
                     bit=None,
                     subject=None,
                     operation=None,
@@ -142,19 +146,19 @@ def showcurriculum(request, c_id):
                 teach_obj = Teach(
                     member=current_user,
                     curriculum=curriculum,
-                    subject = curriculum.subject
+                    subject=curriculum.subject
                 )
                 teach_obj.save()
 
                 # Updating Change Log for the change
-                reason = str(current_user) + 'is teaching' + \
+                reason = str(current_user) + 'is teaching ' + \
                     str(curriculum.title) + ' at their university - ' + \
                     str(current_user.institution)
 
                 log_obj = ChangeLog(
                     member=current_user,
                     description=reason,
-                    curriculum=None,
+                    curriculum=curriculum,
                     bit=None,
                     subject=None,
                     operation=None,
@@ -169,19 +173,19 @@ def showcurriculum(request, c_id):
             teach_obj = Teach(
                 member=current_user,
                 curriculum=curriculum,
-                subject = curriculum.subject
+                subject=curriculum.subject
             )
             teach_obj.save()
 
             # Updating Change Log for the change
-            reason = str(current_user) + 'is teaching' + \
+            reason = str(current_user) + 'is teaching ' + \
                 str(curriculum.title) + ' at their university - ' + \
                 str(current_user.institution)
 
             log_obj = ChangeLog(
                 member=current_user,
                 description=reason,
-                curriculum=None,
+                curriculum=curriculum,
                 bit=None,
                 subject=None,
                 operation=None,
@@ -198,9 +202,9 @@ def showcurriculum(request, c_id):
             subscribe_button_status = 'Subscribe'
 
         context = {'curriculum': curriculum,
-                'teach_status': teach_status,
-                'teach_button_status': teach_button_status,
-                'subscribe_button_status': subscribe_button_status,}
+                   'teach_status': teach_status,
+                   'teach_button_status': teach_button_status,
+                   'subscribe_button_status': subscribe_button_status, }
         return render(request, 'curriculum/show.html', context)
 
     else:
@@ -222,7 +226,7 @@ def showcurriculum(request, c_id):
 
         context = {'curriculum': curriculum,
                    'user_subscription': user_subscription.first(),
-                   'teach_button_status': teach_button_status,}
+                   'teach_button_status': teach_button_status, }
         return render(request, 'curriculum/show.html', context)
 
 
@@ -247,6 +251,7 @@ def updatecurriculum(request, c_id):
             member=Member(id=request.user.id),
             description='Curriculum Updated + more details ',
             curriculum=Curriculum(id=curriculum.id),
+            subject=curriculum.subject,
             operation='update'
         )
         log_obj.save()
@@ -293,6 +298,8 @@ def createbit(request, c_id):
         log_obj = ChangeLog(
             member=Member(id=request.user.id),
             description='Bit Added + more details ',
+            curriculum=curriculum,
+            subject=curriculum.subject,
             bit=Bit(id=b_obj.id),
             operation='create'
         )
@@ -333,6 +340,8 @@ def updatebit(request, c_id, b_id):
             member=Member(id=request.user.id),
             description='Bit Updated + more details ',
             bit=Bit(id=bit.id),
+            curriculum=curriculum,
+            subject=curriculum.subject,
             operation='update'
         )
         log_obj.save()
