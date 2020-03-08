@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import Member, Subject, Comment, Bit, Curriculum, ChangeLog
+from .models import Member, Subject, Comment, Bit, Curriculum, ChangeLog, Upvote
 from django.shortcuts import render, redirect
 
 def check_user_id(user):
@@ -38,5 +38,36 @@ def add_comment(request, c_type, c_id):
         u_obj.changelog = ChangeLog(id=c_id)
 
     u_obj.save()
+
+    return redirect(request.META['HTTP_REFERER'])
+
+def add_upvote(request, u_type, u_id):
+
+    data = request.POST
+    u_obj = Upvote(
+        member = Member(id=request.user.id)
+    )
+    if 'bit' in u_type:
+        u_obj.bit = Bit(id=u_id)
+    elif 'curriculum' in u_type:
+        u_obj.curriculum = Curriculum(id=u_id)
+    elif 'changelog' in u_type:
+        u_obj.changelog = ChangeLog(id=u_id)
+
+    u_obj.save()
+
+    return redirect(request.META['HTTP_REFERER'])
+
+def remove_upvote(request, u_type, u_id):
+
+    data = request.POST
+    if 'changelog' in u_type:
+        u_obj = Upvote.objects.filter(member=Member(id=request.user.id), changelog=ChangeLog(id=u_id), bit=None, curriculum=None)
+    elif 'bit' in u_type:
+        u_obj = Upvote.objects.filter(member=Member(id=request.user.id), bit=Bit(id=u_id), changelog=None, curriculum=None)
+    elif 'curriculum' in u_type:
+        u_obj = Upvote.objects.filter(member=Member(id=request.user.id), bit=None, changelog=None, curriculum=Curriculum(id=u_id))
+
+    u_obj.delete()
 
     return redirect(request.META['HTTP_REFERER'])

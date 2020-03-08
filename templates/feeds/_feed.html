@@ -54,9 +54,10 @@
             </p>
             <div class="row align-items-end">
                 <div class="col-8">
-                    <a href="#" class="btn btn-sm btn-secondary">
-                        Upvote <span class="badge badge-light d-inline">99</span>
-                    </a>
+                    <!-- <a href="#" class="btn btn-sm btn-secondary">
+                        Upvote <span class="badge badge-light d-inline">{{ changelog.upvote.all|length }}</span>
+                    </a> -->
+                    {% include "./_upvote.html" %}
                     <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse"
                         data-target="#collapse-comment-{{changelog.id}}" aria-expanded="false"
                         aria-controls="collapseExample">

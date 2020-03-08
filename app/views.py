@@ -1,6 +1,6 @@
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from .utils import check_user_id, create_member_obj, add_comment
+from .utils import check_user_id, create_member_obj, add_comment, add_upvote, remove_upvote
 from .forms import SignUpForm
 from app.models import Field, Subject, ChangeLog
 from app import curriculum, subject, home, profile
@@ -100,3 +100,13 @@ def comment(request, c_type, c_id):
     if not request.user.is_authenticated:
         return redirect('login')
     return add_comment(request, c_type, c_id)
+
+def upvote(request, u_type, u_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return add_upvote(request, u_type, u_id)
+
+def downvote(request, u_type, u_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return remove_upvote(request, u_type, u_id)
