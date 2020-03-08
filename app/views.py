@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .utils import check_user_id, create_member_obj, add_comment, add_upvote, remove_upvote
 from .forms import SignUpForm
 from app.models import Field, Subject, ChangeLog
-from app import curriculum, subject, home, profile
+from app import curriculum, subject, home, profile, subscriptions
 
 def index(request):
     if not request.user.is_authenticated:
@@ -53,6 +53,10 @@ def subject_index(request, sid):
         return redirect('login')
     return subject.showsubject(request, sid)
 
+def subject_subscription_create(request, sid):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return subscriptions.subject_subscription_create(request, sid)
 
 def curriculum_index(request):
     if not request.user.is_authenticated:
@@ -77,6 +81,11 @@ def curriculum_update(request, c_id):
         return redirect('login')
     return curriculum.updatecurriculum(request, c_id)
 
+def curriculum_subscription_create(request, c_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return subscriptions.curriculum_subscription_create(request, c_id)
+
 
 def feeds_comment_create(request, c_id):
     if not request.user.is_authenticated:
@@ -92,7 +101,7 @@ def feeds_upvote_delete(request, u_id):
     if not request.user.is_authenticated:
         return redirect('login')
     return remove_upvote(request, "changelog", u_id)
-
+    
 def create_bit(request, c_id):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -119,3 +128,14 @@ def downvote(request, u_type, u_id):
     if not request.user.is_authenticated:
         return redirect('login')
     return remove_upvote(request, u_type, u_id)
+    
+def subscription_index(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return subscriptions.subscription_index(request)
+
+def subscription_delete(request, sid):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return subscriptions.subscription_delete(request, sid)
+

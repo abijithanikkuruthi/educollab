@@ -95,51 +95,7 @@ def showcurriculum(request, c_id):
         being NULL and subjects being NULL
 
         """
-
-        if user_subscription:
-            user_subscription.delete()
-
-            # Updating Change Log for the change
-            reason = 'Unsubscribed from Curriculum ' + \
-                str(curriculum.title) + ' + more details'
-            log_obj = ChangeLog(
-                member=current_user,
-                description=reason,
-                curriculum=Curriculum(id=curriculum.id),
-                bit=None,
-                subject=curriculum.subject,
-                operation=None,
-            )
-            log_obj.save()
-
-            sub_status = 'Unsubscribed!'
-            subscribe_button_status = 'Subscribe'
-
-        else:
-            sub_obj = Subscription(
-                member=current_user,
-                subject=None,
-                curriculum=Curriculum(id=curriculum.id)
-            )
-            sub_obj.save()
-
-            # Updating Change Log for the change
-            reason = 'Subscribed to Curriculum ' + \
-                str(curriculum.title) + ' + more details'
-            log_obj = ChangeLog(
-                member=current_user,
-                description=reason,
-                curriculum=Curriculum(id=curriculum.id),
-                bit=None,
-                subject=curriculum.subject,
-                operation=None,
-            )
-            log_obj.save()
-
-            sub_status = 'Subscribed!'
-            subscribe_button_status = 'Unsubscribe'
-
-         # Teach button
+        # Teach button
         if user_teach:
             if user_teach.first().curriculum.id == c_id:
                 teach_button_status = 'UnTeach'
@@ -151,7 +107,7 @@ def showcurriculum(request, c_id):
         context = {'curriculum': curriculum,
                    'sub_status': sub_status,
                    'subscribe_button_status': subscribe_button_status,
-                   'teach_button_status': teach_button_status,}
+                   'teach_button_status': teach_button_status, }
         return render(request, 'curriculum/show.html', context)
 
     elif request.method == 'POST' and '_teach' in request.POST:
@@ -159,7 +115,7 @@ def showcurriculum(request, c_id):
         Filtering teach for current user for the
         associated subject. User is only allowed to
         follow one curriculum from one subject.
-        
+
         """
         if user_teach:
             if user_teach.first().curriculum.id == c_id:
@@ -190,7 +146,7 @@ def showcurriculum(request, c_id):
                 teach_obj = Teach(
                     member=current_user,
                     curriculum=curriculum,
-                    subject = curriculum.subject
+                    subject=curriculum.subject
                 )
                 teach_obj.save()
 
@@ -217,7 +173,7 @@ def showcurriculum(request, c_id):
             teach_obj = Teach(
                 member=current_user,
                 curriculum=curriculum,
-                subject = curriculum.subject
+                subject=curriculum.subject
             )
             teach_obj.save()
 
@@ -246,9 +202,9 @@ def showcurriculum(request, c_id):
             subscribe_button_status = 'Subscribe'
 
         context = {'curriculum': curriculum,
-                'teach_status': teach_status,
-                'teach_button_status': teach_button_status,
-                'subscribe_button_status': subscribe_button_status,}
+                   'teach_status': teach_status,
+                   'teach_button_status': teach_button_status,
+                   'subscribe_button_status': subscribe_button_status, }
         return render(request, 'curriculum/show.html', context)
 
     else:
@@ -258,12 +214,6 @@ def showcurriculum(request, c_id):
         text for button can be set
 
         """
-
-        # Subscribe button
-        if user_subscription:
-            subscribe_button_status = 'Unsubscribe'
-        else:
-            subscribe_button_status = 'Subscribe'
 
         # Teach button
         if user_teach:
@@ -275,8 +225,8 @@ def showcurriculum(request, c_id):
             teach_button_status = 'Teach'
 
         context = {'curriculum': curriculum,
-                   'subscribe_button_status': subscribe_button_status,
-                   'teach_button_status': teach_button_status,}
+                   'user_subscription': user_subscription.first(),
+                   'teach_button_status': teach_button_status, }
         return render(request, 'curriculum/show.html', context)
 
 

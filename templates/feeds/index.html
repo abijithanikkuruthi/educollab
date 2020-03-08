@@ -1,14 +1,26 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-4">
-            <div class="row">
-                {% include "feeds/_profile.html" %}
+<div class="container pt-4">
+    <div class="container">
+        <div class="row pt-4">
+            <div class="col-4">
+                <div class="row">
+                    {% include "feeds/_profile.html" %}
+                </div>
+                <div class="row">
+                    {% include "feeds/_suggestions.html" %}
+                </div>
             </div>
-            <div class="row">
-                {% include "feeds/_suggestions.html" %}
+            <div class="col-8">
+                <div class="row mb-4">
+                    <div class="col-12">
+                        <h2 class="d-inline">Your Feed</h2><small> (<a href="{% url 'subscription_index' %}">Customize</a></small>)
+                    </div>
+                </div>
+                {% for changelog in changelogs %}
+                {% include "feeds/_feed.html" %}
+                {% endfor %}
             </div>
         </div>
         <div class="col-8">

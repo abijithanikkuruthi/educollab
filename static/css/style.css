@@ -484,14 +484,12 @@ h1, h2, h3, h4, h5, h6 {
   .sticky-wrapper + .site-blocks-cover {
     margin-top: 140px; }
   .sticky-wrapper .site-navbar {
-    background-color: #fff;
     -webkit-transition: .3s all ease;
     -o-transition: .3s all ease;
     transition: .3s all ease; }
     .sticky-wrapper .site-navbar a.active {
       color: #fff; }
   .sticky-wrapper.is-sticky .site-navbar {
-    background-color: #fff;
     -webkit-box-shadow: 4px 0 20px -5px rgba(0, 0, 0, 0.1);
     box-shadow: 4px 0 20px -5px rgba(0, 0, 0, 0.1); }
     .sticky-wrapper.is-sticky .site-navbar .site-navigation .site-menu > li {
@@ -972,3 +970,8 @@ h1, h2, h3, h4, h5, h6 {
   padding: 10px;
   font-size: 15px;
 } 
+
+.feed-profile-image {
+  width: 48px;
+  height: 48px;
+}

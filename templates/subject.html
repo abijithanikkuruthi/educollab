@@ -8,11 +8,22 @@
         </div>
     </div>
     <div class="row">
+        {% if user_subscription %}
+            <form class="form-inline d-inline" method="post" action="{% url 'subscription_delete' sid=user_subscription.id %}">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-outline-dark" type="submit">Unsubscribe</button>       
+            </form>
+        {% else %}
+            <form class="form-inline d-inline" method="post" action="{% url 'subject_subscription_create' sid=subject.id %}">
+                {% csrf_token %}
+                <button class="btn btn-sm btn-outline-dark" type="submit">Subscribe</button>       
+            </form>
+        {% endif %}
+        
         <form class="form-inline col-12" method="post">
             {% csrf_token %}
             <input class="form-control col-10" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-dark col-2" type="submit">Search</button>
-            <button class="btn btn-outline-dark col-2" type="submit" style="margin-top: 25px">{{button_status}}</button>        
         </form>
     </div>
 
