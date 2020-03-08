@@ -1,0 +1,13 @@
+<div class="col-2"></div>
+<div class="col-5">
+    <p>Subscription to {{sub.subject.title}}</p>
+    <p>Type: Subject</p>
+</div>
+
+<div class="col-5">
+    <form class="form-inline d-inline" method="post" action="{% url 'subscription_delete' sid=sub.id %}">
+        {% csrf_token %}
+        <button class="btn btn-sm btn-outline-dark" type="submit">Unsubscribe</button>       
+    </form>
+    <a class="btn btn-sm btn-primary" href="{% url 'subjects' sid=sub.subject.id %}">Open</a>
+</div>

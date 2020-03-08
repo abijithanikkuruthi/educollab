@@ -9,6 +9,10 @@ urlpatterns = [
     path('profile/edit', views.profile_edit, name="profile_edit"),
     path('profile/<str:uname>', views.profile_user),
     path('subject/<sid>', views.subject_index, name="subjects"),
+    path('subject/<sid>/subscription/add', views.subject_subscription_create, name="subject_subscription_create"),
+    path('subscription/', views.subscription_index, name="subscription_index"),
+    path('subscription/<sid>/delete', views.subscription_delete, name="subscription_delete"),
+    
     path('curriculum/', views.curriculum_index, name="curriculum_index"),
     path('curriculum/new', views.curriculum_create, name="curriculum_create"),
     path('curriculum/<int:c_id>', views.curriculum_show, name="curriculum_show"),
@@ -18,5 +22,6 @@ urlpatterns = [
     path('curriculum/<int:c_id>/bit/new', views.create_bit),
     path('curriculum/<int:c_id>/bit/<int:b_id>/edit', views.update_bit),
     path('curriculum/<int:c_id>/comment/new', views.curriculum_comment_create, name="curriculum_comment_create"),
+    path('curriculum/<int:c_id>/subscription/add', views.curriculum_subscription_create, name="curriculum_subscription_create"),
     path('comment/<str:c_type>/<int:c_id>', views.comment)
 ]

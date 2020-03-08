@@ -15,7 +15,7 @@
             <div class="col-8">
                 <div class="row mb-4">
                     <div class="col-12">
-                        <h2 class="d-inline">Your Feed</h2><small> (<a href="/subscriptions">Customize</a></small>)
+                        <h2 class="d-inline">Your Feed</h2><small> (<a href="{% url 'subscription_index' %}">Customize</a></small>)
                     </div>
                 </div>
                 {% for changelog in changelogs %}
