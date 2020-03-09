@@ -13,7 +13,7 @@
     </li>
     {% endfor %}
     <li class="list-group-item">
-        <form method="post" action="{% url 'curriculum_comment_create' c_id=changelog.id %}">
+        <form method="post" action="{% url 'feeds_comment_create' c_id=changelog.id %}">
             {% csrf_token %}
             <input type="text" name="comment" />
             <input type="submit" value="Comment">

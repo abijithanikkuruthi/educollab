@@ -9,7 +9,7 @@ def createcurriculum(request):
     fields = Field.objects.all()
     topics = Topic.objects.all()
     subjects = Subject.objects.all()
-
+    current_user = get_object_or_404(Member, u_id=request.user)
     form_type = 'Create'
 
     if request.method == 'POST':
@@ -18,21 +18,21 @@ def createcurriculum(request):
             title=data['title'],
             subject=Subject(id=data['subjects']),
             description=data['description'],
-            posted_by=Member(id=request.user.id)
+            posted_by= current_user
         )
 
         c_obj.save()
 
         # Automatic subscribing to own made curriculum
         sub_obj = Subscription(
-            member=Member(id=request.user.id),
+            member=current_user,
             subject=None,
             curriculum=Curriculum(id=c_obj.id)
         )
         sub_obj.save()
 
         log_obj = ChangeLog(
-            member=Member(id=request.user.id),
+            member=current_user,
             description='New Curriculum Created + more details ',
             curriculum=Curriculum(id=c_obj.id),
             operation='create'
@@ -55,8 +55,8 @@ def createcurriculum(request):
 
 
 def indexcurriculum(request):
-
-    curriculums = Curriculum.objects.filter(posted_by=request.user.id)
+    current_user = get_object_or_404(Member, u_id=request.user)
+    curriculums = Curriculum.objects.filter(posted_by=current_user)
     if request.method == 'GET':
         context = {'curriculums': curriculums}
         return render(request, 'curriculum/index.html', context)
@@ -70,7 +70,7 @@ def showcurriculum(request, c_id):
     """
 
     # Current user
-    current_user = Member(id=request.user.id)
+    current_user = get_object_or_404(Member, u_id=request.user)
 
     # Shitty solution for now
     if not Curriculum.objects.filter(id=c_id):
@@ -81,12 +81,12 @@ def showcurriculum(request, c_id):
 
     # Check if user is subscribed to the curriculum with id=c_id
     user_subscription = Subscription.objects.filter(
-        member=request.user.id, curriculum=curriculum, subject__isnull=True).exclude(curriculum__isnull=True)
+        member=current_user, curriculum=curriculum, subject__isnull=True).exclude(curriculum__isnull=True)
 
     # Fetch all curriculums taught by user for the subject of
     # current curriculum. (Shouldn't be more than 1)
     user_teach = Teach.objects.filter(
-        member=request.user.id, subject=curriculum.subject)
+        member=current_user, subject=curriculum.subject)
 
     if request.method == 'POST' and '_subscribe' in request.POST:
         """
@@ -235,6 +235,7 @@ def updatecurriculum(request, c_id):
     fields = Field.objects.all()
     topics = Topic.objects.all()
     subjects = Subject.objects.all()
+    current_user = get_object_or_404(Member, u_id=request.user)
 
     curriculum = get_object_or_404(Curriculum, id=c_id)
     form_type = 'Update'
@@ -248,7 +249,7 @@ def updatecurriculum(request, c_id):
 
         curriculum.save()
         log_obj = ChangeLog(
-            member=Member(id=request.user.id),
+            member=current_user,
             description='Curriculum Updated + more details ',
             curriculum=Curriculum(id=curriculum.id),
             subject=curriculum.subject,
@@ -281,6 +282,8 @@ def updatecurriculum(request, c_id):
 
 def createbit(request, c_id):
     curriculum = get_object_or_404(Curriculum, id=c_id)
+    current_user = get_object_or_404(Member, u_id=request.user)
+
     form_type = 'Create'
     if request.method == 'POST':
         data = request.POST
@@ -296,7 +299,7 @@ def createbit(request, c_id):
         )
         b_obj.save()
         log_obj = ChangeLog(
-            member=Member(id=request.user.id),
+            member=current_user,
             description='Bit Added + more details ',
             curriculum=curriculum,
             subject=curriculum.subject,
@@ -319,6 +322,8 @@ def createbit(request, c_id):
 
 
 def updatebit(request, c_id, b_id):
+
+    current_user = get_object_or_404(Member, u_id=request.user)
     curriculum = get_object_or_404(Curriculum, id=c_id)
     bit = get_object_or_404(Bit, id=b_id)
     form_type = 'Update'
@@ -337,7 +342,7 @@ def updatebit(request, c_id, b_id):
         bit.save()
 
         log_obj = ChangeLog(
-            member=Member(id=request.user.id),
+            member=current_user,
             description='Bit Updated + more details ',
             bit=Bit(id=bit.id),
             curriculum=curriculum,

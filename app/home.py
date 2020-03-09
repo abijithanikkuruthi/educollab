@@ -1,41 +1,47 @@
 from django.shortcuts import render, get_object_or_404
-from app.models import Member, ChangeLog, Subscription, Subject
+from app.models import Member, ChangeLog, Subscription, Subject, Upvote
 from .utils import check_user_id
 from itertools import chain
 
 
 def feed(request):
-    current_user = Member.objects.filter(u_id=request.user.id).first()
-
-    """
-    Filtering feeds according to user's
-    subscriptions.
-
-    """
+    
+    # Create user if not present - hacky hack
+    check_user_id(request.user)
+    current_user = get_object_or_404(Member, u_id=request.user)
     user_subs = Subscription.objects.filter(member=current_user)
-    changelog_sub, changelog_curriculum = [], []
+
+    subbed_curriculums = []
 
     for sub in user_subs:
         # for feeds related to subject
-        if sub.curriculum is None:
-            changelog_sub.extend(ChangeLog.objects.filter(subject=sub.subject))
+        if sub.subject is not None:
+            # add all curriculums that belong the subject
+            subbed_curriculums.extend(sub.subject.curriculum.all())
+                
         # for feeds related to curriculum
-        elif sub.subject is None:
-            changelog_curriculum.extend(
-                ChangeLog.objects.filter(curriculum=sub.curriculum))
+        elif sub.curriculum is not None:
+            subbed_curriculums.append(sub.curriculum)
         else:
             print("No Changelog")
             changelogs = []
 
-        member = Member.objects.filter(u_id=current_user).first()
+    # Get all changelogs to all 
+    changelog_curriculum = ChangeLog.objects.filter(curriculum__in=subbed_curriculums)
+
+    # TODO: Bit Updates by quering all bits are referenced by curriculums
 
     # Only distinct feeds allowed
-    changelogs = sorted(list(set(chain(changelog_sub, changelog_curriculum))),
+    changelogs = sorted(list(set(chain(changelog_curriculum))),
                         key=lambda instance: instance.created_on, reverse=True)
 
+    for c_log in changelogs:
+            u_obj = Upvote.objects.filter(member=current_user, changelog=c_log, bit=None, curriculum=None)
+            c_log.is_upvoted = len(u_obj) > 0
+
     context = {
-        "changelogs": changelogs,
+        "changelogs": changelog_curriculum,
         "current_user": current_user,
-        "member": member
+        "member": current_user
     }
     return render(request, 'feeds/index.html', context)

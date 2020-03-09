@@ -69,7 +69,7 @@ def edit_profile(request):
         return redirect('my_profile')
         
     else:
-        form = ProfileForm()
+        form = ProfileForm(data=member_details.__dict__)
 
     context = {
         'form' : form

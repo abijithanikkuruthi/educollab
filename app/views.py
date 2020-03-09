@@ -1,6 +1,6 @@
 from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
-from .utils import check_user_id, create_member_obj, add_comment
+from .utils import check_user_id, create_member_obj, add_comment, add_upvote, remove_upvote
 from .forms import SignUpForm
 from app.models import Field, Subject, ChangeLog
 from app import curriculum, subject, home, profile, subscriptions
@@ -81,18 +81,27 @@ def curriculum_update(request, c_id):
         return redirect('login')
     return curriculum.updatecurriculum(request, c_id)
 
-
-def curriculum_comment_create(request, c_id):
-    if not request.user.is_authenticated:
-        return redirect('login')
-    return add_comment(request, "changelog", c_id)
-
 def curriculum_subscription_create(request, c_id):
     if not request.user.is_authenticated:
         return redirect('login')
     return subscriptions.curriculum_subscription_create(request, c_id)
 
 
+def feeds_comment_create(request, c_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return add_comment(request, "changelog", c_id)
+
+def feeds_upvote_create(request, u_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return add_upvote(request, "changelog", u_id)
+
+def feeds_upvote_delete(request, u_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return remove_upvote(request, "changelog", u_id)
+    
 def create_bit(request, c_id):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -110,6 +119,16 @@ def comment(request, c_type, c_id):
         return redirect('login')
     return add_comment(request, c_type, c_id)
 
+def upvote(request, u_type, u_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return add_upvote(request, u_type, u_id)
+
+def downvote(request, u_type, u_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return remove_upvote(request, u_type, u_id)
+    
 def subscription_index(request):
     if not request.user.is_authenticated:
         return redirect('login')
