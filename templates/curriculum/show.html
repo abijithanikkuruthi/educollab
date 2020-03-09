@@ -1,39 +1,75 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        {% if user_subscription %}
-        <form class="form-inline d-inline" method="post" action="{% url 'subscription_delete' sid=user_subscription.id %}">
-            {% csrf_token %}
-            <button class="btn btn-sm btn-outline-dark" type="submit">Unsubscribe</button>       
-        </form>
-        {% else %}
-            <form class="form-inline d-inline" method="post" action="{% url 'curriculum_subscription_create' c_id=curriculum.id %}">
-                {% csrf_token %}
-                <button class="btn btn-sm btn-outline-dark" type="submit">Subscribe</button>       
-            </form>
-        {% endif %}
+<div class="container pt-4">
+    <div class="container">
+        <div class="row pt-4">
+            <div class="col-12">
+                <div class="row">
+                    <div class="card w-100">
+                        <div class="card-body">
+                            <div class="card-title">
+                                <h5 class="d-inline">Curriculum: {{curriculum.title}}</h5>
+                                {% if curriculum.posted_by == current_user %}
+                                <a href="{% url 'curriculum_update' c_id=curriculum.id %}" class="far fa-edit"></a>
+                                {% endif %}
+                            </div>
+                            <div class="card-subtitle">
+                                <h6 class=" mb-2 text-muted">Subject: {{curriculum.subject}}</h6>
+                            </div>
+                            <p class="card-text">{{curriculum.description}}</p>
+                            <div class="row">
+                                <div class="col-12 text-left">
 
-        <form class="form-inline col-12" method="post">
-                {% csrf_token %}
-            <button class="btn btn-outline-dark col-2" name="_teach" type="submit" style="margin-left: 20px">{{teach_button_status}}</button>
-        </form>
+                                    {% if curriculum.is_upvoted %}
+                                    <form method="post" class="d-inline"
+                                        action="{% url 'curriculum_upvote_delete' c_id=curriculum.id %}">
+                                        {% csrf_token %}
+                                        <span
+                                            class="badge badge-light d-inline">{{ curriculum.upvote.all|length }}</span>
+                                        <input class="btn btn-sm btn-outline-danger" type="submit" value="-1">
+                                    </form>
+                                    {% else %}
+                                    <form method="post" class="d-inline"
+                                        action="{% url 'curriculum_upvote_create' c_id=curriculum.id %}">
+                                        {% csrf_token %}
+                                        <span
+                                            class="badge badge-light d-inline">{{ curriculum.upvote.all|length }}</span>
+                                        <input class="btn btn-sm btn-secondary" type="submit" value="+1">
+                                    </form>
+                                    {% endif %}
+
+                                    <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse"
+                                        data-target="#collapse-comment-{{changelog.id}}" aria-expanded="false"
+                                        aria-controls="collapseExample">
+                                        Comments <span
+                                            class="badge badge-light d-inline">{{ changelog.comment.all|length }}</span>
+                                    </button>
+                                    {% if user_subscription %}
+                                    <form class="form-inline d-inline" method="post"
+                                        action="{% url 'subscription_delete' sid=user_subscription.id %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-outline-dark" type="submit">Unsubscribe</button>
+                                    </form>
+                                    {% else %}
+                                    <form class="form-inline d-inline" method="post"
+                                        action="{% url 'curriculum_subscription_create' c_id=curriculum.id %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-outline-dark" type="submit">Subscribe</button>
+                                    </form>
+                                    {% endif %}
+                                    <form class="form-inline d-inline" method="post">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-outline-dark" name="_teach" type="submit">{{teach_button_status}}</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-    
-    <!-- Shittiest HTML ever ahead -->
-    <br /><br />
-    <h6>{{sub_status}}</h6>
-    <h6>{{teach_status}}</h6>
-    <br />
-    Show the Curriculum Here!
-    <ul>
-        <li><b>Curriculum ID: </b>{{curriculum.id}}</li>
-        <li><b>Curriculum Subject: </b> {{curriculum.subject}}</li>
-        <li><b>Curriculum Title: </b> {{curriculum.title}}</li>
-        <li><b>Curriculum Description: </b> {{curriculum.description}}</li>
-    </ul>
-
 </div>
 <script>
     //  subject filter scripts based on field and topic

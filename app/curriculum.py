@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import CurriculumForm, BitForm
-from app.models import Field, Subject, Topic, Curriculum, Member, Bit, ChangeLog, Subscription, Teach
+from app.models import Bit, ChangeLog, Curriculum, Field, Member, Subject, Subscription, Teach, Topic, Upvote
 
 
 def createcurriculum(request):
@@ -79,6 +79,9 @@ def showcurriculum(request, c_id):
     # Fetch all records for curriculum with id=c_id
     curriculum = get_object_or_404(Curriculum, id=c_id)
 
+    u_obj = Upvote.objects.filter(member=current_user, changelog=None, bit=None, curriculum=curriculum)
+    curriculum.is_upvoted = len(u_obj) > 0
+
     # Check if user is subscribed to the curriculum with id=c_id
     user_subscription = Subscription.objects.filter(
         member=current_user, curriculum=curriculum, subject__isnull=True).exclude(curriculum__isnull=True)
@@ -107,6 +110,7 @@ def showcurriculum(request, c_id):
         context = {'curriculum': curriculum,
                    'sub_status': sub_status,
                    'subscribe_button_status': subscribe_button_status,
+                   'current_user': current_user,
                    'teach_button_status': teach_button_status, }
         return render(request, 'curriculum/show.html', context)
 
@@ -204,7 +208,8 @@ def showcurriculum(request, c_id):
         context = {'curriculum': curriculum,
                    'teach_status': teach_status,
                    'teach_button_status': teach_button_status,
-                   'subscribe_button_status': subscribe_button_status, }
+                   'subscribe_button_status': subscribe_button_status,
+                   "current_user": current_user }
         return render(request, 'curriculum/show.html', context)
 
     else:
@@ -226,7 +231,8 @@ def showcurriculum(request, c_id):
 
         context = {'curriculum': curriculum,
                    'user_subscription': user_subscription.first(),
-                   'teach_button_status': teach_button_status, }
+                   'teach_button_status': teach_button_status,
+                   'current_user': current_user }
         return render(request, 'curriculum/show.html', context)
 
 
