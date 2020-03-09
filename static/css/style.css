@@ -2,6 +2,7 @@
 body {
   line-height: 1.7;
   color: gray;
+  background-color: #eaeaea;
   font-weight: 300;
   font-size: 1rem;
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
@@ -944,7 +945,7 @@ h1, h2, h3, h4, h5, h6 {
   background-color: #fff;
   margin-bottom: 20px;
   text-align: center;
-  margin-top: 200px;
+  margin-top: 180px;
 }
 
 .user-pro-img {
@@ -974,4 +975,18 @@ h1, h2, h3, h4, h5, h6 {
 .feed-profile-image {
   width: 48px;
   height: 48px;
+}
+
+.mg-top-20{
+  margin-top: 20px;
+}
+
+.profile-feed-item {
+  background: white;
+  margin: 15px 0px;
+  padding: 30px;
+}
+
+.profile-edit {
+  float: right;
 }

@@ -24,18 +24,19 @@
 
             </div>
         </div>
-        <div class="col-lg-9">
-            <div><b>{{member.full_name}}'s Activity</b></div>
-            <div>
-                {% if is_my_profile %}
-                    <span class="btn">edit profile button</span>
-                {% endif %}
+        <div class="col-lg-9 mg-top-20">
+            <div><b>{{member.full_name}}'s Activity</b>
+            {% if is_my_profile %}
+                <span class="profile-edit"><a href="/profile/edit">Edit Profile</a></span>
+            {% endif %}
             </div>
             {% for c in changelogs %}
+            <div class="profile-feed-item">
                 <b>Change: </b>{{ c }} <br /> 
                 <b> Likes: </b>{{ c.likes }} | <b>Comments: </b>{{ c.comments }} <br />
+            </div>
             {% endfor %}
-            <br /><br /><br /><br />    
+            
         </div>
     </div>
 </div>
