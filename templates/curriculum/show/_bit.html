@@ -1,0 +1,28 @@
+
+    <div class="card">
+      <div class="card-header">
+        <div class="row">
+          <div class="col-8">
+            <button class="btn p-0 border-0" type="button" data-toggle="collapse" data-target="#bit-{{bit.id}}" aria-expanded="true" aria-controls="collapseOne">
+              {{bit.title}} - {{ bit.bit_type }}
+            </button>
+          </div>
+          <div class="col-4 text-right">
+            {% if curriculum.posted_by == current_user %}
+              <a href="{% url 'bit_update' c_id=curriculum.id b_id=bit.id %}" class="far fa-edit"></a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+  
+      <div id="bit-{{bit.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+        <div class="card-body">
+          <p>
+            {{ bit.description }}
+          </p>
+          <p>
+            {{ bit.text }}
+          </p>
+        </div>
+      </div>
+    </div>

@@ -10,10 +10,16 @@
                     <div class="card w-100">
                         <div class="card-body">
                             <div class="card-title">
-                                <h5 class="d-inline">Curriculum: {{curriculum.title}}</h5>
-                                {% if curriculum.posted_by == current_user %}
-                                <a href="{% url 'curriculum_update' c_id=curriculum.id %}" class="far fa-edit"></a>
-                                {% endif %}
+                                <div class="row">
+                                    <div class="col-8">
+                                        <h5 class="d-inline">Curriculum: {{curriculum.title}}</h5>
+                                    </div>
+                                    <div class="col-4 text-right">
+                                        {% if curriculum.posted_by == current_user %}
+                                            <a href="{% url 'curriculum_update' c_id=curriculum.id %}" class="far fa-edit"></a>
+                                        {% endif %}
+                                    </div>
+                                </div>
                             </div>
                             <div class="card-subtitle">
                                 <h6 class=" mb-2 text-muted">Subject: {{curriculum.subject}}</h6>
@@ -60,6 +66,29 @@
                                     </form>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    
+                    <div class="container mt-4 p-0">
+                        <div class="row">
+                            <div class="col-12 mb-2">
+                                {% if curriculum.posted_by == current_user %}
+                                <a href="{% url 'create_bit' c_id=curriculum.id %}" class="btn btn-sm btn-primary">Add new part</a>
+                                {% endif %}
+                            </div>
+                        </div>
+
+                        {% if not curriculum.bit.all  %}
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <p>This curriculum is currently empty.</p>
+                            </div>
+                        </div>
+                        {% endif %}
+                        <div class="accordion" id="accordionExample">
+                            {% for bit in curriculum.bit.all %}
+                                {% include "./show/_bit.html" %}
+                            {% endfor %}
                         </div>
                     </div>
                 </div>
