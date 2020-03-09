@@ -287,16 +287,15 @@ def createbit(request, c_id):
     form_type = 'Create'
     if request.method == 'POST':
         data = request.POST
-        # TODO: fileupload
-        # file_upload(request)
         b_obj = Bit(
             title=data["title"],
             bit_type=data["bit_type"],
             description=data["description"],
             text=data["text"],
-            curriculum=Curriculum(id=c_id),
-            file=data["file"]
+            curriculum=Curriculum(id=c_id)
         )
+        if 'file' in request.FILES:
+            b_obj.file = request.FILES['file']
         b_obj.save()
         log_obj = ChangeLog(
             member=current_user,
@@ -337,8 +336,10 @@ def updatebit(request, c_id, b_id):
         bit.description = data["description"],
         bit.text = data["text"],
         bit.curriculum = Curriculum(id=c_id)
-        bit.file = data["file"]
-
+        if 'file' in request.FILES:
+            bit.file = request.FILES['file']
+        else:
+            bit.file = None
         bit.save()
 
         log_obj = ChangeLog(
