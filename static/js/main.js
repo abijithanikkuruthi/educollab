@@ -4,6 +4,8 @@ AOS.init({
 	once: true
 });
 
+var position = $(window).scrollTop(); 
+
 jQuery(document).ready(function($) {
 
    "use strict";
@@ -296,20 +298,18 @@ jQuery(document).ready(function($) {
 
 	 $(window).scroll(function() {
 
-		 var st = $(this).scrollTop();
+		var st = $(this).scrollTop();
 
-		 if (st > 300) {
-			 $('.js-sticky-header').addClass('shrink');
-		 } else {
-			 $('.js-sticky-header').removeClass('shrink');
-		 }
+		if (st > 300) {
+			$('.js-sticky-header').addClass('shrink');
+		} else {
+			$('.js-sticky-header').removeClass('shrink');
+		}
 
-		 if ( $('body').hasClass('offcanvas-menu') ) {
-			 $('body').removeClass('offcanvas-menu');
-		 }
-
+		if ( $('body').hasClass('offcanvas-menu') ) {
+			$('body').removeClass('offcanvas-menu');
+		}
 	 }) 
-
  };
  siteScroll();
 
@@ -338,16 +338,15 @@ jQuery(document).ready(function($) {
    stickyFillInit();
 
    $('.component-explore').find('.field-buttons').on('click', function (e) {
-	console.log("test")
-	$('.component-explore').find(".subject-list.active.show").each(function (index) {
-		$(this).removeClass('active');
-		$(this).removeClass('show');
-	})
-	$('.component-explore').find(".topic-list-item.active").each(function (index) {
-		$(this).removeClass('active');
-	})
-	e.preventDefault()
-	
-})
+	   console.log("test")
+	   $('.component-explore').find(".subject-list.active.show").each(function (index) {
+		   $(this).removeClass('active');
+		   $(this).removeClass('show');
+	   })
+	   $('.component-explore').find(".topic-list-item.active").each(function (index) {
+		   $(this).removeClass('active');
+	   })
+	   e.preventDefault()
+   })
 
 });
