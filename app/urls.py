@@ -24,6 +24,7 @@ urlpatterns = [
     path('curriculum/<int:c_id>/bit/<int:b_id>/edit', views.update_bit),
     path('curriculum/<int:c_id>/upvote/new', views.curriculum_upvote_create, name="curriculum_upvote_create"),
     path('curriculum/<int:c_id>/upvote/delete', views.curriculum_upvote_delete, name="curriculum_upvote_delete"),
+    path('curriculum/<int:c_id>/comment/new', views.curriculum_comment_create, name="curriculum_comment_create"),
     path('feeds/<int:c_id>/comment/new', views.feeds_comment_create, name="feeds_comment_create"),
     path('feeds/<int:u_id>/upvote/new', views.feeds_upvote_create, name="feeds_upvote_create"),
     path('feeds/<int:u_id>/upvote/delete', views.feeds_upvote_delete, name="feeds_upvote_delete"),

@@ -91,6 +91,11 @@ def curriculum_upvote_delete(request, c_id):
         return redirect('login')
     return remove_upvote(request, "curriculum", c_id)
 
+def curriculum_comment_create(request, c_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return add_comment(request, "curriculum", c_id)
+
 def curriculum_subscription_create(request, c_id):
     if not request.user.is_authenticated:
         return redirect('login')
