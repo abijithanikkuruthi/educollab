@@ -29,7 +29,7 @@ def add_comment(request, c_type, c_id):
     current_user = get_object_or_404(Member, u_id=request.user)
     data = request.POST
     u_obj = Comment(
-        member = Mcurrent_user,
+        member = current_user,
         comment = data["comment"]
     )
     if 'bit' in c_type:
