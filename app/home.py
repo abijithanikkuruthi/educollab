@@ -5,7 +5,7 @@ from itertools import chain
 
 
 def feed(request):
-    
+
     # Create user if not present - hacky hack
     check_user_id(request.user)
     current_user = get_object_or_404(Member, u_id=request.user)
@@ -18,7 +18,7 @@ def feed(request):
         if sub.subject is not None:
             # add all curriculums that belong the subject
             subbed_curriculums.extend(sub.subject.curriculum.all())
-                
+
         # for feeds related to curriculum
         elif sub.curriculum is not None:
             subbed_curriculums.append(sub.curriculum)
@@ -26,8 +26,9 @@ def feed(request):
             print("No Changelog")
             changelogs = []
 
-    # Get all changelogs to all 
-    changelog_curriculum = ChangeLog.objects.filter(curriculum__in=subbed_curriculums)
+    # Get all changelogs to all
+    changelog_curriculum = ChangeLog.objects.filter(
+        curriculum__in=subbed_curriculums)
 
     # TODO: Bit Updates by quering all bits are referenced by curriculums
 
@@ -36,8 +37,9 @@ def feed(request):
                         key=lambda instance: instance.created_on, reverse=True)
 
     for c_log in changelogs:
-            u_obj = Upvote.objects.filter(member=current_user, changelog=c_log, bit=None, curriculum=None)
-            c_log.is_upvoted = len(u_obj) > 0
+        u_obj = Upvote.objects.filter(
+            member=current_user, changelog=c_log, bit=None, curriculum=None)
+        c_log.is_upvoted = len(u_obj) > 0
 
     context = {
         "changelogs": changelog_curriculum,

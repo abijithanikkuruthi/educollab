@@ -5,9 +5,10 @@ from .forms import ProfileForm
 from educollab import settings
 import os
 
+
 def view_profile(request, uname):
     member_details = get_object_or_404(Member, username=uname)
-    
+
     # TODO: (?) user curriculums need not be displayed in my profile - (my curricula shows it there)
     #
     # curriculums = Curriculum.objects.filter(posted_by=member_details.id)
@@ -26,26 +27,29 @@ def view_profile(request, uname):
 
     #     c_obj = c.__dict__
     #     c_obj["b_list"] = b_list
-        
+
     #     c_list.append(c_obj)
 
-    changelogs = ChangeLog.objects.filter(member=member_details).order_by('-created_on')
+    changelogs = ChangeLog.objects.filter(
+        member=member_details).order_by('-created_on')
 
     for c in changelogs:
         c.likes = len(Upvote.objects.filter(changelog=c))
         c.comments = len(Comment.objects.filter(changelog=c))
 
     context = {
-        'member' : member_details,
-        'changelogs' : changelogs,
-        'is_my_profile' : request.user.username==uname
+        'member': member_details,
+        'changelogs': changelogs,
+        'is_my_profile': request.user.username == uname
     }
     return render(request, 'profile/index.html', context)
+
 
 def file_upload(request):
     save_path = os.path.join(settings.MEDIA_ROOT, request.FILES['image'])
     path = default_storage.save(save_path, request.FILES['image'])
     return default_storage.path(path)
+
 
 def edit_profile(request):
     u_id = request.user.id
@@ -62,15 +66,15 @@ def edit_profile(request):
 
         if 'image' in request.FILES:
             member_details.image = request.FILES["image"]
-        
+
         member_details.save()
 
         return redirect('my_profile')
-        
+
     else:
         form = ProfileForm(data=member_details.__dict__)
 
     context = {
-        'form' : form
+        'form': form
     }
     return render(request, 'profile/edit.html', context)
