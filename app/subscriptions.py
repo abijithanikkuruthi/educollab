@@ -55,6 +55,7 @@ def curriculum_subscription_create(request, cid):
 
     return redirect(request.headers['Referer'])
 
+
 def subject_subscription_create(request, sid):
     if request.method != 'POST':
         raise Http404("Invalid routing.")
@@ -70,7 +71,7 @@ def subject_subscription_create(request, sid):
 
     if subscription is not None:
         raise Http404("Subscription Already Exists.")
-    
+
     subscription = Subscription(
         member=current_user,
         subject=subject,
@@ -108,7 +109,7 @@ def subscription_delete(request, sid):
         subObject = subscription.curriculum
     else:
         subObject = subscription.subject
-    
+
     # Updating Change Log for the change
     reason = 'Unsubscribed from ' + \
         str(subObject) + ' + more details'
