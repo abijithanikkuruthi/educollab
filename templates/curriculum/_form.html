@@ -1,0 +1,42 @@
+<!-- Select menu drop down goes here -->
+Field:
+<select name="fields" onChange="JSFunctiontoupdateTopics()">
+    {% for f in fields %}
+    <option value="{{f.id}}">
+        {{f.title}}
+    </option>
+    {% endfor %}
+</select>
+
+Topic:
+<select name="topics">
+    {% for t in topics %}
+    <option value="{{t.id}}">
+        {{t.title}}
+    </option>
+    {% endfor %}
+</select>
+
+Subject:
+<select name="subjects">
+    {% for s in subjects %}
+    <option value="{{s.id}}">
+        {{s.title}}
+    </option>
+    {% endfor %}
+</select>
+
+
+{% for field in form %}
+<div class="form-row">
+    <label>{{ field.label_tag }}</label>
+    {{ field }}
+</div>
+{% for error in field.errors %}
+<p style="color: red">{{ error }}</p>
+{% endfor %}
+{% endfor %}
+<div class="submit-row">
+    <label>&nbsp;</label>
+    <input type="submit" value="{{type}} Curriculum">
+</div>
