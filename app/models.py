@@ -53,6 +53,7 @@ class Bit(models.Model):
 
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(Member, related_name='bit', on_delete=models.CASCADE)
     bit_type = models.CharField(max_length=100)
     curriculum = models.ForeignKey(Curriculum, related_name='bit', on_delete=models.CASCADE)
     title = models.CharField(max_length=100)    
