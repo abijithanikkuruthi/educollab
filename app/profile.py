@@ -7,11 +7,10 @@ import os
 
 def view_profile(request, uname):
     member_details = get_object_or_404(Member, username=uname)
-    user_details = get_object_or_404(User, username=uname)
     
     # TODO: (?) user curriculums need not be displayed in my profile - (my curricula shows it there)
     #
-    # curriculums = Curriculum.objects.filter(posted_by=user_details.id)
+    # curriculums = Curriculum.objects.filter(posted_by=member_details.id)
 
     # c_list = []
     # for c in curriculums:
@@ -30,7 +29,7 @@ def view_profile(request, uname):
         
     #     c_list.append(c_obj)
 
-    changelogs = ChangeLog.objects.filter(member=user_details.id).order_by('-created_on')
+    changelogs = ChangeLog.objects.filter(member=member_details).order_by('-created_on')
 
     for c in changelogs:
         c.likes = len(Upvote.objects.filter(changelog=c))

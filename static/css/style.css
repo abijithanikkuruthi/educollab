@@ -986,9 +986,33 @@ h1, h2, h3, h4, h5, h6 {
 .profile-feed-item {
   background: white;
   margin: 15px 0px;
-  padding: 30px;
+  padding: 20px 40px 10px 40px;
 }
 
 .profile-edit {
   float: right;
+}
+
+.profile-feed-title{
+  color: #000;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+.profile-feed-time{
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.m-lr-5{
+  margin: 0 5px;
+}
+
+.profile-university-icon {
+  color: #5f9ea0;
+  margin-left: 10px;
+}
+
+.profile-designation-icon{
+  color: #4682b4;
 }
