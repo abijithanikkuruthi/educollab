@@ -306,6 +306,12 @@ def createbit(request, c_id):
 
     form_type = 'Create'
     if request.method == 'POST':
+
+        if '_back' in request.POST:
+            return redirect(request.headers['Referer'])
+        elif not('_create' in request.POST):
+            print("Bad routing!")
+            return redirect(request.headers['Referer'])
         data = request.POST
         b_obj = Bit(
             title=data["title"],
@@ -330,18 +336,18 @@ def createbit(request, c_id):
             operation='create'
         )
         log_obj.save()
-        context = {
-            'success': 'Bit Added!'
-        }
-        return render(request, 'bit-form.html', context)
+        
+        # TODO - add some session stuff
+        return redirect('curriculum_show', c_id=curriculum.id)
     else:
         form = BitForm()
         context = {
             'curriculum': curriculum,
             'form': form,
-            'type': form_type
+            'type': form_type,
+            "owner": current_user
         }
-        return render(request, 'bit-form.html', context)
+        return render(request, 'bit/new.html', context)
 
 
 def updatebit(request, c_id, b_id):
