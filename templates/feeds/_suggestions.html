@@ -1,13 +1,20 @@
-<aside>
-    <div class="col-12 p-4 card">
-        <h4>Suggestions</h4>
-
-        <ol>
-            {% for curriculum, upvote in suggestions %}
-            <li>{{curriculum}} - <b>Upvotes:</b> {{upvote}}</li>
-            <!-- Add subscribe button here -->
-            {% endfor %}
-        </ol>
+<aside class="col-12 p-0 card">
+    <div class="border p-3">
+        <h6 class="m-0">Suggestions</h6>
     </div>
-    <p></p>
+    <div class="row p-3">
+        {% for curriculum, upvote in suggestions %}
+            <div class="col-10 mb-3">
+                <a class="text-secondary" href="{% url 'curriculum_show' c_id=curriculum.id %}">{{curriculum}}</a>
+            </div>
+            <div class="col-2 text-right pr-4">
+                <a href="{% url 'curriculum_subscription_create' c_id=curriculum.id %}">
+                    <i class="far fa-plus-square"></i>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+    {% if not suggestions  %}
+    <p class="p-3 text-center">There are no suggestions at the moment.</p>
+    {% endif %}
 </aside>
