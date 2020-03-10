@@ -47,6 +47,8 @@ def feed(request):
     upvote_count = dict((curriculum, Upvote.objects.filter(curriculum=curriculum).count()) for curriculum in suggested_curriculums)
     sorted_suggested_curriculums = sorted(upvote_count.items(), key=lambda upvote: upvote[1], reverse=True)
 
+    # TODO: What if suggestions are empty?
+
     context = {
         "changelogs": changelog_curriculum,
         "current_user": current_user,

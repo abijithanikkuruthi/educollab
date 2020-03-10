@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import Http404
 from .forms import CurriculumForm, BitForm
 from app.models import Bit, ChangeLog, Curriculum, Field, Member, Subject, Subscription, Teach, Topic, Upvote
 
@@ -311,11 +312,15 @@ def createbit(request, c_id):
             bit_type=data["bit_type"],
             description=data["description"],
             text=data["text"],
-            curriculum=Curriculum(id=c_id)
+            curriculum=Curriculum(id=c_id),
+            created_by = current_user,
         )
+
+        # Something funny is happening here (intuition)
         if 'file' in request.FILES:
             b_obj.file = request.FILES['file']
         b_obj.save()
+
         log_obj = ChangeLog(
             member=current_user,
             description='Bit Added + more details ',
@@ -344,17 +349,25 @@ def updatebit(request, c_id, b_id):
     current_user = get_object_or_404(Member, u_id=request.user)
     curriculum = get_object_or_404(Curriculum, id=c_id)
     bit = get_object_or_404(Bit, id=b_id)
+
+    # If user tries to play with urls
+    if current_user != bit.created_by:
+        raise Http404("You are not allowed to access this page.")
+
+     # Check if current user owns the bit
+    owner = True if bit.created_by == current_user else False
+
     form_type = 'Update'
+
     if request.method == 'POST':
         data = request.POST
-        # TODO: fileupload
-        # file_upload(request)
 
         bit.title = data["title"],
         bit.bit_type = data["bit_type"],
         bit.description = data["description"],
         bit.text = data["text"],
         bit.curriculum = Curriculum(id=c_id)
+
         if 'file' in request.FILES:
             bit.file = request.FILES['file']
         else:
@@ -378,8 +391,43 @@ def updatebit(request, c_id, b_id):
     else:
         form = BitForm(data=bit.__dict__)
         context = {
+            'owner': owner,
             'curriculum': curriculum,
             'form': form,
             'type': form_type
         }
         return render(request, 'bit-form.html', context)
+
+
+def showbit(request, c_id, b_id):
+
+    current_user = get_object_or_404(Member, u_id=request.user)
+    curriculum = get_object_or_404(Curriculum, id=c_id)
+    bit = get_object_or_404(Bit, id=b_id)
+
+    form_type = 'show'
+    
+    # Check if current user owns the bit
+    owner = True if bit.created_by == current_user else False
+    
+    if request.method == 'GET':
+        form = BitForm(data=bit.__dict__)
+        context = {
+            'owner': owner,
+            'curriculum': curriculum,
+            'form': form,
+            'type': form_type
+        }
+        return render(request, 'bit-form.html', context)
+
+    else:
+        form = BitForm(data=bit.__dict__)
+
+        if owner and '_update' in request.POST:
+            return redirect('bit_update', c_id, b_id)
+        elif '_back' in request.POST:
+            return redirect(request.headers['Referer'])
+        else:
+            print("Bad routing!")
+            return redirect(request.headers['Referer'])
+
