@@ -3,26 +3,30 @@
 {% block content %}
 <div class="container pt-4">
     <div class="container">
-        <div class="row pt-4">
-            <div class="col-12 col-sm-8">
+        <div class="row">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Curriculum {{curriculum.title}}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
                 <div class="row">
-
                     <div class="card w-100">
                         <div class="card-body">
-                            <div class="card-title">
+                            <div class="card-subtitle">
                                 <div class="row">
                                     <div class="col-8">
-                                        <h5 class="d-inline">Curriculum: {{curriculum.title}}</h5>
+                                        <h6 class="text-muted">Subject: {{curriculum.subject}}</h6>
                                     </div>
                                     <div class="col-4 text-right">
                                         {% if curriculum.posted_by == current_user %}
-                                            <a href="{% url 'curriculum_update' c_id=curriculum.id %}" class="far fa-edit"></a>
+                                        <a href="{% url 'curriculum_update' c_id=curriculum.id %}"
+                                            class="far fa-edit"></a>
                                         {% endif %}
                                     </div>
                                 </div>
-                            </div>
-                            <div class="card-subtitle">
-                                <h6 class=" mb-2 text-muted">Subject: {{curriculum.subject}}</h6>
                             </div>
                             <p class="card-text">{{curriculum.description}}</p>
                             <div class="row">
@@ -68,57 +72,66 @@
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="container mt-4 p-0">
-                        <div class="row">
-                            <div class="col-12 mb-2">
-                                {% if curriculum.posted_by == current_user %}
-                                <a href="{% url 'create_bit' c_id=curriculum.id %}" class="btn btn-sm btn-primary">Add new part</a>
-                                {% endif %}
-                            </div>
-                        </div>
-
-                        {% if not curriculum.bit.all  %}
-                        <div class="row">
-                            <div class="col-12 text-center">
-                                <p>This curriculum is currently empty.</p>
-                            </div>
-                        </div>
-                        {% endif %}
-                        <div class="accordion" id="accordionExample">
-                            {% for bit in curriculum.bit.all %}
-                                {% include "./show/_bit.html" %}
-                            {% endfor %}
-                        </div>
-                    </div>
                 </div>
             </div>
-            <div class="col-12 col-sm-4">
-                <div class="card card-body">
-                    <h5 class="card-title">Discussion</h5>
-                    <ul class="list-group list-group-flush">
-                        {% for comment in curriculum.comment.all %}
-                        <li class="list-group-item">
-                            <div class="row">
-                                <div class="col-12">
-                                    Display Profile Pic + Name
-                                </div>
-                                <div class="col-10">
-                                    {{comment.comment}} <br/>
-                                    {{comment.created_on}}
-                                </div>
-                            </div>
-                        </li>
-                        {% endfor %}
-                        <li class="list-group-item">
-                            <form method="post" action="{% url 'curriculum_comment_create' c_id=curriculum.id %}">
-                                {% csrf_token %}
-                                <input type="text" name="comment" />
-                                <input type="submit" value="Comment">
-                            </form>
-                        </li>
-                    </ul>
+        </div>
+        <div class="row">
+            <div class="col-12 col-sm-8 pl-sm-0 pt-4">
+                
+                    <div class="row">
+                        <div class="col-12">
+                            <h5 class="d-inline">Curriculum Parts</h5>
+                            {% if curriculum.posted_by == current_user %}
+                            <a href="{% url 'create_bit' c_id=curriculum.id %}" class="fas fa-plus"></a>
+                            {% endif %}
+                        </div>
+                    </div>
 
+                    {% if not curriculum.bit.all  %}
+                    <div class="row">
+                        <div class="col-12 text-center">
+                            <p>This curriculum is currently empty.</p>
+                        </div>
+                    </div>
+                    {% endif %}
+                    <div class="accordion" id="accordionExample">
+                        {% for bit in curriculum.bit.all %}
+                        {% include "./show/_bit.html" %}
+                        {% endfor %}
+                    </div>
+            </div>
+            <div class="col-12 col-sm-4 pt-4 pl-sm-4">
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Discussion</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for comment in curriculum.comment.all %}
+                            <li class="list-group-item">
+                                <div class="row">
+                                    <div class="col-12">
+                                        Display Profile Pic + Name
+                                    </div>
+                                    <div class="col-10">
+                                        {{comment.comment}} <br />
+                                        {{comment.created_on}}
+                                    </div>
+                                </div>
+                            </li>
+                            {% endfor %}
+                            <li class="list-group-item">
+                                <form method="post" action="{% url 'curriculum_comment_create' c_id=curriculum.id %}">
+                                    {% csrf_token %}
+                                    <input type="text" name="comment" />
+                                    <input type="submit" value="Comment">
+                                </form>
+                            </li>
+                        </ul>
+        
+                    </div>
                 </div>
             </div>
         </div>

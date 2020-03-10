@@ -263,7 +263,6 @@ def updatecurriculum(request, c_id):
         )
         log_obj.save()
 
-        context = {'success': 'Curriculum !'}
         # TODO Redirect with message - need to package
         context = {'success': 'Curriculum updated!'}
         return redirect('curriculum_show', c_id=curriculum.id)
