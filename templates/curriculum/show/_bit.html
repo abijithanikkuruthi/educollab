@@ -8,7 +8,7 @@
             </button>
           </div>
           <div class="col-4 text-right">
-            {% if curriculum.posted_by == current_user %}
+            {% if bit.created_by == current_user %}
               <a href="{% url 'bit_update' c_id=curriculum.id b_id=bit.id %}" class="far fa-edit"></a>
             {% endif %}
           </div>

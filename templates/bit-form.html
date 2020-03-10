@@ -1,41 +1,50 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+
 <div class="container">
 {% if success %}
     <div>{{success}}</div>
     <div>
-    <a>Link to add/edit another bit</a>
+        <a>Link to add/edit another bit</a>
     </div>
+
 {% else %}
-<div class="row">
-    Curriculum: {{curriculum.title}}
-</div>
-{{type}} Bit
+    <div class="row">
+        Curriculum: {{curriculum.title}}
+    </div>
+
+    {{type}} Bit
 
 
-            {{ form.non_field_errors }}
-            <div id="content-main">
-				<form method="post" enctype="multipart/form-data">
-                    {% csrf_token %}
-                    
-                    {% for field in form %}
-                    <div class="form-row">
-						<label>{{ field.label_tag }}</label>
-						{{ field }}
-					</div>
-                        {% for error in field.errors %}
-                        <p style="color: red">{{ error }}</p>
-                        {% endfor %}
-					{% endfor %}
-                    <div class="submit-row">
-                        <label>&nbsp;</label>
-                        <input type="submit" value="{{type}} Bit">
-                    </div>
-                </form>
+    {{ form.non_field_errors }}
+    <div id="content-main">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% for field in form %}
+                <div class="form-row">
+                    <label>{{ field.label_tag }}</label>
+                    {% if type == 'show' %}
+                        {{ field.value }}
+                    {% else %}
+                        {{ field }}
+                    {% endif %}
+                </div>
+                {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                {% endfor %}
+            {% endfor %}
+            <div class="submit-row">
+                <label>&nbsp;</label>
+                {% if owner %}
+                    <input type="submit" name="_update" value="Edit Bit">
+                {% else %}
+                    <input type="submit" name="_back" value="Go Back">
+                {% endif %}
             </div>
-
-
+        </form>
+    </div>
 </div>
 <script>
     //  subject filter scripts based on field and topic

@@ -25,7 +25,7 @@ admin.site.register(Comment, CommentAdmin)
 
 
 class BitAdmin(admin.ModelAdmin):
-    list_display = ('id', 'created_on', 'last_modified', 'bit_type',
+    list_display = ('id', 'created_on', 'last_modified', 'created_by', 'bit_type',
                     'title', 'description', 'curriculum', 'file', 'text')
 
 admin.site.register(Bit, BitAdmin)

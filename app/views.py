@@ -142,6 +142,11 @@ def update_bit(request, c_id, b_id):
         return redirect('login')
     return curriculum.updatebit(request, c_id, b_id)
 
+def show_bit(request, c_id, b_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return curriculum.showbit(request, c_id, b_id)
+
 
 def comment(request, c_type, c_id):
     if not request.user.is_authenticated:
