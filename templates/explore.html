@@ -43,7 +43,7 @@
                         {% for subject in topic.subject.all %}
                         <a href= "{% url 'subjects' sid=subject.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
                           {{subject}}
-                          <span class="badge badge-primary badge-pill">99</span>
+                          <span class="badge badge-primary badge-pill">{{subject.curriculum.count}}</span>
                         </a>
                         {% endfor %}
                       </ul>
