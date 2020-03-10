@@ -19,32 +19,25 @@
                             {% csrf_token %}
                             <div class="card-body">
                                 <div class="card-subtitle">
-                                    Field:
-                                    <select name="fields" onChange="JSFunctiontoupdateTopics()">
-                                        {% for f in fields %}
-                                        <option value="{{f.id}}">
-                                            {{f.title}}
-                                        </option>
-                                        {% endfor %}
-                                    </select>
-
-                                    Topic:
-                                    <select name="topics">
-                                        {% for t in topics %}
-                                        <option value="{{t.id}}">
-                                            {{t.title}}
-                                        </option>
-                                        {% endfor %}
-                                    </select>
-
-                                    Subject:
-                                    <select name="subjects">
-                                        {% for s in subjects %}
-                                        <option value="{{s.id}}">
-                                            {{s.title}}
-                                        </option>
-                                        {% endfor %}
-                                    </select>
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                          <label class="input-group-text" for="subject-inputgroup">Subject</label>
+                                        </div>
+                                        <select name="subjects" class="custom-select" id="subject-inputgroup">
+                                            {% for s in subjects %}
+                                            {% if curriculum.id == s.id %}
+                                            <option value="{{s.id}}">
+                                                {{s.topic.field.title}} - {{s.topic.title}} - {{s.title}}
+                                            </option>
+                                            
+                                            {% else %}
+                                            <option selected value="{{s.id}}">
+                                                {{s.topic.field.title}} - {{s.topic.title}} - {{s.title}}
+                                            </option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                      </div>
                                 </div>
                                 <div class="card-text">
                                     {% for field in form %}
