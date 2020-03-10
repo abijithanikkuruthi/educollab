@@ -5,7 +5,7 @@ from itertools import chain
 
 
 def feed(request):
-    
+
     # Create user if not present - hacky hack
     check_user_id(request.user)
     current_user = get_object_or_404(Member, u_id=request.user)
@@ -19,10 +19,11 @@ def feed(request):
         # for feeds related to subject
         if sub.subject is not None:
             # add all curriculums that belong the subject
+
             curriculums_for_subject = sub.subject.curriculum.all()
             curriculums_for_subbed_subjects.extend(curriculums_for_subject)
             total_subbed_curriculums.extend(curriculums_for_subject)
-                
+
         # for feeds related to curriculum
         elif sub.curriculum is not None:
             subbed_curriculums.append(sub.curriculum)

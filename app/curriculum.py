@@ -18,7 +18,7 @@ def createcurriculum(request):
             title=data['title'],
             subject=Subject(id=data['subjects']),
             description=data['description'],
-            posted_by= current_user
+            posted_by=current_user
         )
 
         c_obj.save()
@@ -56,9 +56,22 @@ def createcurriculum(request):
 
 def indexcurriculum(request):
     current_user = get_object_or_404(Member, u_id=request.user)
-    curriculums = Curriculum.objects.filter(posted_by=current_user)
+
+    # Fetching curriculums created by the user
+    curriculums_created_by_user = Curriculum.objects.filter(
+        posted_by=current_user)
+
+    # Fetching curriculums subscribed by the user
+    curriculums_subscribed_by_user = [user_sub.curriculum for user_sub in Subscription.objects.filter(
+        member=current_user, subject__isnull=True)]
+
+    # Removing common records
+    non_matching_records = list(set(
+        curriculums_subscribed_by_user) - set(curriculums_created_by_user))
+
     if request.method == 'GET':
-        context = {'curriculums': curriculums}
+        context = {'curriculums_created_by_user': curriculums_created_by_user,
+                   'non_matching_curriculums_subscribed_by_user': non_matching_records}
         return render(request, 'curriculum/index.html', context)
 
 
@@ -79,7 +92,8 @@ def showcurriculum(request, c_id):
     # Fetch all records for curriculum with id=c_id
     curriculum = get_object_or_404(Curriculum, id=c_id)
 
-    u_obj = Upvote.objects.filter(member=current_user, changelog=None, bit=None, curriculum=curriculum)
+    u_obj = Upvote.objects.filter(
+        member=current_user, changelog=None, bit=None, curriculum=curriculum)
     curriculum.is_upvoted = len(u_obj) > 0
 
     # Check if user is subscribed to the curriculum with id=c_id
@@ -209,7 +223,7 @@ def showcurriculum(request, c_id):
                    'teach_status': teach_status,
                    'teach_button_status': teach_button_status,
                    'subscribe_button_status': subscribe_button_status,
-                   "current_user": current_user }
+                   "current_user": current_user}
         return render(request, 'curriculum/show.html', context)
 
     else:
@@ -232,7 +246,7 @@ def showcurriculum(request, c_id):
         context = {'curriculum': curriculum,
                    'user_subscription': user_subscription.first(),
                    'teach_button_status': teach_button_status,
-                   'current_user': current_user }
+                   'current_user': current_user}
         return render(request, 'curriculum/show.html', context)
 
 
