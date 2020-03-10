@@ -1,11 +1,13 @@
 <aside>
     <div class="col-12 p-4 card">
         <h4>Suggestions</h4>
-        
-        
-        TODO: Display the top 10 of upvoted curriculums, based on the subscriptions of 
-        subs to subject?
 
+        <ol>
+            {% for curriculum, upvote in suggestions %}
+            <li>{{curriculum}} - <b>Upvotes:</b> {{upvote}}</li>
+            <!-- Add subscribe button here -->
+            {% endfor %}
+        </ol>
     </div>
     <p></p>
 </aside>
