@@ -17,6 +17,7 @@ def subscription_index(request):
 
 
 def curriculum_subscription_create(request, cid):
+    # commenting out for now for easier implementation
     # if request.method != 'POST':
     #     raise Http404("Invalid routing.")
 
