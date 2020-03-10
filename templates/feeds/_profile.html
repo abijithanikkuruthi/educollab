@@ -1,14 +1,16 @@
 <aside>
-    <div class="col-12">
+    <div class="col-12 card mt-5">
         <div class="w-100 text-center">
             {% if member.image %}
-            <img class="feed-profile-image rounded-circle" src="{{member.image.url}}">
+            <img class="w-50 rounded-circle feed-profile-pic" src="{{member.image.url}}">
         {% else %}
-            <img class="feed-profile-image  rounded-circle" src="/media/avatar.png">
+            <img class="w-50 rounded-circle feed-profile-pic" src="/media/avatar.png">
         {% endif %}
         </div>
-        <h4>Hi {{member.full_name}},</h4>
-        <p>welcome to your EduCollab. profile! Check out your feed to keep up to date and see what the community is working on.</p>
+        <div class="p-4">
+            <h4>Hi {{member.full_name}},</h4>
+            <p>Welcome to your EduCollab. profile! Check out your feed to keep up to date and see what the community is working on.</p>
+        </div>
     </div>
     <p></p>
 </aside>

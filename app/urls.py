@@ -7,7 +7,7 @@ urlpatterns = [
     path('signup/', views.signup),
     path('profile/', views.myprofile, name="my_profile"),
     path('profile/edit', views.profile_edit, name="profile_edit"),
-    path('profile/<str:uname>', views.profile_user),
+    path('profile/<str:uname>', views.profile_user, name="profile_view"),
     path('subject/<sid>', views.subject_index, name="subjects"),
     path('subject/<sid>/subscription/add', views.subject_subscription_create, name="subject_subscription_create"),
     path('subscription/', views.subscription_index, name="subscription_index"),

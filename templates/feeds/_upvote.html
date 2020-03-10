@@ -1,13 +1,11 @@
+<span>
 {% if changelog.is_upvoted %}
-    <form method="post" class="d-inline mr-2" action="{% url 'feeds_upvote_delete' u_id=changelog.id %}">
-    {% csrf_token %}
-        <span class="badge badge-light d-inline">{{ changelog.upvote.all|length }}</span>
-        <input class="btn btn-sm btn-outline-danger" type="submit" value="-1"> 
-    </form>
+    <a class="d-inline mr-2 text-danger" href="{% url 'feeds_upvote_delete' u_id=changelog.id %}">
+        <span class="far fa-thumbs-up"></span><span class="m-lr-5">Liked&nbsp;{{ changelog.upvote.all|length }}</span>
+    </a>
     {% else %}
-    <form method="post" class="d-inline mr-2" action="{% url 'feeds_upvote_create' u_id=changelog.id %}">
-    {% csrf_token %}
-        <span class="badge badge-light d-inline">{{ changelog.upvote.all|length }}</span> 
-        <input class="btn btn-sm btn-secondary" type="submit" value="+1"> 
-    </form>
-    {% endif %}
+    <a class="d-inline mr-2 text-secondary" href="{% url 'feeds_upvote_create' u_id=changelog.id %}">
+        <span class="far fa-thumbs-up"></span><span class="m-lr-5">Like&nbsp;{{ changelog.upvote.all|length }}</span>
+    </a>
+{% endif %}
+</span>
