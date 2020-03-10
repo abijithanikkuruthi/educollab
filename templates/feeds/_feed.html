@@ -1,8 +1,8 @@
 <div class="row mb-2 p-2">
     <article class="card w-100">
-        <div class="p-4">
+        <div class="pl-4 pr-4">
             <div class="container">
-                <div class="row">
+                <div class="row pt-4">
                     <div class="col-2 col-sm-1 text-center align-self-center p-0">
                         {% if changelog.member.image.url != '' %}
                         <img height="50px" width="50px" class="rounded-circle mt-auto"
@@ -35,7 +35,7 @@
                 </div>
             </div>
             <div>
-                <h5 class="card-title mt-2">
+                <h5 class="card-title mt-3">
                     {% if changelog.bit %}
                     Curriculum {{changelog.bit.curriculum.title}} Updated - [Updated / Created] {{changelog.bit.bit_type}}
                     {% else %}
@@ -46,28 +46,25 @@
                 <p class="card-text" {{changelog.curriculum.description }}>
                     {{changelog.description}}
                 </p>
-                <hr class="col-12 p-0 mb-2">
-                <div class="row align-items-end">
-                    <div class="col-8">
-                        <!-- <a href="#" class="btn btn-sm btn-secondary">
-                            Upvote <span class="badge badge-light d-inline">{{ changelog.upvote.all|length }}</span>
-                        </a> -->
+                <hr class="col-12 p-0 mb-0">
+                <div class="row align-items-end feed-content">
+                    <div class="col-8 pb-2 pl-4">
                         {% include "./_upvote.html" %}
-                        <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse"
-                            data-target="#collapse-comment-{{changelog.id}}" aria-expanded="false"
-                            aria-controls="collapseExample">
-                            Comments <span class="badge badge-light d-inline">{{ changelog.comment.all|length }}</span>
-                        </button>
+                        <a href="#" class="text-secondary" data-toggle="collapse"
+                        data-target="#collapse-comment-{{changelog.id}}" aria-expanded="false"
+                        aria-controls="collapseExample">
+                            <span class="far fa-comments ml-3"></span><span class="m-lr-5">Comments&nbsp;{{ changelog.comment.all|length }}</span>
+                        </a>
                     </div>
-                    <div class="ml-auto col-4 text-right">
+                    <div class="ml-auto col-4 text-right pb-1 pt-1">
                         {% if changelog.bit %}
                         <a href="{% url 'bit_show' c_id=changelog.bit.curriculum.id b_id=changelog.bit.id %}"
-                            class="btn btn-primary">View</a>
+                            class="btn btn-primary btn-sm">View</a>
                         {% elif changelog.curriculum.id %}
-                        <a href="{% url 'curriculum_show' c_id=changelog.curriculum.id %}" class="btn btn-primary">View</a>
+                        <a href="{% url 'curriculum_show' c_id=changelog.curriculum.id %}" class="btn btn-primary btn-sm">View</a>
                         {% else%}
                         <!-- Curriculum doesn't exist anymore -->
-                        <a href="#" class="btn btn-primary">Unavailable</a>
+                        <a href="#" class="btn btn-primary btn-sm">Unavailable</a>
                         {% endif %}
                     </div>
                 </div>
