@@ -27,15 +27,11 @@ def feed(request):
             changelogs = []
 
     # Get all changelogs to all 
-    changelog_curriculum = ChangeLog.objects.filter(curriculum__in=subbed_curriculums)
+    changelog_curriculum = ChangeLog.objects.filter(curriculum__in=subbed_curriculums).order_by('-created_on')
 
     # TODO: Bit Updates by quering all bits are referenced by curriculums
 
-    # Only distinct feeds allowed
-    changelogs = sorted(list(set(chain(changelog_curriculum))),
-                        key=lambda instance: instance.created_on, reverse=True)
-
-    for c_log in changelogs:
+    for c_log in changelog_curriculum:
             u_obj = Upvote.objects.filter(member=current_user, changelog=c_log, bit=None, curriculum=None)
             c_log.is_upvoted = len(u_obj) > 0
 
