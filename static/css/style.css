@@ -1016,3 +1016,7 @@ h1, h2, h3, h4, h5, h6 {
 .profile-designation-icon{
   color: #4682b4;
 }
+
+.feed-profile-pic {
+  margin-top: -70px;
+}
