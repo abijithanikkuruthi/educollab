@@ -1,26 +1,68 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container">
-    {% if success %}
-    <div>{{success}}</div>
-    <a>Link to add/edit bit</a>
-    {% else %}
-    {{type}} Curriculum
+<div class="container pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Create New Curriculum</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    {{ form.non_field_errors }}
+                        <div class="card w-100">
+                            <form method="post" action="{% url 'curriculum_create' %}">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="card-subtitle">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                          <label class="input-group-text" for="subject-inputgroup">Subject</label>
+                                        </div>
+                                        <select name="subjects" class="custom-select" id="subject-inputgroup">
+                                            {% for s in subjects %}
+                                            {% if curriculum.id == s.id %}
+                                            <option value="{{s.id}}">
+                                                {{s.topic.field.title}} - {{s.topic.title}} - {{s.title}}
+                                            </option>
+                                            
+                                            {% else %}
+                                            <option selected value="{{s.id}}">
+                                                {{s.topic.field.title}} - {{s.topic.title}} - {{s.title}}
+                                            </option>
+                                            {% endif %}
+                                            {% endfor %}
+                                        </select>
+                                      </div>
+                                </div>
+                                <div class="card-text">
+                                    {% for field in form %}
+                                    <div class="form-row">
+                                        <label>{{ field.label_tag }}</label>
+                                        {{ field }}
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                <div class="row pt-4">
+                                    <div class="col-12 text-right">
+                                        <input class="btn btn-primary" type="submit" value="{{type}} Curriculum" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    
 
-    {{ form.non_field_errors }}
-    <div id="content-main">
-        <form method="post" action="{% url 'curriculum_create' %}">
-            {% csrf_token %}
-
-            {% include "curriculum/_form.html" %}
-        </form>
+                </div>
+            </div>
+        </div>
     </div>
-
-
 </div>
 <script>
     //  subject filter scripts based on field and topic
 </script>
-{% endif %}
 {% endblock %}
