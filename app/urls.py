@@ -3,7 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name='home'),
-    path('explore/', views.explore, name="explore_index"),
+    path('explore/', views.explore_index, name="explore_index"),
     path('signup/', views.signup),
     path('profile/', views.myprofile, name="my_profile"),
     path('profile/edit', views.profile_edit, name="profile_edit"),
@@ -12,7 +12,6 @@ urlpatterns = [
     path('subject/<sid>/subscription/add', views.subject_subscription_create, name="subject_subscription_create"),
     path('subscription/', views.subscription_index, name="subscription_index"),
     path('subscription/<sid>/delete', views.subscription_delete, name="subscription_delete"),
-    
     path('curriculum/', views.curriculum_index, name="curriculum_index"),
     path('curriculum/new', views.curriculum_create, name="curriculum_create"),
     path('curriculum/<int:c_id>', views.curriculum_show, name="curriculum_show"),

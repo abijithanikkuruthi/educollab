@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from .utils import check_user_id, create_member_obj, add_comment, add_upvote, remove_upvote
 from .forms import SignUpForm
 from app.models import Field, Subject, ChangeLog
-from app import curriculum, subject, home, profile, subscriptions
+from app import curriculum, subject, home, profile, subscriptions, explore
 
 def index(request):
     if not request.user.is_authenticated:
@@ -43,10 +43,10 @@ def signup(request):
     return render(request, 'registration/signup.html', {'form': form})
 
 
-def explore(request):
-    fields = Field.objects.all()
-    return render(request, 'explore.html', {"fields": fields})
-
+def explore_index(request):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return explore.showchoices(request)
 
 def subject_index(request, sid):
     if not request.user.is_authenticated:
