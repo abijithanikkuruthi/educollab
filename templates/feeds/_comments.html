@@ -52,10 +52,10 @@
             {% endfor %}
             <div class="row p-3">
                 <div class="col-1 p-0">
-                    <a href="{% url 'profile_view' uname=changelog.member.username %}">
-                        {% if changelog.member.image.url != '' %}
+                    <a href="{% url 'profile_view' uname=member.username %}">
+                        {% if member.image.url != '' %}
                         <img height="50px" width="50px" class="rounded-circle mt-auto"
-                            src="{{changelog.member.image.url }}" />
+                            src="{{member.image.url }}" />
                         {% else %}
                         <img height="50px" width="50px" class="rounded-circle mt-auto"
                             src="media/avatar.png" />
@@ -68,7 +68,7 @@
                             {% csrf_token %}
                             <div class="row">
                               <div class="col-10 ml-auto"><input class="form-control input-lg shadow-sm bg-light rounded w-100" type="text" size="28" name="comment" /></div>
-                              <div class="col-2 ml-auto"><input class="btn btn-primary" type="submit" value="Comment"/></div>
+                              <div class="col-2 ml-auto align-self-center"><input class="btn btn-primary btn-sm" type="submit" value="Comment"/></div>
                             </div>
                         </form>
                     </li>

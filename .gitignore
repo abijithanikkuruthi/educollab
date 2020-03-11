@@ -3,3 +3,9 @@ venv
 db.sqlite3
 **/__pycache__
 media/
+app/__pycache__
+app/migrations/__pycache__
+educollab/__pycache__
+educollab/migrations/__pycache__
+media/
+app/templatetags/__pycache__

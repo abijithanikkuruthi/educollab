@@ -1,13 +1,12 @@
-<div class="col-2"></div>
-<div class="col-5">
-    <p>Subscription to {{sub.curriculum.title}}</p>
-    <p>Type: Curriculum</p>
+<div class="col-9">
+    <a href="{% url 'curriculum_show' c_id=sub.curriculum.id %}">
+    <h6>{{sub.curriculum.title}}</h6>
+    <p class="text-secondary mb-0">Type: Curriculum</p>
+    </a>
 </div>
-
-<div class="col-5">
+<div class="col-3 text-right">
     <form class="form-inline d-inline" method="post" action="{% url 'subscription_delete' sid=sub.id %}">
         {% csrf_token %}
-        <button class="btn btn-sm btn-outline-dark" type="submit">Unsubscribe</button>       
+        <button class="btn btn-sm btn-outline-primary" type="submit">Unsubscribe</button>       
     </form>
-    <a class="btn btn-sm btn-primary" href="{% url 'curriculum_show' c_id=sub.curriculum.id %}">Open</a>
 </div>

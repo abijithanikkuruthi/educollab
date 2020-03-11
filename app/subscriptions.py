@@ -12,7 +12,10 @@ def subscription_index(request):
     subs = Subscription.objects.filter(member=current_user)
 
     if request.method == 'GET':
-        context = {'subscriptions': subs}
+        context = {
+            'subscriptions': subs,
+            'member': current_user
+        }
         return render(request, 'subscriptions/index.html', context)
 
 
