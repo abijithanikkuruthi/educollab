@@ -46,12 +46,13 @@ def add_comment(request, c_type, c_id, b_id):
 
     u_obj.save()
 
-    if not Contributor.objects.filter(member=current_user, curriculum=curriculum):
-        contributor_obj = Contributor(
-            member=current_user,
-            curriculum=curriculum
-        )
-        contributor_obj.save()
+    if 'bit' in c_type or 'curriculum' in c_type:
+        if not Contributor.objects.filter(member=current_user, curriculum=curriculum):
+            contributor_obj = Contributor(
+                member=current_user,
+                curriculum=curriculum
+            )
+            contributor_obj.save()
 
     return redirect(request.META['HTTP_REFERER'])
 
