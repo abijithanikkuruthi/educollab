@@ -1,8 +1,5 @@
 venv
 .vscode
 db.sqlite3
-app/__pycache__
-app/migrations/__pycache__
-educollab/__pycache__
-educollab/migrations/__pycache__
+**/__pycache__
 media/
