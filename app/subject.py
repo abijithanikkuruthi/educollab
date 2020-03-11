@@ -34,7 +34,7 @@ def subject_show(request, sid):
         for curriculum_obj in sorted_curriculums:
             # TODO: here instead of the names, i need the actual objects
             u_obj = Subscription.objects.filter(member=current_user, subject__isnull=True).first()
-            #curriculum_obj[0]["user_subscription"] = u_obj 
+            curriculum_obj[0].user_subscription = u_obj
 
         context = {
             'subject': subject,
