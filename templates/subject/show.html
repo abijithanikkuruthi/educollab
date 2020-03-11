@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Explore {{subject.topic}} - {{subject.title}}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-2">
+            <div class="col-12">
+                {% if user_subscription %}
+                <form class="form-inline d-inline" method="post"
+                    action="{% url 'subscription_delete' sid=user_subscription.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-dark" type="submit">Unsubscribe</button>
+                </form>
+                {% else %}
+                <form class="form-inline d-inline" method="post"
+                    action="{% url 'subject_subscription_create' sid=subject.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-dark" type="submit">Subscribe</button>
+                </form>
+                {% endif %}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-3">
+                                    Votes & Contributors
+                                </div>
+                                <div class="col-7">Curriculum</div>
+                                <div class="col-2">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% for curriculum, upvote_count in sorted_curriculums%}
+                    <li class="list-group-item">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-3">
+                                    <span class="far fa-thumbs-up"></span><span class="m-lr-5">{{upvote_count}}</span>
+                                    <span class="fas fa-users ml-3"></span><span class="m-lr-5">{{contributors|get_item:curriculum}}</span>
+                                </div>
+                                <div class="col-7">
+                                    {{curriculum}}
+                                </div>
+                                <div class="col-2 text-right">
+                                    {% if user_subscription %}
+                                    <form class="form-inline d-inline" method="post"
+                                        action="{% url 'subscription_delete' sid=user_subscription.id %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-outline-dark" type="submit">Unsubscribe</button>
+                                    </form>
+                                    {% else %}
+                                    <form class="form-inline d-inline" method="post"
+                                        action="{% url 'curriculum_subscription_create' c_id=curriculum.id %}">
+                                        {% csrf_token %}
+                                        <button class="btn btn-sm btn-outline-dark" type="submit">Subscribe</button>
+                                    </form>
+                                    {% endif %}
+                                    
+                                    <a class="btn btn-sm btn-primary" href="{% url 'curriculum_show' c_id=curriculum.id %}"><i class="fas fa-angle-right"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //  subject filter scripts based on field and topic
+</script>
+{% endblock %}

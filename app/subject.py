@@ -1,8 +1,8 @@
 from django.shortcuts import render, get_object_or_404
-from app.models import Member, Subscription, Subject, Upvote, Curriculum, Contributor
+from app.models import Member, Subscription, Subject, Upvote, Curriculum, Contributor, Field
 
 
-def showsubject(request, sid):
+def subject_show(request, sid):
     # Shitty solution for now
     if not Subject.objects.filter(id=sid):
         return render(request, 'registration/login.html', {})
@@ -28,12 +28,25 @@ def showsubject(request, sid):
     # Check if user is subscribed to the subject
     user_subscription = Subscription.objects.filter(
         member=current_user, subject=subject, curriculum__isnull=True).exclude(subject__isnull=True)
-
+    
     if request.method == 'GET':
+        
+        for curriculum_obj in sorted_curriculums:
+            # TODO: here instead of the names, i need the actual objects
+            u_obj = Subscription.objects.filter(member=current_user, subject__isnull=True).first()
+            #curriculum_obj[0]["user_subscription"] = u_obj 
+
         context = {
             'subject': subject,
             'sorted_curriculums': sorted_curriculums,
             'user_subscription': user_subscription.first(),
             'contributors': contributors,
         }
-        return render(request, 'subject.html', context)
+        return render(request, 'subject/show.html', context)
+
+def subject_index(request):
+    fields = Field.objects.all()
+
+    context = {"fields": fields, }
+    return render(request, 'explore.html', context)
+
