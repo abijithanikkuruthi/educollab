@@ -81,9 +81,7 @@
                 <div class="row">
                     <div class="col-12">
                         <h5 class="d-inline">Curriculum Parts</h5>
-                        {% if curriculum.posted_by == current_user %}
                         <a href="{% url 'create_bit' c_id=curriculum.id %}" class="fas fa-plus"></a>
-                        {% endif %}
                     </div>
                 </div>
 
