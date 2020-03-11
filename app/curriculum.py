@@ -21,7 +21,6 @@ def createcurriculum(request):
             description=data['description'],
             posted_by=current_user
         )
-
         c_obj.save()
 
         # Automatic subscribing to own made curriculum
@@ -31,6 +30,14 @@ def createcurriculum(request):
             curriculum=Curriculum(id=c_obj.id)
         )
         sub_obj.save()
+
+        # Adding to contributor list
+        if not Contributor.objects.filter(member=current_user):
+            contributor_obj = Contributor(
+                member=current_user,
+                curriculum=Curriculum(id=c_obj.id)
+            )
+            contributor_obj.save()
 
         log_obj = ChangeLog(
             member=current_user,
@@ -329,7 +336,9 @@ def createbit(request, c_id):
         elif not('_create' in request.POST):
             print("Bad routing!")
             return redirect(request.headers['Referer'])
+
         data = request.POST
+
         b_obj = Bit(
             title=data["title"],
             bit_type=data["bit_type"],
@@ -338,6 +347,14 @@ def createbit(request, c_id):
             curriculum=Curriculum(id=c_id),
             created_by=current_user,
         )
+
+        # Adding to contributor list
+        if not Contributor.objects.filter(member=current_user):
+            contributor_obj = Contributor(
+                member=current_user,
+                curriculum=curriculum
+            )
+            contributor_obj.save()
 
         # Something funny is happening here (intuition)
         if 'file' in request.FILES:
@@ -396,6 +413,14 @@ def updatebit(request, c_id, b_id):
         else:
             bit.file = None
         bit.save()
+
+        # Adding to contributor list
+        if not Contributor.objects.filter(member=current_user):
+            contributor_obj = Contributor(
+                member=current_user,
+                curriculum=curriculum
+            )
+            contributor_obj.save()
 
         log_obj = ChangeLog(
             member=current_user,
