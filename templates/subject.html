@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load get_dict_value %}
+
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -32,10 +34,17 @@
     </ul>
     <div class="row w-100">
         <ul class="list-group list-group-flush w-100 d-block">
-            <li class="list-group-item"><b>Upvote count</b>&ensp;&ensp;&ensp;<b>Curriculum name</b> </li>
-            {% for curriculum, upvote_count in sorted_curriculums %}
+            <li class="list-group-item"><b>Upvote count</b>&ensp;&ensp;&ensp;
+                                        <b>Curriculum name</b>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                                        <b>Contributor count</b>
+            </li>
+            {% for curriculum, upvote_count in sorted_curriculums%}
             <li class="list-group-item">
-                {{upvote_count}}&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;{{curriculum}}
+                <a href="{% url 'curriculum_show' c_id=curriculum.id %}">
+                    {{upvote_count}}&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                    {{curriculum}}  &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                    {{contributors|get_item:curriculum}}                    
+                </a>
             </li>
             {% endfor %}
         </ul>
