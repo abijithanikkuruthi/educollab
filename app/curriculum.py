@@ -319,6 +319,7 @@ def createbit(request, c_id):
         elif not('_create' in request.POST):
             print("Bad routing!")
             return redirect(request.headers['Referer'])
+            
         data = request.POST
         b_obj = Bit(
             title=data["title"],
@@ -328,8 +329,7 @@ def createbit(request, c_id):
             curriculum=Curriculum(id=c_id),
             created_by=current_user,
         )
-
-        # Something funny is happening here (intuition)
+        
         if 'file' in request.FILES:
             b_obj.file = request.FILES['file']
         b_obj.save()
@@ -375,31 +375,39 @@ def updatebit(request, c_id, b_id):
     if request.method == 'POST':
         data = request.POST
 
-        bit.title = data["title"],
-        bit.bit_type = data["bit_type"],
-        bit.description = data["description"],
-        bit.text = data["text"],
-        bit.curriculum = Curriculum(id=c_id)
-
-        if 'file' in request.FILES:
-            bit.file = request.FILES['file']
+        if '_delete' in data:
+            bit.delete()
+            context = {
+                'success': 'Bit Deleted!'
+            }
         else:
-            bit.file = None
-        bit.save()
+            bit.title = data["title"]
+            bit.bit_type = data["bit_type"]
+            bit.description = data["description"]
+            bit.text = data["text"]
+            bit.curriculum = Curriculum(id=c_id)
 
-        log_obj = ChangeLog(
-            member=current_user,
-            description='Bit Updated + more details ',
-            bit=Bit(id=bit.id),
-            curriculum=curriculum,
-            subject=curriculum.subject,
-            operation='update'
-        )
-        log_obj.save()
+            if 'file' in request.FILES:
+                bit.file = request.FILES['file']
+            else:
+                pass
 
-        context = {
-            'success': 'Bit Updated!'
-        }
+            bit.save()
+
+            log_obj = ChangeLog(
+                member=current_user,
+                description='Bit Updated + more details ',
+                bit=Bit(id=bit.id),
+                curriculum=curriculum,
+                subject=curriculum.subject,
+                operation='update'
+            )
+            log_obj.save()
+
+            context = {
+                'success': 'Bit Updated!'
+            }
+
         return render(request, 'bit-form.html', context)
     else:
         form = BitForm(data=bit.__dict__)
@@ -407,9 +415,10 @@ def updatebit(request, c_id, b_id):
             'owner': owner,
             'curriculum': curriculum,
             'form': form,
-            'type': form_type
+            'type': form_type,
+            'bit':bit,
         }
-        return render(request, 'bit-form.html', context)
+    return render(request, 'bit-form.html', context)
 
 
 def showbit(request, c_id, b_id):
@@ -429,7 +438,8 @@ def showbit(request, c_id, b_id):
             'owner': owner,
             'curriculum': curriculum,
             'form': form,
-            'type': form_type
+            'type': form_type,
+            'bit': bit,
         }
         return render(request, 'bit-form.html', context)
 
@@ -438,6 +448,12 @@ def showbit(request, c_id, b_id):
 
         if owner and '_update' in request.POST:
             return redirect('bit_update', c_id, b_id)
+        elif owner and '_delete' in request.POST:
+            bit.delete()
+            context = {
+                'success': 'Bit Deleted!'
+            }
+            return render(request, 'bit-form.html', context)
         elif '_back' in request.POST:
             return redirect(request.headers['Referer'])
         else:
