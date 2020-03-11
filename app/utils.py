@@ -27,7 +27,7 @@ def create_member_obj(user, u_id):
     m_obj.save()
 
 
-def add_comment(request, c_type, c_id):
+def add_comment(request, c_type, c_id, b_id):
 
     current_user = get_object_or_404(Member, u_id=request.user)
     curriculum =Curriculum(id=c_id)
@@ -38,7 +38,7 @@ def add_comment(request, c_type, c_id):
         comment=data["comment"]
     )
     if 'bit' in c_type:
-        u_obj.bit = Bit(id=c_id)
+        u_obj.bit = Bit(id=b_id)
     elif 'curriculum' in c_type:
         u_obj.curriculum = curriculum
     elif 'changelog' in c_type:

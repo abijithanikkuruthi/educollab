@@ -37,14 +37,52 @@
             {% endfor %}
             <div class="submit-row">
                 <label>&nbsp;</label>
-                {% if owner %}
+                {% if type == 'Create' %}
+                    <input type="submit" name="_create" value="Create Bit">
+                {% elif type != 'Create' and owner %}
                     <input type="submit" name="_update" value="Edit Bit">
+                    <input type="submit" name="_delete" value="Delete Bit">
                 {% else %}
                     <input type="submit" name="_back" value="Go Back">
                 {% endif %}
             </div>
         </form>
     </div>
+    {% if type == 'show' %}
+    <div class="col-12 col-sm-4 pt-4 pl-sm-4">
+        <div class="row">
+            <div class="col-12">
+                <h5>Discussion</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="card card-body">
+                <ul class="list-group list-group-flush">
+                    {% for comment in bit.comment.all %}
+                        <li class="list-group-item">
+                            <div class="row">
+                                <div class="col-12">
+                                    Display Profile Pic + Name
+                                </div>
+                                <div class="col-10">
+                                    {{comment.comment}} <br />
+                                    {{comment.created_on}}
+                                </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                    <li class="list-group-item">
+                        <form method="post" action="{% url 'bit_comment_create' c_id=curriculum.id b_id=bit.id %}">
+                            {% csrf_token %}
+                            <input type="text" name="comment" />
+                            <input type="submit" value="Comment">
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    {% endif %}
 </div>
 <script>
     //  subject filter scripts based on field and topic
