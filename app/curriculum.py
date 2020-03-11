@@ -377,7 +377,7 @@ def updatebit(request, c_id, b_id):
         if 'file' in request.FILES:
             bit.file = request.FILES['file']
         else:
-            bit.file = None
+            pass
 
         bit.save()
 
