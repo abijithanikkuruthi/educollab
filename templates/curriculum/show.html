@@ -89,9 +89,9 @@
         <div class="row">
             <div class="col-8"> <!-- Discussion & Bits column -->
               <div class="row"> <!-- BITS -->
-                <div class="col pl-sm-0 pt-4">
+                <div class="col pl-0 pr-0 pt-4">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-8 pl-10">
                             <h5 class="d-inline">Bits of Content</h5>
                         </div>
                         <div class="col-4 text-right">
@@ -105,7 +105,7 @@
                         </div>
                     </div>
                     {% endif %}
-                    <div class="accordion" id="accordionExample">
+                    <div class="accordion pl-20" id="accordionExample">
                         {% for bit in curriculum.bit.all %}
                         {% include "./show/_bit.html" %}
                         {% endfor %}
@@ -114,14 +114,14 @@
               </div>
               <!-- Discussion -->
               <div class="row">
-                <div class="col pl-sm-0 pt-4">
+                <div class="col pl-2 pt-4">
                     <div class="row">
-                        <div class="col-12">
-                            <h5>Discussion</h5>
+                        <div class="col-12 pl-2">
+                            <h5 >Discussion</h5>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="card card-body">
+                    <div class="row pl-2">
+                        <div class="pl-2 card card-body">
                             <ul class="list-group list-group-flush">
                                 {% for comment in curriculum.comment.all %}
                                 <li class="list-group-item">
