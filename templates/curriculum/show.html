@@ -70,6 +70,18 @@
                                     </form>
                                 </div>
                             </div>
+                            <div style="margin-top: 30px">
+                                {% if institutions_teaching %}
+                                    <b>Institution Teaching this curriculum:</b>
+                                    <ul>
+                                        {% for Institution in institutions_teaching %}
+                                        <li>
+                                                    {{Institution}}
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
                 </div>
