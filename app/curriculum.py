@@ -32,7 +32,7 @@ def createcurriculum(request):
         sub_obj.save()
 
         # Adding to contributor list
-        if not Contributor.objects.filter(member=current_user):
+        if not Contributor.objects.filter(member=current_user, curriculum=curriculum):
             contributor_obj = Contributor(
                 member=current_user,
                 curriculum=Curriculum(id=c_obj.id)
@@ -108,6 +108,9 @@ def showcurriculum(request, c_id):
     subscribed_users = [
         sub.member for sub in Subscription.objects.filter(curriculum=curriculum)]
 
+    # Fetch all the contributors for the curriculum
+    contributors = [contributors.member for contributors in Contributor.objects.filter(curriculum=curriculum)]
+
     u_obj = Upvote.objects.filter(
         member=current_user, changelog=None, bit=None, curriculum=curriculum)
     curriculum.is_upvoted = len(u_obj) > 0
@@ -144,6 +147,7 @@ def showcurriculum(request, c_id):
                    'teach_button_status': teach_button_status,
                    'institutions_teaching': institutions_teaching,
                    'subscribed_users': subscribed_users,
+                   'contributors': contributors,
                 }
         return render(request, 'curriculum/show.html', context)
 
@@ -245,6 +249,7 @@ def showcurriculum(request, c_id):
                    'current_user': current_user,
                    'institutions_teaching': institutions_teaching,
                    'subscribed_users': subscribed_users,
+                   'contributors': contributors,
                 }
         return render(request, 'curriculum/show.html', context)
 
@@ -271,6 +276,7 @@ def showcurriculum(request, c_id):
                    'current_user': current_user,
                    'institutions_teaching': institutions_teaching,
                    'subscribed_users': subscribed_users,
+                   'contributors': contributors,
                 }
         return render(request, 'curriculum/show.html', context)
 
@@ -349,7 +355,7 @@ def createbit(request, c_id):
         )
 
         # Adding to contributor list
-        if not Contributor.objects.filter(member=current_user):
+        if not Contributor.objects.filter(member=current_user, curriculum=curriculum):
             contributor_obj = Contributor(
                 member=current_user,
                 curriculum=curriculum
@@ -415,7 +421,7 @@ def updatebit(request, c_id, b_id):
         bit.save()
 
         # Adding to contributor list
-        if not Contributor.objects.filter(member=current_user):
+        if not Contributor.objects.filter(member=current_user, curriculum=curriculum):
             contributor_obj = Contributor(
                 member=current_user,
                 curriculum=curriculum
