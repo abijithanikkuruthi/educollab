@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
 from .forms import CurriculumForm, BitForm
-from app.models import Bit, ChangeLog, Curriculum, Field, Member, Subject, Subscription, Teach, Topic, Upvote
+from app.models import Bit, ChangeLog, Curriculum, Field, Member, Subject, Subscription, Teach, Topic, Upvote, Contributor
 
 
 def createcurriculum(request):
