@@ -4,6 +4,7 @@
             <div class="container">
                 <div class="row pt-4">
                     <div class="col-2 col-sm-1 text-center align-self-center p-0">
+                        <a href="{% url 'profile_view' uname=changelog.member.username %}">
                         {% if changelog.member.image.url != '' %}
                         <img height="50px" width="50px" class="rounded-circle mt-auto"
                             src="{{changelog.member.image.url }}" />
@@ -11,9 +12,10 @@
                         <img height="50px" width="50px" class="rounded-circle mt-auto"
                             src="media/avatar.png" />
                         {% endif %}
-
+                        </a>
                     </div>
                     <div class="col-10 col-sm-11">
+                        <a href="{% url 'profile_view' uname=changelog.member.username %}">
                         {% if changelog.member.full_name != '' %}
                         <div class="profile-feed-title">{{changelog.member.full_name}}</div>
                         {% elif changelog.member.username != '' %}
@@ -21,6 +23,7 @@
                         {% else %}
                         <div class="profile-feed-title">(NA)</div>
                         {% endif %}
+                        </a>
                         <div class="profile-feed-time">
                             <span class="far fa-clock"></span>
                             <span>{{changelog.created_on}}</span>

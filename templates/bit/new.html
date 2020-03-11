@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <div class="col-12">
+                    <h2>Create New Curriculum Part</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="row">
+                    {{ form.non_field_errors }}
+                        <div class="card w-100">
+                            <form method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="card-text">
+                                    {% for field in form %}
+                                    <div class="form-row">
+                                        <label>{{ field.label_tag }}</label>
+                                        {% if type == 'show' %}
+                                            {{ field.value }}
+                                        {% else %}
+                                            {{ field }}
+                                        {% endif %}
+                                    </div>
+                                        {% for error in field.errors %}
+                                            <p style="color: red">{{ error }}</p>
+                                        {% endfor %}
+                                    {% endfor %}
+                                </div>
+                                <div class="row pt-4">
+                                    <div class="col-12 text-right">
+                                        {% if owner %}
+                                            <input type="submit" name="_create" value="Add Curriculum Part">
+                                        {% else %}
+                                            <input type="submit" name="_back" value="Go Back">
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    //  subject filter scripts based on field and topic
+</script>
+{% endblock %}
