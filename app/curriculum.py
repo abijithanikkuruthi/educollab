@@ -312,6 +312,7 @@ def createbit(request, c_id):
         elif not('_create' in request.POST):
             print("Bad routing!")
             return redirect(request.headers['Referer'])
+            
         data = request.POST
         b_obj = Bit(
             title=data["title"],
@@ -321,8 +322,7 @@ def createbit(request, c_id):
             curriculum=Curriculum(id=c_id),
             created_by = current_user,
         )
-
-        # Something funny is happening here (intuition)
+        
         if 'file' in request.FILES:
             b_obj.file = request.FILES['file']
         b_obj.save()
@@ -368,16 +368,17 @@ def updatebit(request, c_id, b_id):
     if request.method == 'POST':
         data = request.POST
 
-        bit.title = data["title"],
-        bit.bit_type = data["bit_type"],
-        bit.description = data["description"],
-        bit.text = data["text"],
+        bit.title = data["title"]
+        bit.bit_type = data["bit_type"]
+        bit.description = data["description"]
+        bit.text = data["text"]
         bit.curriculum = Curriculum(id=c_id)
 
         if 'file' in request.FILES:
             bit.file = request.FILES['file']
         else:
             bit.file = None
+
         bit.save()
 
         log_obj = ChangeLog(
