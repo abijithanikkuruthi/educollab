@@ -79,7 +79,9 @@ def indexcurriculum(request):
 
     if request.method == 'GET':
         context = {'curriculums_created_by_user': curriculums_created_by_user,
-                   'non_matching_curriculums_subscribed_by_user': non_matching_records}
+                   'non_matching_curriculums_subscribed_by_user': non_matching_records,
+                   'member': current_user
+                   }
         return render(request, 'curriculum/index.html', context)
 
 
