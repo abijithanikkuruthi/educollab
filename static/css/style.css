@@ -1026,15 +1026,16 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-.edit-profile label {
+.edit-profile label, #bit-form label {
   margin-bottom: 2px;
 }
 
-.edit-profile .form-row{
+.edit-profile .form-row, #bit-form .form-row{
   margin-bottom: 30px;
 }
 
-.edit-profile input[type=file]{
+.edit-profile input[type=file], #bit-form input[type=file]{
   margin-left: 20px;
   cursor: pointer;
 }
+

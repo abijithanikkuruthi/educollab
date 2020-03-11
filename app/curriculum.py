@@ -416,6 +416,7 @@ def updatebit(request, c_id, b_id):
             context = {
                 'success': 'Bit Deleted!'
             }
+            return redirect('curriculum_show', c_id)
         else:
             bit.title = data["title"]
             bit.bit_type = data["bit_type"]
@@ -428,6 +429,10 @@ def updatebit(request, c_id, b_id):
             else:
                 pass
             bit.save()
+
+            context = {
+                'success': 'Bit Updated!'
+            }
 
         # Adding to contributor list
         if not Contributor.objects.filter(member=current_user, curriculum=curriculum):
@@ -447,7 +452,7 @@ def updatebit(request, c_id, b_id):
         )
         log_obj.save()  
 
-        return render(request, 'bit-form.html', context)
+        return redirect('bit_show', c_id, b_id)
     else:
         form = BitForm(data=bit.__dict__)
         context = {

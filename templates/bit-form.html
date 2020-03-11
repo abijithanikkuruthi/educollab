@@ -10,16 +10,12 @@
     </div>
 
 {% else %}
-    <div class="row">
-        Curriculum: {{curriculum.title}}
-    </div>
-
-    {{type}} Bit
+    .<h5>Update Bit</h5>
 
 
     {{ form.non_field_errors }}
-    <div id="content-main">
-        <form method="post" enctype="multipart/form-data">
+    <div id="bit-form" class="container bg-white">
+        <form class="p-4" method="post" enctype="multipart/form-data">
             {% csrf_token %}
 
             {% for field in form %}
@@ -35,13 +31,13 @@
                     <p style="color: red">{{ error }}</p>
                 {% endfor %}
             {% endfor %}
-            <div class="submit-row">
+            <div class="submit-row text-right mt-4">
                 <label>&nbsp;</label>
                 {% if type == 'Create' %}
                     <input type="submit" name="_create" value="Create Bit">
                 {% elif type != 'Create' and owner %}
-                    <input type="submit" name="_update" value="Edit Bit">
-                    <input type="submit" name="_delete" value="Delete Bit">
+                    <input class="btn btn-primary pl-3 pr-3" type="submit" name="_update" value="Update Bit">
+                    <input class="btn btn-danger ml-2 pl-3 pr-3" type="submit" name="_delete" value="Delete Bit">
                 {% else %}
                     <input type="submit" name="_back" value="Go Back">
                 {% endif %}
