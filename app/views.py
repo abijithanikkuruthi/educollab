@@ -53,6 +53,7 @@ def explore_index(request):
         return redirect('login')
     return explore.showchoices(request)
 
+
 def subject_index(request, sid):
     if not request.user.is_authenticated:
         return redirect('login')
@@ -104,7 +105,7 @@ def curriculum_upvote_delete(request, c_id):
 def curriculum_comment_create(request, c_id):
     if not request.user.is_authenticated:
         return redirect('login')
-    return add_comment(request, "curriculum", c_id)
+    return add_comment(request, "curriculum", c_id, None)
 
 
 def curriculum_subscription_create(request, c_id):
@@ -116,7 +117,7 @@ def curriculum_subscription_create(request, c_id):
 def feeds_comment_create(request, c_id):
     if not request.user.is_authenticated:
         return redirect('login')
-    return add_comment(request, "changelog", c_id)
+    return add_comment(request, "changelog", c_id, None)
 
 
 def feeds_upvote_create(request, u_id):
@@ -142,16 +143,23 @@ def update_bit(request, c_id, b_id):
         return redirect('login')
     return curriculum.updatebit(request, c_id, b_id)
 
+
 def show_bit(request, c_id, b_id):
     if not request.user.is_authenticated:
         return redirect('login')
     return curriculum.showbit(request, c_id, b_id)
 
 
+def bit_comment_create(request, c_id, b_id):
+    if not request.user.is_authenticated:
+        return redirect('login')
+    return add_comment(request, "bit", c_id, b_id)
+
+
 def comment(request, c_type, c_id):
     if not request.user.is_authenticated:
         return redirect('login')
-    return add_comment(request, c_type, c_id)
+    return add_comment(request, c_type, c_id, None)
 
 
 def upvote(request, u_type, u_id):

@@ -19,6 +19,7 @@ urlpatterns = [
          views.curriculum_update, name="curriculum_update"),
     path('curriculum/<int:c_id>/subscription/add', views.curriculum_subscription_create, name="curriculum_subscription_create"),
     path('curriculum/<int:c_id>/bit/<int:b_id>/', views.show_bit, name="bit_show"),
+    path('curriculum/<int:c_id>/bit/<int:b_id>/comment/new', views.bit_comment_create, name="bit_comment_create"),
     path('curriculum/<int:c_id>/bit/new', views.create_bit, name="create_bit"),
     path('curriculum/<int:c_id>/bit/<int:b_id>/edit', views.update_bit, name="bit_update"),
     path('curriculum/<int:c_id>/upvote/new', views.curriculum_upvote_create, name="curriculum_upvote_create"),

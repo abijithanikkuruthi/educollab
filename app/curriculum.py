@@ -394,7 +394,8 @@ def updatebit(request, c_id, b_id):
             'owner': owner,
             'curriculum': curriculum,
             'form': form,
-            'type': form_type
+            'type': form_type,
+            'bit':bit,
         }
         return render(request, 'bit-form.html', context)
 
@@ -416,7 +417,8 @@ def showbit(request, c_id, b_id):
             'owner': owner,
             'curriculum': curriculum,
             'form': form,
-            'type': form_type
+            'type': form_type,
+            'bit': bit,
         }
         return render(request, 'bit-form.html', context)
 
