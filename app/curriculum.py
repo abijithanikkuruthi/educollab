@@ -90,8 +90,12 @@ def showcurriculum(request, c_id):
     if not Curriculum.objects.filter(id=c_id):
         return render(request, 'registration/login.html', {})
 
-    # Fetch all records for curriculum with id=c_id
+    # Fetch curriculum with id=c_id
     curriculum = get_object_or_404(Curriculum, id=c_id)
+
+    # Fetch all the institutions teaching the curriculum
+    institutions_teaching = [
+        teach.member.institution for teach in Teach.objects.filter(curriculum=curriculum)]
 
     u_obj = Upvote.objects.filter(
         member=current_user, changelog=None, bit=None, curriculum=curriculum)
@@ -126,7 +130,8 @@ def showcurriculum(request, c_id):
                    'sub_status': sub_status,
                    'subscribe_button_status': subscribe_button_status,
                    'current_user': current_user,
-                   'teach_button_status': teach_button_status, }
+                   'teach_button_status': teach_button_status,
+                   'institutions_teaching': institutions_teaching, }
         return render(request, 'curriculum/show.html', context)
 
     elif request.method == 'POST' and '_teach' in request.POST:
@@ -224,7 +229,8 @@ def showcurriculum(request, c_id):
                    'teach_status': teach_status,
                    'teach_button_status': teach_button_status,
                    'subscribe_button_status': subscribe_button_status,
-                   "current_user": current_user}
+                   'current_user': current_user,
+                   'institutions_teaching': institutions_teaching, }
         return render(request, 'curriculum/show.html', context)
 
     else:
@@ -247,7 +253,8 @@ def showcurriculum(request, c_id):
         context = {'curriculum': curriculum,
                    'user_subscription': user_subscription.first(),
                    'teach_button_status': teach_button_status,
-                   'current_user': current_user}
+                   'current_user': current_user,
+                   'institutions_teaching': institutions_teaching, }
         return render(request, 'curriculum/show.html', context)
 
 
@@ -320,7 +327,7 @@ def createbit(request, c_id):
             description=data["description"],
             text=data["text"],
             curriculum=Curriculum(id=c_id),
-            created_by = current_user,
+            created_by=current_user,
         )
         
         if 'file' in request.FILES:
@@ -336,7 +343,7 @@ def createbit(request, c_id):
             operation='create'
         )
         log_obj.save()
-        
+
         # TODO - add some session stuff
         return redirect('curriculum_show', c_id=curriculum.id)
     else:
@@ -421,10 +428,10 @@ def showbit(request, c_id, b_id):
     bit = get_object_or_404(Bit, id=b_id)
 
     form_type = 'show'
-    
+
     # Check if current user owns the bit
     owner = True if bit.created_by == current_user else False
-    
+
     if request.method == 'GET':
         form = BitForm(data=bit.__dict__)
         context = {
