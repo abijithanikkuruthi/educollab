@@ -97,6 +97,10 @@ def showcurriculum(request, c_id):
     institutions_teaching = [
         teach.member.institution for teach in Teach.objects.filter(curriculum=curriculum)]
 
+    # Fetch all the subscribers for the curriculum
+    subscribed_users = [
+        sub.member for sub in Subscription.objects.filter(curriculum=curriculum)]
+
     u_obj = Upvote.objects.filter(
         member=current_user, changelog=None, bit=None, curriculum=curriculum)
     curriculum.is_upvoted = len(u_obj) > 0
@@ -131,7 +135,9 @@ def showcurriculum(request, c_id):
                    'subscribe_button_status': subscribe_button_status,
                    'current_user': current_user,
                    'teach_button_status': teach_button_status,
-                   'institutions_teaching': institutions_teaching, }
+                   'institutions_teaching': institutions_teaching,
+                   'subscribed_users': subscribed_users,
+                }
         return render(request, 'curriculum/show.html', context)
 
     elif request.method == 'POST' and '_teach' in request.POST:
@@ -230,7 +236,9 @@ def showcurriculum(request, c_id):
                    'teach_button_status': teach_button_status,
                    'subscribe_button_status': subscribe_button_status,
                    'current_user': current_user,
-                   'institutions_teaching': institutions_teaching, }
+                   'institutions_teaching': institutions_teaching,
+                   'subscribed_users': subscribed_users,
+                }
         return render(request, 'curriculum/show.html', context)
 
     else:
@@ -254,7 +262,9 @@ def showcurriculum(request, c_id):
                    'user_subscription': user_subscription.first(),
                    'teach_button_status': teach_button_status,
                    'current_user': current_user,
-                   'institutions_teaching': institutions_teaching, }
+                   'institutions_teaching': institutions_teaching,
+                   'subscribed_users': subscribed_users,
+                }
         return render(request, 'curriculum/show.html', context)
 
 

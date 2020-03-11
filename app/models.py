@@ -107,3 +107,7 @@ class Teach(models.Model):
     member = models.ForeignKey(Member, related_name='teach', on_delete=models.CASCADE)
     curriculum = models.ForeignKey(Curriculum, related_name='teach', on_delete=models.CASCADE)
     subject = models.ForeignKey(Subject, related_name='teach', on_delete=models.CASCADE)
+
+class Contributor(models.Model):
+    member = models.ForeignKey(Member, related_name='contributor', on_delete=models.CASCADE)
+    curriculum = models.ForeignKey(Curriculum, related_name='contributor', on_delete=models.CASCADE)
