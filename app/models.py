@@ -17,6 +17,7 @@ class Member(models.Model):
 
 class Field(models.Model):
     title = models.CharField(max_length=100)
+    coverimage = models.FileField(null=True, default=None)
 
     def __str__(self):
         return self.title
