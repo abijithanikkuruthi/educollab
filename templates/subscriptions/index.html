@@ -4,15 +4,20 @@
 <div class="container pt-4">
     <div class="container">
         <div class="row pt-4">
-            <div class="col-12">
+            <div class="col-4">
+                <div class="row p-4">
+                    {% include "./_profile.html" %}
+                </div>
+            </div>
+            <div class="col-8">
                 <div class="row mb-4">
                     <div class="col-12">
-                        <h2>Your Subscriptions</h2>
+                        <h5>Your Subscriptions</h5>
                     </div>
                 </div>
-                <div class="container">
+                <div class="container p-0">
                     {% for sub in subscriptions %}
-                    <div class=" card">
+                    <div class="card mt-3">
                         <div class="card-body">
                             <div class="row">
                                 {% if sub.subject %}

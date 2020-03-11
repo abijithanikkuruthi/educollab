@@ -1,0 +1,16 @@
+<aside>
+    <div class="col-12 card mt-5">
+        <div class="w-100 text-center">
+            {% if member.image %}
+            <img class="w-50 rounded-circle feed-profile-pic" src="{{member.image.url}}">
+        {% else %}
+            <img class="w-50 rounded-circle feed-profile-pic" src="/media/avatar.png">
+        {% endif %}
+        </div>
+        <div class="p-4">
+            <h4>Hi {{member.full_name}},</h4>
+            <p>This is your subscripitions page and here you can keep track of which subjects and curricula to follow.</p>
+        </div>
+    </div>
+    <p></p>
+</aside>
