@@ -17,6 +17,7 @@ class Member(models.Model):
 
 class Field(models.Model):
     title = models.CharField(max_length=100)
+    coverimage = models.FileField(null=True, default=None)
 
     def __str__(self):
         return self.title
@@ -53,6 +54,7 @@ class Bit(models.Model):
 
     created_on = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateTimeField(auto_now=True)
+    created_by = models.ForeignKey(Member, related_name='bit', on_delete=models.CASCADE)
     bit_type = models.CharField(max_length=100)
     curriculum = models.ForeignKey(Curriculum, related_name='bit', on_delete=models.CASCADE)
     title = models.CharField(max_length=100)    
@@ -105,3 +107,8 @@ class Subscription(models.Model):
 class Teach(models.Model):
     member = models.ForeignKey(Member, related_name='teach', on_delete=models.CASCADE)
     curriculum = models.ForeignKey(Curriculum, related_name='teach', on_delete=models.CASCADE)
+    subject = models.ForeignKey(Subject, related_name='teach', on_delete=models.CASCADE)
+
+class Contributor(models.Model):
+    member = models.ForeignKey(Member, related_name='contributor', on_delete=models.CASCADE)
+    curriculum = models.ForeignKey(Curriculum, related_name='contributor', on_delete=models.CASCADE)

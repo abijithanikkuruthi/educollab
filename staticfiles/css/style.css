@@ -2,6 +2,7 @@
 body {
   line-height: 1.7;
   color: gray;
+  background-color: #eaeaea;
   font-weight: 300;
   font-size: 1rem;
   font-family: "Roboto", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; }
@@ -484,14 +485,12 @@ h1, h2, h3, h4, h5, h6 {
   .sticky-wrapper + .site-blocks-cover {
     margin-top: 140px; }
   .sticky-wrapper .site-navbar {
-    background-color: #fff;
     -webkit-transition: .3s all ease;
     -o-transition: .3s all ease;
     transition: .3s all ease; }
     .sticky-wrapper .site-navbar a.active {
       color: #fff; }
   .sticky-wrapper.is-sticky .site-navbar {
-    background-color: #fff;
     -webkit-box-shadow: 4px 0 20px -5px rgba(0, 0, 0, 0.1);
     box-shadow: 4px 0 20px -5px rgba(0, 0, 0, 0.1); }
     .sticky-wrapper.is-sticky .site-navbar .site-navigation .site-menu > li {
@@ -934,4 +933,60 @@ h1, h2, h3, h4, h5, h6 {
 
 .login .form-row label {
   margin-bottom: 0;
+}
+
+.main-left-sidebar {
+  float: left;
+  width: 100%;
+}
+
+.user-profile {
+  width: 100%;
+  background-color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+  margin-top: 180px;
+}
+
+.user-pro-img {
+  width: 80%;
+  text-align: center;
+  margin-bottom: 28px;
+  margin-top: -125px;
+  position: relative;
+  border-radius: 50%;
+}
+
+.user-pro-status {
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 27px;
+  font-size: 19px;
+}
+
+.user-pro-uni {
+  color: #000;
+}
+
+.user-pro-email {
+  padding: 10px;
+  font-size: 15px;
+} 
+
+.feed-profile-image {
+  width: 48px;
+  height: 48px;
+}
+
+.mg-top-20{
+  margin-top: 20px;
+}
+
+.profile-feed-item {
+  background: white;
+  margin: 15px 0px;
+  padding: 30px;
+}
+
+.profile-edit {
+  float: right;
 }

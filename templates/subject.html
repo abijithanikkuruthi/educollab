@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load get_dict_value %}
+
 <div class="container">
     <div class="row">
         <div class="col-12">
@@ -8,20 +10,22 @@
         </div>
     </div>
     <div class="row">
-        <form class="form-inline col-12" method="post">
+        {% if user_subscription %}
+        <form class="form-inline d-inline" method="post"
+            action="{% url 'subscription_delete' sid=user_subscription.id %}">
             {% csrf_token %}
-            <input class="form-control col-10" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-dark col-2" type="submit">Search</button>
-            <button class="btn btn-outline-dark col-2" type="submit" style="margin-top: 25px">{{button_status}}</button>        
+            <button class="btn btn-sm btn-outline-dark" type="submit">Unsubscribe</button>
         </form>
+        {% else %}
+        <form class="form-inline d-inline" method="post"
+            action="{% url 'subject_subscription_create' sid=subject.id %}">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-outline-dark" type="submit">Subscribe</button>
+        </form>
+        {% endif %}
     </div>
 
-     <!-- Shittiest HTML ever ahead -->
-     <br /><br />
-     <h6>{{sub_status}}</h6>
-     <br />
-    <br />
-
+    <!-- Shittiest HTML ever ahead -->
     Show Subject details Here!
     <ul>
         <li><b>Subject ID: </b>{{subject.id}}</li>
@@ -30,8 +34,18 @@
     </ul>
     <div class="row w-100">
         <ul class="list-group list-group-flush w-100 d-block">
-            {% for curriculum in subject.curriculum.all %}
-            <li class="list-group-item">{{curriculum.title}}</li>
+            <li class="list-group-item"><b>Upvote count</b>&ensp;&ensp;&ensp;
+                                        <b>Curriculum name</b>&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                                        <b>Contributor count</b>
+            </li>
+            {% for curriculum, upvote_count in sorted_curriculums%}
+            <li class="list-group-item">
+                <a href="{% url 'curriculum_show' c_id=curriculum.id %}">
+                    {{upvote_count}}&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                    {{curriculum}}  &ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;&ensp;
+                    {{contributors|get_item:curriculum}}                    
+                </a>
+            </li>
             {% endfor %}
         </ul>
     </div>

@@ -20,13 +20,34 @@ th, td{
 
     <div class="row w-100">
         <table style="margin-top:20px">
+            <caption>Curriculum Made by the user</caption>
             <tr>
                 <th>Curriculum ID</th>
                 <th>Curriculum Subject</th>
                 <th>Curriculum Title</th>
                 <th>Curriculum Description</th>
             </tr>
-            {% for curriculum in curriculums  %}
+            {% for curriculum in curriculums_created_by_user  %}
+            <tr>
+                <td>{{curriculum.id}}</td>
+                <td><a href="/curriculum/{{curriculum.id}}">{{curriculum.subject}}</a></td>
+                <td>{{curriculum.title}}</td>
+                <td>{{curriculum.description}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+
+    <div class="row w-100">
+        <table style="margin-top:20px">
+            <caption>Curriculum Subscribed by the user</caption>
+            <tr>
+                <th>Curriculum ID</th>
+                <th>Curriculum Subject</th>
+                <th>Curriculum Title</th>
+                <th>Curriculum Description</th>
+            </tr>
+            {% for curriculum in non_matching_curriculums_subscribed_by_user  %}
             <tr>
                 <td>{{curriculum.id}}</td>
                 <td><a href="/curriculum/{{curriculum.id}}">{{curriculum.subject}}</a></td>

@@ -1,26 +1,32 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <h2>Explore</h2>
-        </div>
-    </div>
-    <div class="row component-explore">
-        <div class="col-4">
-            <div class="list-group" id="list-fields" role="tablist">
-                {% for field in fields %}
-                <a class="list-group-item list-group-item-action field-buttons" id="list-field-{{field.id}}" data-toggle="list"
-                    href="#field-{{field.id}}" role="tab" aria-controls="home">{{field.title}}</a>
-                {% endfor %}
+<div class="container pt-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h2>Explore</h2>
             </div>
         </div>
-        <div class="col-4">
-            <div class="tab-content" id="nav-tabContent">
-                {% for field in fields %}
-                <div class="tab-pane fade" id="field-{{field.id}}" role="tabpanel"
-                    aria-labelledby="list-field-{{field.id}}">
+        {% for field in fields %}
+        <div class="row component-explore pl-4">
+            <div class="col-12">
+                <h5>{{field.title}}</h5>
+            </div>
+            <div class="col-4">
+                <div class="list-group" id="list-fields" role="tablist">
+                    <a class="card field-buttons mb-4" id="list-field-{{field.id}}" data-toggle="list"
+                        href="#field-{{field.id}}" role="tab" aria-controls="home">
+                        {% if field.coverimage %}
+                        <img src="{{field.coverimage.url}}" class="card-img-top">
+                        {% else %}
+                        <img src="/media/default_field_cover.jpg" class="card-img-top">
+                        {% endif %}
+                    </a>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="tab-pane" id="field-{{field.id}}" role="tabpanel" aria-labelledby="list-field-{{field.id}}">
                     <div class="list-group" id="list-tab" role="tablist">
                         {% for topic in field.topic.all %}
                         <a class="list-group-item list-group-item-action topic-list-item"
@@ -28,31 +34,29 @@
                             href="#list-field-{{field.id}}-topic-{{topic.id}}-subjects" role="tab"
                             aria-controls="home">{{topic.title}}</a>
                         {% endfor %}
-
                     </div>
                 </div>
-                {% endfor %}
             </div>
-        </div>
-        <div class="col-4">
-            <div class="tab-content" id="nav-tabContent">
-                {% for field in fields %}
-                {% for topic in field.topic.all %}
-                <div class="tab-pane fade subject-list" id="list-field-{{field.id}}-topic-{{topic.id}}-subjects" role="tabpanel"
-                    aria-labelledby="list-field-{{field.id}}-topic-{{topic.id}}">
-                    <ul class="list-group">
-                        {% for subject in topic.subject.all %}
-                        <a href= "{% url 'subjects' sid=subject.id %}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
-                          {{subject}}
-                          <span class="badge badge-primary badge-pill">99</span>
-                        </a>
-                        {% endfor %}
-                      </ul>
+            <div class="col-4">
+                <div class="tab-content" id="nav-tabContent">
+                    {% for topic in field.topic.all %}
+                    <div class="tab-pane fade subject-list" id="list-field-{{field.id}}-topic-{{topic.id}}-subjects"
+                        role="tabpanel" aria-labelledby="list-field-{{field.id}}-topic-{{topic.id}}">
+                        <ul class="list-group">
+                            {% for subject in topic.subject.all %}
+                            <a href="{% url 'subjects' sid=subject.id %}"
+                                class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                {{subject}}
+                                <span class="badge badge-primary badge-pill">{{subject.curriculum.count}}</span>
+                            </a>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endfor %}
                 </div>
-                {% endfor %}
-                {% endfor %}
             </div>
         </div>
+        {% endfor %}
     </div>
 </div>
 </div>

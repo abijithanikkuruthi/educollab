@@ -1,84 +1,81 @@
-<div class="row mb-2">
-
+<div class="row mb-2 p-2">
     <article class="card w-100">
-        <div class="card-header">
+        <div class="pl-4 pr-4">
             <div class="container">
-                <div class="row">
+                <div class="row pt-4">
                     <div class="col-2 col-sm-1 text-center align-self-center p-0">
+                        <a href="{% url 'profile_view' uname=changelog.member.username %}">
                         {% if changelog.member.image.url != '' %}
-                        <img height="48px" width="48px" class="rounded-circle mt-auto"
+                        <img height="50px" width="50px" class="rounded-circle mt-auto"
                             src="{{changelog.member.image.url }}" />
                         {% else %}
-                        <img height="48px" width="48px" class="rounded-circle mt-auto"
+                        <img height="50px" width="50px" class="rounded-circle mt-auto"
                             src="media/avatar.png" />
                         {% endif %}
+                        </a>
                     </div>
                     <div class="col-10 col-sm-11">
+                        <a href="{% url 'profile_view' uname=changelog.member.username %}">
                         {% if changelog.member.full_name != '' %}
-                            <h4>{{ changelog.member.full_name}}</h4>
+                        <div class="profile-feed-title">{{changelog.member.full_name}}</div>
                         {% elif changelog.member.username != '' %}
-                            <h4>Super user - {{changelog.member.username}}</h4>
+                        <div class="profile-feed-title">{{changelog.member.username}}</div>
                         {% else %}
-                            <h4>John Doe (no info available)</h4>
+                        <div class="profile-feed-title">(NA)</div>
                         {% endif %}
-                        {{changelog.created_on}}
+                        </a>
+                        <div class="profile-feed-time">
+                            <span class="far fa-clock"></span>
+                            <span>{{changelog.created_on}}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-2">
-                    </div>
-                    <div class="col-4">
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-12">
-                        <span class="badge badge-pill badge-secondary">{{ changelog.member.designation }}</span>
-                        <span class="badge badge-pill badge-secondary">{{ changelog.member.institution }}</span>
+                    <div class="col-12 mt-2 p-0">
+                        <span class="fas fa-user-tag profile-designation-icon"></span><span class="m-lr-5">{{ changelog.member.designation }}</span>
+                        <span class="fas fa-university profile-university-icon"></span><span class="m-lr-5">{{ changelog.member.institution }}</span>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="card-body">
-            <h5 class="card-title">
-                {% if changelog.bit %}
-                Curriculum {{changelog.bit.curriculum.title}} Updated - [Updated / Created] {{changelog.bit.bit_type}}
-                {% else %}
-                Curriculum {{changelog.curriculum.title}} [Updated / Created]
-                {% endif %}
-            </h5>
+            <div>
+                <h5 class="card-title mt-3">
+                    {% if changelog.bit %}
+                    Curriculum {{changelog.bit.curriculum.title}} Updated - [Updated / Created] {{changelog.bit.bit_type}}
+                    {% else %}
+                    Curriculum {{changelog.curriculum.title}} [Updated / Created]
+                    {% endif %}
+                </h5>
 
-            <p class="card-text" {{changelog.curriculum.description }}>
-                {{changelog.description}}
-            </p>
-            <div class="row align-items-end">
-                <div class="col-8">
-                    <a href="#" class="btn btn-sm btn-secondary">
-                        Upvote <span class="badge badge-light d-inline">99</span>
-                    </a>
-                    <button class="btn btn-sm btn-primary" type="button" data-toggle="collapse"
+                <p class="card-text" {{changelog.curriculum.description }}>
+                    {{changelog.description}}
+                </p>
+                <hr class="col-12 p-0 mb-0">
+                <div class="row align-items-end feed-content">
+                    <div class="col-8 pb-2 pl-4">
+                        {% include "./_upvote.html" %}
+                        <a href="#" class="text-secondary" data-toggle="collapse"
                         data-target="#collapse-comment-{{changelog.id}}" aria-expanded="false"
                         aria-controls="collapseExample">
-                        Comments <span class="badge badge-light d-inline">{{ changelog.comment.all|length }}</span>
-                    </button>
+                            <span class="far fa-comments ml-3"></span><span class="m-lr-5">Comments&nbsp;{{ changelog.comment.all|length }}</span>
+                        </a>
+                    </div>
+                    <div class="ml-auto col-4 text-right pb-1 pt-1">
+                        {% if changelog.bit %}
+                        <a href="{% url 'bit_show' c_id=changelog.bit.curriculum.id b_id=changelog.bit.id %}"
+                            class="btn btn-primary btn-sm pl-4 pr-4">View</a>
+                        {% elif changelog.curriculum.id %}
+                        <a href="{% url 'curriculum_show' c_id=changelog.curriculum.id %}" class="btn btn-primary btn-sm pl-4 pr-4">View</a>
+                        {% else%}
+                        <!-- Curriculum doesn't exist anymore -->
+                        <a href="#" class="btn btn-primary btn-sm pl-4 pr-4">Unavailable</a>
+                        {% endif %}
+                    </div>
                 </div>
-                <div class="ml-auto col-4 text-right">
-                    {% if changelog.bit %}
-                    <a href="{% url 'bit_show' c_id=changelog.bit.curriculum.id b_id=changelog.bit.id %}"
-                        class="btn btn-primary">Go</a>
-                    {% elif changelog.curriculum.id %}
-                    <a href="{% url 'curriculum_show' c_id=changelog.curriculum.id %}" class="btn btn-primary">Go</a>
-                    {% else%}
-                    <!-- Curriculum doesn't exist anymore -->
-                    <a href="#" class="btn btn-primary">Don't go</a>
-                    {% endif %}
+                <div class="collapse row" id="collapse-comment-{{changelog.id}}">
+                    <div class="col-12">
+                        {% include "./_comments.html" %}
+                    </div>
                 </div>
             </div>
-            <div class="collapse row" id="collapse-comment-{{changelog.id}}">
-                <div class="col-12">
-                    {% include "./_comments.html" %}
-                </div>
-            </div>
-        </div>
     </article>
 </div>

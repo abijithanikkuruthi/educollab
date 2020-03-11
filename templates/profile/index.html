@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="main-left-sidebar">
+                <div class="user-profile">
+                    {% if member.image %}
+                        <img class="user-pro-img" src="{{member.image.url}}">
+                    {% else %}
+                        <img class="user-pro-img" src="/media/avatar.png">
+                    {% endif %}
+                    <div class="user-pro-status">
+                        <div>{{member.designation}}</div>
+                        <div class="user-pro-uni"><b>{{member.institution}}</b></div>
+                    </div>
+                    <div class="user-pro-email">
+                        {{member.email}}
+                    </div>
+                </div>
+                
+
+            </div>
+        </div>
+        <div class="col-lg-9 mg-top-20">
+            <div><h5 class="d-inline">{{member.full_name}}'s Activity</h5>
+            {% if is_my_profile %}
+                <span class="profile-edit"><a href="{% url 'profile_edit' %}">Edit Profile</a></span>
+            {% endif %}
+            </div>
+            {% for c in changelogs %}
+            <div class="profile-feed-item">
+                <div class="conatiner row">
+                    <div class="col-1 p-0">
+                        <div class="profile-feed-icon">
+                        {% if c.member.image.url != '' %}
+                        <img height="50px" width="50px" class="rounded-circle mt-auto"
+                            src="{{c.member.image.url}}" />
+                        {% else %}
+                        <img height="50px" width="50px" class="rounded-circle mt-auto"
+                            src="/media/avatar.png" />
+                        {% endif %}
+                        </div>
+                    </div>
+                    <div class="col-11 p-0">
+                        <div class="profile-feed-title">{{c.member.full_name}}</div>
+                        <div class="profile-feed-time">
+                            <span class="far fa-clock"></span>
+                            <span>{{c.created_on}}</span>
+                        </div>
+                    </div>
+                    <div class="col-12 m-2 p-0">
+                        <span class="fas fa-user-tag profile-designation-icon"></span><span class="m-lr-5">{{c.member.designation}}</span>
+                        <span class="fas fa-university profile-university-icon"></span><span class="m-lr-5">{{c.member.institution}}</span>
+                    </div>
+                    <div class="col-12 m-3 p-0 profile-feed-title">
+                        {{ c }}
+                    </div>
+                    <!-- <hr class="col-12 p-0 m-2">
+                    <div class="col-12 m-1">
+                        <span class="far fa-thumbs-up"></span><span class="m-lr-5">Like&nbsp;{{c.likes}}</span>
+                        <span class="far fa-comments ml-3"></span><span class="m-lr-5">Comments&nbsp;{{c.comments}}</span>
+                    </div> -->
+                </div>
+            </div>
+            {% endfor %}
+            
+        </div>
+    </div>
+</div>
+{% endblock %}

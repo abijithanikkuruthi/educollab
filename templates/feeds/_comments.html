@@ -1,7 +1,6 @@
-<ul class="list-group list-group-flush">
-    {% for comment in changelog.comment.all %}
-    <li class="list-group-item">
-        <div class="row">
+<!-- <ul class="list-group list-group-flush"> -->
+    <!-- <li class="list-group-item"> -->
+        <!-- <div class="row">
             <div class="col-2">
               {% if changelog.member.image %}
                 <img height="48px" width="48px" class="rounded-circle mt-auto"
@@ -16,16 +15,77 @@
                 <div class="text-body shadow-sm p-3 mb-5 bg-white rounded" >{{comment.comment}}</div>
                 <p align="center"><small> {{comment.created_on}} </small></p>
             </div>
+        </div> -->
+        <div class="container">
+            {% for comment in changelog.comment.all %}
+            <div class="row pt-4">
+                <div class="col-2 col-sm-1 text-center p-0">
+                    <a href="{% url 'profile_view' uname=comment.member.username %}">
+                    {% if comment.member.image.url != '' %}
+                    <img height="50px" width="50px" class="rounded-circle mt-auto"
+                        src="{{comment.member.image.url }}" />
+                    {% else %}
+                    <img height="50px" width="50px" class="rounded-circle mt-auto"
+                        src="media/avatar.png" />
+                    {% endif %}
+                    </a>
+                </div>
+                <div class="col-10 col-sm-11">
+                    <a href="{% url 'profile_view' uname=comment.member.username %}">
+                    {% if comment.member.full_name != '' %}
+                    <div class="profile-feed-title">{{comment.member.full_name}}</div>
+                    {% elif comment.member.username != '' %}
+                    <div class="profile-feed-title">{{comment.member.username}}</div>
+                    {% else %}
+                    <div class="profile-feed-title">(NA)</div>
+                    {% endif %}
+                    </a>
+                    <div class="profile-feed-time">
+                        <span class="far fa-clock"></span>
+                        <span>{{comment.created_on}}</span>
+                    </div>
+                    <div class="text-black">
+                        {{comment.comment}}
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <div class="row p-3">
+                <div class="col-1 p-0">
+                    <a href="{% url 'profile_view' uname=changelog.member.username %}">
+                        {% if changelog.member.image.url != '' %}
+                        <img height="50px" width="50px" class="rounded-circle mt-auto"
+                            src="{{changelog.member.image.url }}" />
+                        {% else %}
+                        <img height="50px" width="50px" class="rounded-circle mt-auto"
+                            src="media/avatar.png" />
+                        {% endif %}
+                    </a>
+                </div>
+                <div class="col-11">
+                    <form method="post" action="{% url 'feeds_comment_create' c_id=changelog.id %}">
+                        <form method="post" action="{% url 'curriculum_comment_create' c_id=changelog.id %}">
+                            {% csrf_token %}
+                            <div class="row">
+                              <div class="col-xs-6 ml-auto"><input class="form-control input-lg shadow-sm bg-light rounded" type="text" size="28" name="comment" /></div>
+                              <div class="col-xs-6 ml-auto"><input class="btn btn-primary" type="submit" value="Send"/></div>
+                            </div>
+                        </form>
+                    </li>
+                    
+                        <!-- {% csrf_token %}
+                        <div class="row">
+                        <div class="col-10">
+                            <input class="w-100 form-control input-lg border" type="text" name="comment"/>
+                        </div>
+                        <div class="col-2 align-self-center">
+                            <input class="btn btn-primary btn-sm pl-4 pr-4" type="submit" value="Comment">
+                        </div>
+                        </div> -->
+                    
+                </div>
+            </div>
         </div>
     </li>
     {% endfor %}
-    <li class="list-group-item">
-        <form method="post" action="{% url 'curriculum_comment_create' c_id=changelog.id %}">
-            {% csrf_token %}
-            <div class="row">
-              <div class="col-xs-6 ml-auto"><input class="form-control input-lg shadow-sm bg-light rounded" type="text" size="28" name="comment" /></div>
-              <div class="col-xs-6 ml-auto"><input class="btn btn-primary" type="submit" value="Send"/></div>
-            </div>
-        </form>
-    </li>
 </ul>
