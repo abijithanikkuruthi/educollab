@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import Http404
 from .forms import CurriculumForm, BitForm
-from app.models import Bit, ChangeLog, Curriculum, Field, Member, Subject, Subscription, Teach, Topic, Upvote
+from app.models import Bit, ChangeLog, Curriculum, Field, Member, Subject, Subscription, Teach, Topic, Upvote, Contributor
 
 
 def createcurriculum(request):
@@ -21,7 +21,6 @@ def createcurriculum(request):
             description=data['description'],
             posted_by=current_user
         )
-
         c_obj.save()
 
         # Automatic subscribing to own made curriculum
@@ -31,6 +30,14 @@ def createcurriculum(request):
             curriculum=Curriculum(id=c_obj.id)
         )
         sub_obj.save()
+
+        # Adding to contributor list
+        if not Contributor.objects.filter(member=current_user, curriculum=curriculum):
+            contributor_obj = Contributor(
+                member=current_user,
+                curriculum=Curriculum(id=c_obj.id)
+            )
+            contributor_obj.save()
 
         log_obj = ChangeLog(
             member=current_user,
@@ -97,6 +104,13 @@ def showcurriculum(request, c_id):
     institutions_teaching = [
         teach.member.institution for teach in Teach.objects.filter(curriculum=curriculum)]
 
+    # Fetch all the subscribers for the curriculum
+    subscribed_users = [
+        sub.member for sub in Subscription.objects.filter(curriculum=curriculum)]
+
+    # Fetch all the contributors for the curriculum
+    contributors = [contributors.member for contributors in Contributor.objects.filter(curriculum=curriculum)]
+
     u_obj = Upvote.objects.filter(
         member=current_user, changelog=None, bit=None, curriculum=curriculum)
     curriculum.is_upvoted = len(u_obj) > 0
@@ -131,7 +145,10 @@ def showcurriculum(request, c_id):
                    'subscribe_button_status': subscribe_button_status,
                    'current_user': current_user,
                    'teach_button_status': teach_button_status,
-                   'institutions_teaching': institutions_teaching, }
+                   'institutions_teaching': institutions_teaching,
+                   'subscribed_users': subscribed_users,
+                   'contributors': contributors,
+                }
         return render(request, 'curriculum/show.html', context)
 
     elif request.method == 'POST' and '_teach' in request.POST:
@@ -230,7 +247,10 @@ def showcurriculum(request, c_id):
                    'teach_button_status': teach_button_status,
                    'subscribe_button_status': subscribe_button_status,
                    'current_user': current_user,
-                   'institutions_teaching': institutions_teaching, }
+                   'institutions_teaching': institutions_teaching,
+                   'subscribed_users': subscribed_users,
+                   'contributors': contributors,
+                }
         return render(request, 'curriculum/show.html', context)
 
     else:
@@ -254,7 +274,10 @@ def showcurriculum(request, c_id):
                    'user_subscription': user_subscription.first(),
                    'teach_button_status': teach_button_status,
                    'current_user': current_user,
-                   'institutions_teaching': institutions_teaching, }
+                   'institutions_teaching': institutions_teaching,
+                   'subscribed_users': subscribed_users,
+                   'contributors': contributors,
+                }
         return render(request, 'curriculum/show.html', context)
 
 
@@ -321,6 +344,7 @@ def createbit(request, c_id):
             return redirect(request.headers['Referer'])
             
         data = request.POST
+
         b_obj = Bit(
             title=data["title"],
             bit_type=data["bit_type"],
@@ -329,6 +353,16 @@ def createbit(request, c_id):
             curriculum=Curriculum(id=c_id),
             created_by=current_user,
         )
+
+        # Adding to contributor list
+        if not Contributor.objects.filter(member=current_user, curriculum=curriculum):
+            contributor_obj = Contributor(
+                member=current_user,
+                curriculum=curriculum
+            )
+            contributor_obj.save()
+
+        # Something funny is happening here (intuition)
         
         if 'file' in request.FILES:
             b_obj.file = request.FILES['file']
@@ -391,22 +425,25 @@ def updatebit(request, c_id, b_id):
                 bit.file = request.FILES['file']
             else:
                 pass
-
             bit.save()
 
-            log_obj = ChangeLog(
+        # Adding to contributor list
+        if not Contributor.objects.filter(member=current_user, curriculum=curriculum):
+            contributor_obj = Contributor(
                 member=current_user,
-                description='Bit Updated + more details ',
-                bit=Bit(id=bit.id),
-                curriculum=curriculum,
-                subject=curriculum.subject,
-                operation='update'
+                curriculum=curriculum
             )
-            log_obj.save()
+            contributor_obj.save()
 
-            context = {
-                'success': 'Bit Updated!'
-            }
+        log_obj = ChangeLog(
+            member=current_user,
+            description='Bit Updated + more details ',
+            bit=Bit(id=bit.id),
+            curriculum=curriculum,
+            subject=curriculum.subject,
+            operation='update'
+        )
+        log_obj.save()  
 
         return render(request, 'bit-form.html', context)
     else:

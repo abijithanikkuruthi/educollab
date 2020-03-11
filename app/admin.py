@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Member, Field, Topic, Curriculum, Bit, Comment, Upvote, Subscription, Subject, Teach, ChangeLog
+from .models import Member, Field, Topic, Curriculum, Bit, Comment, Upvote, Subscription, Subject, Teach, ChangeLog, Contributor
 
 # Register your models here.
 
@@ -74,3 +74,8 @@ class FieldAdmin(admin.ModelAdmin):
     list_display = ('id', 'title')
 
 admin.site.register(Field, FieldAdmin)
+
+class ContributorAdmin(admin.ModelAdmin):
+    list_display = ('id', 'member', 'curriculum')
+
+admin.site.register(Contributor, ContributorAdmin)

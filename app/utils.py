@@ -1,5 +1,5 @@
 from django.contrib.auth.models import User
-from .models import Member, Subject, Comment, Bit, Curriculum, ChangeLog, Upvote
+from .models import Member, Subject, Comment, Bit, Curriculum, ChangeLog, Upvote, Contributor
 from django.shortcuts import render, redirect
 from django.shortcuts import get_object_or_404
 
@@ -30,7 +30,9 @@ def create_member_obj(user, u_id):
 def add_comment(request, c_type, c_id, b_id):
 
     current_user = get_object_or_404(Member, u_id=request.user)
+    curriculum =Curriculum(id=c_id)
     data = request.POST
+
     u_obj = Comment(
         member=current_user,
         comment=data["comment"]
@@ -38,11 +40,18 @@ def add_comment(request, c_type, c_id, b_id):
     if 'bit' in c_type:
         u_obj.bit = Bit(id=b_id)
     elif 'curriculum' in c_type:
-        u_obj.curriculum = Curriculum(id=c_id)
+        u_obj.curriculum = curriculum
     elif 'changelog' in c_type:
         u_obj.changelog = ChangeLog(id=c_id)
 
     u_obj.save()
+
+    if not Contributor.objects.filter(member=current_user, curriculum=curriculum):
+        contributor_obj = Contributor(
+            member=current_user,
+            curriculum=curriculum
+        )
+        contributor_obj.save()
 
     return redirect(request.META['HTTP_REFERER'])
 

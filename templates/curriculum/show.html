@@ -93,9 +93,7 @@
                 <div class="row">
                     <div class="col-12">
                         <h5 class="d-inline">Curriculum Parts</h5>
-                        {% if curriculum.posted_by == current_user %}
                         <a href="{% url 'create_bit' c_id=curriculum.id %}" class="fas fa-plus"></a>
-                        {% endif %}
                     </div>
                 </div>
 
@@ -143,6 +141,115 @@
                             </li>
                         </ul>
 
+                    </div>
+                </div>
+            </div>
+            <!-- Institution Teaching Block -->
+            <div class="col-12 col-sm-4 pt-4 pl-sm-4">
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Institution Teaching this curriculum:</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card card-body">
+                        {% if institutions_teaching %}
+                            <ul class="list-group list-group-flush">
+                                    {% for Institution in institutions_teaching %}
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            {{Institution}}
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% else%}
+                            <b>No Institution is teaching this curriculum as of now. 
+                               If you like the curriculum, press teach to acknowledge you are
+                               teaching this curriculum at your institution. </b>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subscribed User Block -->
+            <div class="col-12 col-sm-4 pt-4 pl-sm-4">
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Subscribed Users:</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card card-body">
+                        {% if subscribed_users %}
+                            <ul class="list-group list-group-flush">
+                                    {% for user in subscribed_users %}
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            {% if user.image %}
+                                                <img width=35px src="{{user.image.url}}">
+                                            {% else %}
+                                                <img width=35px src="/media/avatar.png">
+                                            {% endif %}
+
+                                            <a href="{% url 'profile_view' uname=user.u_id %}"> {{user.full_name}}</a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-10">
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% else%}
+                        <b>No users are subscribed to this curriculum as of now.  
+                           Press subscribe button to follow all updates related
+                           to this curriculum. </b>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contributors Block -->
+            <div class="col-12 col-sm-4 pt-4 pl-sm-4">
+                <div class="row">
+                    <div class="col-12">
+                        <h5>Contributors:</h5>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="card card-body">
+                        {% if contributors %}
+                            <ul class="list-group list-group-flush">
+                                    {% for contributor in contributors %}
+                                <li class="list-group-item">
+                                    <div class="row">
+                                        <div class="col-10">
+                                            {% if contributor.image %}
+                                                <img width=35px src="{{user.image.url}}">
+                                            {% else %}
+                                                <img width=35px src="/media/avatar.png">
+                                            {% endif %}
+
+                                            <a href="{% url 'profile_view' uname=contributor.u_id %}"> {{contributor.full_name}}</a>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-10">
+                                        </div>
+                                    </div>
+                                </li>
+                                {% endfor %}
+                            </ul>
+                        {% else%}
+                        <b>At the moment there are no contributors for this curriculum. 
+                           Become one by adding bits to the curriculum or engaging in 
+                           conversations :) </b>
+                        {% endif %}
                     </div>
                 </div>
             </div>
