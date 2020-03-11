@@ -1025,3 +1025,16 @@ h1, h2, h3, h4, h5, h6 {
   font-size: 14px;
   font-weight: normal;
 }
+
+.edit-profile label {
+  margin-bottom: 2px;
+}
+
+.edit-profile .form-row{
+  margin-bottom: 30px;
+}
+
+.edit-profile input[type=file]{
+  margin-left: 20px;
+  cursor: pointer;
+}

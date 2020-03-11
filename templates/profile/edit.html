@@ -3,8 +3,12 @@
 {% block content %}
 
 {{ form.non_field_errors }}
-    <div class="container">
-        <form method="post" enctype="multipart/form-data" action="{% url 'profile_edit' %}">
+<div class="container edit-profile">
+    <h5 class="col-12 pt-3 pl-0">
+        Edit Profile
+    </h5>
+    <div class="container bg-white mt-3">
+        <form class="p-4" method="post" enctype="multipart/form-data" action="{% url 'profile_edit' %}">
             {% csrf_token %}
             {% for field in form %}
             <div class="form-row">
@@ -15,11 +19,11 @@
             <p style="color: red">{{ error }}</p>
             {% endfor %}
             {% endfor %}
-            <div class="submit-row">
+            <div class="submit-row text-right">
                 <label>&nbsp;</label>
-                <input type="submit" value="Save">
+                <input class="btn btn-primary pl-4 pr-4" type="submit" value="Save">
             </div>
         </form>
     </div>
-
+</div>
 {% endblock %} 

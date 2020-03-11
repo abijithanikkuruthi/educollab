@@ -1,62 +1,79 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
-<style>
-table, th, td {
-  border: 1px solid rgb(71, 70, 70);
-  border-collapse: collapse;
-}
-
-th, td{
-    padding:10px;
-}
-</style>
-<div class="container">
-
-    My Curricula
-
-    <a class="btn btn-primary" href="{% url 'curriculum_create' %}" role="button">Create New Curriculum</a>
-
-    <div class="row w-100">
-        <table style="margin-top:20px">
-            <caption>Curriculum Made by the user</caption>
-            <tr>
-                <th>Curriculum ID</th>
-                <th>Curriculum Subject</th>
-                <th>Curriculum Title</th>
-                <th>Curriculum Description</th>
-            </tr>
-            {% for curriculum in curriculums_created_by_user  %}
-            <tr>
-                <td>{{curriculum.id}}</td>
-                <td><a href="/curriculum/{{curriculum.id}}">{{curriculum.subject}}</a></td>
-                <td>{{curriculum.title}}</td>
-                <td>{{curriculum.description}}</td>
-            </tr>
-            {% endfor %}
-        </table>
+<div class="container pt-4">
+    <div class="container mb-5">
+        <div class="row pt-4">
+            <div class="col-4">
+                <div class="row p-4">
+                    <div class="col-12 card mt-5">
+                        <div class="w-100 text-center">
+                            {% if member.image %}
+                            <img class="w-50 rounded-circle feed-profile-pic" src="{{member.image.url}}">
+                        {% else %}
+                            <img class="w-50 rounded-circle feed-profile-pic" src="/media/avatar.png">
+                        {% endif %}
+                        </div>
+                        <div class="p-4">
+                            <h4>Hi {{member.full_name}},</h4>
+                            <p>This is your Curriculum listing page + better content (The viewer should feel like the App is a guided tour and he should not put any effort in figuring out what each page is about. Especially since this app won't be viewed more than once by the professor..).</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-8">
+                <div class="row mb-4">
+                    <div class="col-8">
+                        <h5>My Curricula</h5>
+                    </div>
+                    <div class="col-4 text-right">
+                        <a class="btn btn-primary btn-sm pl-4 pr-4" href="{% url 'curriculum_create' %}" role="button">Create New Curriculum</a>
+                    </div>
+                </div>
+                {% if curriculums_created_by_user %}
+                <div class="row col-12 mt-4">
+                    <h6>{{member.full_name}} created Curricula</h6>
+                </div>
+                {% endif %}
+                <div class="container p-0">
+                    {% for c in curriculums_created_by_user %}
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <a href="{% url 'curriculum_show' c_id=c.id %}">
+                                    <h6>{{c.title}}</h6>
+                                    <p class="text-secondary mb-0">Subject: {{c.subject}}</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% if non_matching_curriculums_subscribed_by_user %}
+                <div class="row col-12 mt-4">
+                    <h6>{{member.full_name}} subscribed Curricula</h6>
+                </div>
+                {% endif %}
+                <div class="container p-0">
+                    {% for c in non_matching_curriculums_subscribed_by_user %}
+                    <div class="card mt-3">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-12">
+                                    <a href="{% url 'curriculum_show' c_id=c.id %}">
+                                    <h6>{{c.title}}</h6>
+                                    <p class="text-secondary mb-0">Subject: {{c.subject}}</p>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
-
-    <div class="row w-100">
-        <table style="margin-top:20px">
-            <caption>Curriculum Subscribed by the user</caption>
-            <tr>
-                <th>Curriculum ID</th>
-                <th>Curriculum Subject</th>
-                <th>Curriculum Title</th>
-                <th>Curriculum Description</th>
-            </tr>
-            {% for curriculum in non_matching_curriculums_subscribed_by_user  %}
-            <tr>
-                <td>{{curriculum.id}}</td>
-                <td><a href="/curriculum/{{curriculum.id}}">{{curriculum.subject}}</a></td>
-                <td>{{curriculum.title}}</td>
-                <td>{{curriculum.description}}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-
 </div>
 {% endblock %}
