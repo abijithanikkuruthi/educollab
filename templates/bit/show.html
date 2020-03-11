@@ -53,60 +53,60 @@
             </div>
             <div class="card container p-4">
                 <div class="row">
-                    <div class="col-6">
+                    <div class="col-6 h6 pl-4 pt-1">
                         Created by:
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 p-0">
                         <a href="{% url 'profile_view' uname=bit.created_by %}">
                             {{bit.created_by.full_name}}
                         </a>
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-6">
+                    <div class="col-6 h6 pl-4 pt-1">
                         Created On:
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 p-0">
                             {{bit.created_on}}
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-6">
+                    <div class="col-6 h6 pl-4 pt-1">
                         Last Modified:
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 p-0">
                             {{bit.last_modified}}
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-6">
+                    <div class="col-6 h6 pl-4 pt-1">
                         Field:
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 p-0">
                             {{bit.curriculum.subject.topic.field}}
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-6">
+                    <div class="col-6 h6 pl-4 pt-1">
                         Topic:
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 p-0">
                             {{bit.curriculum.subject.topic}}
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-6">
+                    <div class="col-6 h6 pl-4 pt-1">
                         Subject:
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 p-0">
                             {{bit.curriculum.subject}}
                     </div>
                 </div>
                 <div class="row pt-3">
-                    <div class="col-6">
+                    <div class="col-6 h6 pl-4 pt-1">
                         Curriculum:
                     </div>
-                    <div class="col-6">
+                    <div class="col-6 p-0">
                             {{bit.curriculum}}
                     </div>
                 </div>
