@@ -99,7 +99,9 @@
                         Subject:
                     </div>
                     <div class="col-6 p-0">
+                        <a href="{% url 'subjects' sid=bit.curriculum.subject.id %}">
                             {{bit.curriculum.subject}}
+                        </a>
                     </div>
                 </div>
                 <div class="row pt-3">
@@ -107,7 +109,9 @@
                         Curriculum:
                     </div>
                     <div class="col-6 p-0">
+                        <a href="{% url 'curriculum_show' c_id=bit.curriculum.id %}">
                             {{bit.curriculum}}
+                        </a>
                     </div>
                 </div>
                 <div class="row pt-3">
