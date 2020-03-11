@@ -32,7 +32,7 @@ def createcurriculum(request):
         sub_obj.save()
 
         # Adding to contributor list
-        if not Contributor.objects.filter(member=current_user, curriculum=curriculum):
+        if not Contributor.objects.filter(member=current_user, curriculum=c_obj):
             contributor_obj = Contributor(
                 member=current_user,
                 curriculum=Curriculum(id=c_obj.id)
