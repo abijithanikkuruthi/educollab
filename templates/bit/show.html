@@ -1,0 +1,117 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<div class="container pt-4">
+    <div class="row">
+        <div class="col-9">
+            <h5>{{bit.title}}</h5>
+        </div>
+        <div class="col-3 text-right">
+            {% if owner %}
+            <a class="btn btn-primary pl-4 pr-4" href="{% url 'bit_update' c_id=bit.curriculum.id b_id=bit.id %}"><i class="far fa-edit"></i></a>
+            {% endif %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-8">
+            {% if bit.description %}
+            <div class="row col-12 mt-4">
+                <h6>Description</h6>
+            </div>
+            <div class="card container p-4">
+                {{bit.description}}
+            </div>
+            {% endif %}
+            {% if bit.text %}
+            <div class="row col-12 mt-4">
+                <h6>Text Content</h6>
+            </div>
+            <div class="card container p-4">
+                {{bit.text}}
+            </div>
+            {% endif %}
+            {% if bit.file %}
+            <div class="row col-12 mt-4">
+                <h6>File</h6>
+            </div>
+            <div class="card container p-4">
+                <div class="row">
+                    <div class="col-9 align-self-center">
+                        {{bit.file}}
+                    </div>
+                    <div class="col-3">
+                        <a class="btn btn-primary pl-4 pr-4" href="{{bit.file.url}}" download="{{bit.file}}">Download</a>
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+        <div class="col-4">
+            <div class="row col-12 mt-4">
+                <h6>Other Information</h6>
+            </div>
+            <div class="card container p-4">
+                <div class="row">
+                    <div class="col-6">
+                        Created by:
+                    </div>
+                    <div class="col-6">
+                        <a href="{% url 'profile_view' uname=bit.created_by %}">
+                            {{bit.created_by.full_name}}
+                        </a>
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col-6">
+                        Created On:
+                    </div>
+                    <div class="col-6">
+                            {{bit.created_on}}
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col-6">
+                        Last Modified:
+                    </div>
+                    <div class="col-6">
+                            {{bit.last_modified}}
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col-6">
+                        Field:
+                    </div>
+                    <div class="col-6">
+                            {{bit.curriculum.subject.topic.field}}
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col-6">
+                        Topic:
+                    </div>
+                    <div class="col-6">
+                            {{bit.curriculum.subject.topic}}
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col-6">
+                        Subject:
+                    </div>
+                    <div class="col-6">
+                            {{bit.curriculum.subject}}
+                    </div>
+                </div>
+                <div class="row pt-3">
+                    <div class="col-6">
+                        Curriculum:
+                    </div>
+                    <div class="col-6">
+                            {{bit.curriculum}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

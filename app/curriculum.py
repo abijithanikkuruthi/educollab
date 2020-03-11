@@ -480,7 +480,7 @@ def showbit(request, c_id, b_id):
             'type': form_type,
             'bit': bit,
         }
-        return render(request, 'bit-form.html', context)
+        return render(request, 'bit/show.html', context)
 
     else:
         form = BitForm(data=bit.__dict__)
