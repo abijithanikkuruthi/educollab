@@ -38,7 +38,7 @@
                 <div class="container p-0">
                     {% for c in curriculums_created_by_user %}
                     <div class="card mt-3">
-                        <div class="card-body">
+                        <div class="card-body highlight-card">
                             <div class="row">
                                 <div class="col-12">
                                     <a href="{% url 'curriculum_show' c_id=c.id %}">
@@ -59,7 +59,7 @@
                 <div class="container p-0">
                     {% for c in non_matching_curriculums_subscribed_by_user %}
                     <div class="card mt-3">
-                        <div class="card-body">
+                        <div class="card-body highlight-card">
                             <div class="row">
                                 <div class="col-12">
                                     <a href="{% url 'curriculum_show' c_id=c.id %}">

@@ -1026,15 +1026,38 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
 }
 
-.edit-profile label {
+.edit-profile label, #bit-form label {
   margin-bottom: 2px;
 }
 
-.edit-profile .form-row{
+.edit-profile .form-row, #bit-form .form-row{
   margin-bottom: 30px;
 }
 
-.edit-profile input[type=file]{
+.edit-profile input[type=file], #bit-form input[type=file]{
   margin-left: 20px;
   cursor: pointer;
 }
+
+.highlight-card {
+  background: #fff;
+  border: 1px solid #eee;
+  -webkit-transition: .3s all ease-in-out;
+  -o-transition: .3s all ease-in-out;
+  transition: .3s all ease-in-out;
+  position: relative;
+  top: 0;
+}
+.highlight-card:hover, .highlight-card:focus {
+  -webkit-box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  border: 1px solid transparent;
+  top: -2px; }
+.highlight-card *:last-child {
+  margin-bottom: 0; }
+.highlight-card h3 {
+  font-size: 1.1rem;
+  color: #000; }
+.highlight-card p {
+  color: #999999;
+  font-size: 1rem; }
