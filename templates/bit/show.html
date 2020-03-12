@@ -45,7 +45,75 @@
                 </div>
             </div>
             {% endif %}
-
+            <div class="row col-12 mt-4">
+                <h6>Discussion</h6>
+            </div>
+            <div class="card container pl-5 mb-5">
+                {% for comment in bit.comment.all %}
+                <div class="row pt-4">
+                    <div class="col-2 col-sm-1 text-center p-0">
+                        <a href="{% url 'profile_view' uname=comment.member.username %}">
+                        {% if comment.member.image.url != '' %}
+                        <img height="50px" width="50px" class="rounded-circle mt-auto"
+                            src="{{comment.member.image.url }}" />
+                        {% else %}
+                        <img height="50px" width="50px" class="rounded-circle mt-auto"
+                            src="media/avatar.png" />
+                        {% endif %}
+                        </a>
+                    </div>
+                    <div class="col-10 col-sm-11">
+                        <a href="{% url 'profile_view' uname=comment.member.username %}">
+                        {% if comment.member.full_name != '' %}
+                        <div class="profile-feed-title">{{comment.member.full_name}}</div>
+                        {% elif comment.member.username != '' %}
+                        <div class="profile-feed-title">{{comment.member.username}}</div>
+                        {% else %}
+                        <div class="profile-feed-title">(NA)</div>
+                        {% endif %}
+                        </a>
+                        <div class="profile-feed-time">
+                            <span class="far fa-clock"></span>
+                            <span>{{comment.created_on}}</span>
+                        </div>
+                        <div class="text-black">
+                            {{comment.comment}}
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                <!-- <div class="row pt-4">
+                    <form method="post" action="{% url 'bit_comment_create' c_id=curriculum.id b_id=bit.id %}">
+                        {% csrf_token %}
+                        <input type="text" name="comment" />
+                        <input type="submit" value="Comment">
+                    </form>
+                </div> -->
+                <div class="row p-3">
+                    <div class="col-1 p-0">
+                        <a href="{% url 'profile_view' uname=member.username %}">
+                            {% if member.image.url != '' %}
+                            <img height="50px" width="50px" class="rounded-circle mt-auto"
+                                src="{{member.image.url }}" />
+                            {% else %}
+                            <img height="50px" width="50px" class="rounded-circle mt-auto"
+                                src="media/avatar.png" />
+                            {% endif %}
+                        </a>
+                    </div>
+                    <div class="col-11">
+                        <form method="post" action="{% url 'bit_comment_create' c_id=curriculum.id b_id=bit.id %}">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-10 ml-auto"><input class="form-control input-lg shadow-sm bg-light rounded w-100" type="text" size="28" name="comment" /></div>
+                                <div class="col-2 align-self-center p-2"><input class="btn btn-primary btn-sm" type="submit" value="Comment"/></div>
+                            </div>
+                        </form>                                    
+                    </div>
+                </div>
+            </div>
+            
+            
         </div>
         <div class="col-4">
             <div class="row col-12 mt-4">

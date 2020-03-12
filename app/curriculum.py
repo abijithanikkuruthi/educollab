@@ -484,6 +484,7 @@ def showbit(request, c_id, b_id):
             'form': form,
             'type': form_type,
             'bit': bit,
+            'member': current_user
         }
         return render(request, 'bit/show.html', context)
 
