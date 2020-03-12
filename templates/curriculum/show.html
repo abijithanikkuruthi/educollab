@@ -9,7 +9,7 @@
         <div class="row">
             <div class="row">
                 <div class="col-12 mx-auto">
-                    <h2 class="text-center">Curriculum "{{curriculum.title}}"</h2>
+                    <h3>{{curriculum.title}}</h3>
                 </div>
             </div>
         </div>
@@ -19,7 +19,7 @@
             <div class="col-12">
                 <div class="row">
                     <div class="card w-100">
-                        <div class="card-body">
+                        <div class="card-body p-4 mt-2">
                           <!-- TITLE INFO CARD -->
                             <div class="card-subtitle">
                                 <div class="row">
@@ -28,9 +28,8 @@
                                     </div>
                                     <div class="col-4 text-right">
                                         {% if curriculum.posted_by == current_user %}
-                                        <p>Edit
                                         <a href="{% url 'curriculum_update' c_id=curriculum.id %}"
-                                            class="far fa-edit"></a></p>
+                                            class="btn btn-primary pl-4 pr-4 far fa-edit"></a>
                                         {% endif %}
                                     </div>
                                 </div>
@@ -38,23 +37,15 @@
                             <!-- Curriculum Description -->
                             <p class="card-text">{{curriculum.description}}</p>
                             <div class="row">
-                                <div class="col-8">
+                                <div class="col-8 align-self-center">
                                     {% if curriculum.is_upvoted %}
-                                    <form method="post" class="d-inline"
-                                        action="{% url 'curriculum_upvote_delete' c_id=curriculum.id %}">
-                                        {% csrf_token %}
-                                        <span
-                                            class="badge badge-light d-inline">{{ curriculum.upvote.all|length }}</span>
-                                        <input class="btn btn-sm btn-secondary" type="submit" value="-1">
-                                    </form>
+                                    <a class="d-inline mr-2 text-danger" href="{% url 'curriculum_upvote_delete' c_id=curriculum.id %}">
+                                        <span class="far fa-thumbs-up"></span><span class="m-lr-5">Liked&nbsp;{{ curriculum.upvote.all|length }}</span>
+                                    </a>
                                     {% else %}
-                                    <form method="post" class="d-inline"
-                                        action="{% url 'curriculum_upvote_create' c_id=curriculum.id %}">
-                                        {% csrf_token %}
-                                        <span
-                                            class="badge badge-light d-inline">{{ curriculum.upvote.all|length }}</span>
-                                        <input class="btn btn-sm btn-secondary" type="submit" value="+1">
-                                    </form>
+                                    <a class="d-inline mr-2 text-secondary" href="{% url 'curriculum_upvote_create' c_id=curriculum.id %}">
+                                        <span class="far fa-thumbs-up"></span><span class="m-lr-5">Like&nbsp;{{ curriculum.upvote.all|length }}</span>
+                                    </a>
                                     {% endif %}
                                 </div>
                                 <div class="col-4 text-right">
@@ -63,19 +54,19 @@
                                   <form class="form-inline d-inline" method="post"
                                       action="{% url 'subscription_delete' sid=user_subscription.id %}">
                                       {% csrf_token %}
-                                      <button class="btn btn-sm btn-outline-dark" type="submit">Unsubscribe</button>
+                                      <button class="btn btn-sm btn-outline-primary" type="submit">Unsubscribe</button>
                                   </form>
                                   {% else %}
                                   <form class="form-inline d-inline" method="post"
                                       action="{% url 'curriculum_subscription_create' c_id=curriculum.id %}">
                                       {% csrf_token %}
-                                      <button class="btn btn-sm btn-outline-dark" type="submit">Subscribe</button>
+                                      <button class="btn btn-sm btn-outline-primary" type="submit">Subscribe</button>
                                   </form>
                                   {% endif %}
                                   <!-- TEACH BUTTON -->
                                   <form class="form-inline d-inline" method="post">
                                       {% csrf_token %}
-                                      <button class="btn btn-sm btn-outline-dark" name="_teach"
+                                      <button class="btn btn-sm btn-outline-primary" name="_teach"
                                           type="submit">{{teach_button_status}}</button>
                                   </form>
                                 </div>
@@ -89,13 +80,13 @@
         <div class="row">
             <div class="col-8"> <!-- Discussion & Bits column -->
               <div class="row"> <!-- BITS -->
-                <div class="col pl-0 pr-0 pt-4">
+                <div class="col pl-0 pr-3 pt-4">
                     <div class="row">
                         <div class="col-8 pl-10">
                             <h5 class="d-inline">Bits of Content</h5>
                         </div>
-                        <div class="col-4 text-right">
-                            <p> Add <a href="{% url 'create_bit' c_id=curriculum.id %}" class="fas fa-plus"></a></p>
+                        <div class="col-4 text-right pr-4">
+                            <a href="{% url 'create_bit' c_id=curriculum.id %}" class="fas fa-plus"></a>
                         </div>
                     </div>
                     {% if not curriculum.bit.all  %}
@@ -114,37 +105,70 @@
               </div>
               <!-- Discussion -->
               <div class="row">
-                <div class="col pl-2 pt-4">
+                <div class="col-12 p-3 pr-4">
                     <div class="row">
                         <div class="col-12 pl-2">
                             <h5 >Discussion</h5>
                         </div>
                     </div>
-                    <div class="row pl-2">
-                        <div class="pl-2 card card-body">
-                            <ul class="list-group list-group-flush">
-                                {% for comment in curriculum.comment.all %}
-                                <li class="list-group-item">
-                                    <div class="row">
-                                        <div class="col-12">
-                                            Display Profile Pic + Name
-                                        </div>
-                                        <div class="col-10">
-                                            {{comment.comment}} <br />
-                                            {{comment.created_on}}
-                                        </div>
+                    <div class="row">
+                        <div class="card card-body p-0 pl-4">
+                            
+                            {% for comment in curriculum.comment.all %}
+                            <div class="row pt-4">
+                                <div class="col-2 col-sm-1 text-center p-0">
+                                    <a href="{% url 'profile_view' uname=comment.member.username %}">
+                                    {% if comment.member.image.url != '' %}
+                                    <img height="50px" width="50px" class="rounded-circle mt-auto"
+                                        src="{{comment.member.image.url }}" />
+                                    {% else %}
+                                    <img height="50px" width="50px" class="rounded-circle mt-auto"
+                                        src="media/avatar.png" />
+                                    {% endif %}
+                                    </a>
+                                </div>
+                                <div class="col-10 col-sm-11">
+                                    <a href="{% url 'profile_view' uname=comment.member.username %}">
+                                    {% if comment.member.full_name != '' %}
+                                    <div class="profile-feed-title">{{comment.member.full_name}}</div>
+                                    {% elif comment.member.username != '' %}
+                                    <div class="profile-feed-title">{{comment.member.username}}</div>
+                                    {% else %}
+                                    <div class="profile-feed-title">(NA)</div>
+                                    {% endif %}
+                                    </a>
+                                    <div class="profile-feed-time">
+                                        <span class="far fa-clock"></span>
+                                        <span>{{comment.created_on}}</span>
                                     </div>
-                                </li>
-                                {% endfor %}
-                                <li class="list-group-item">
+                                    <div class="text-black">
+                                        {{comment.comment}}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            <div class="row p-3">
+                                <div class="col-1 p-0">
+                                    <a href="{% url 'profile_view' uname=current_user.username %}">
+                                        {% if member.image.url != '' %}
+                                        <img height="50px" width="50px" class="rounded-circle mt-auto"
+                                            src="{{current_user.image.url }}" />
+                                        {% else %}
+                                        <img height="50px" width="50px" class="rounded-circle mt-auto"
+                                            src="media/avatar.png" />
+                                        {% endif %}
+                                    </a>
+                                </div>
+                                <div class="col-11">
                                     <form method="post" action="{% url 'curriculum_comment_create' c_id=curriculum.id %}">
                                         {% csrf_token %}
-                                        <input type="text" name="comment" />
-                                        <input type="submit" value="Comment">
-                                    </form>
-                                </li>
-                            </ul>
-
+                                        <div class="row">
+                                            <div class="col-10 ml-auto"><input class="form-control input-lg shadow-sm bg-light rounded w-100" type="text" size="28" name="comment" /></div>
+                                            <div class="col-2 align-self-center p-2"><input class="btn btn-primary btn-sm" type="submit" value="Comment"/></div>
+                                        </div>
+                                    </form>                                    
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -202,7 +226,7 @@
                                                     <img width=35px src="/media/avatar.png">
                                                 {% endif %}
 
-                                                <a href="{% url 'profile_view' uname=user.u_id %}"> {{user.full_name}}</a>
+                                                <a class="ml-3" href="{% url 'profile_view' uname=user.u_id %}"> {{user.full_name}}</a>
                                             </div>
                                         </div>
                                         <div class="row">

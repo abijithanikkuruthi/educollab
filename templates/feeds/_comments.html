@@ -64,7 +64,6 @@
                 </div>
                 <div class="col-11">
                     <form method="post" action="{% url 'feeds_comment_create' c_id=changelog.id %}">
-                        <form method="post" action="{% url 'curriculum_comment_create' c_id=changelog.id %}">
                             {% csrf_token %}
                             <div class="row">
                               <div class="col-10 ml-auto"><input class="form-control input-lg shadow-sm bg-light rounded w-100" type="text" size="28" name="comment" /></div>
