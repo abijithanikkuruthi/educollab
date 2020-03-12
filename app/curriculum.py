@@ -244,6 +244,7 @@ def showcurriculum(request, c_id):
         else:
             subscribe_button_status = 'Subscribe'
 
+        institutions_teaching = [ teach.member.institution for teach in Teach.objects.filter(curriculum=curriculum)]
         context = {'curriculum': curriculum,
                    'teach_status': teach_status,
                    'teach_button_status': teach_button_status,
