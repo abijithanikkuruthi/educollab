@@ -7,6 +7,6 @@
 <div class="col-3 text-right">
     <form class="form-inline d-inline" method="post" action="{% url 'subscription_delete' sid=sub.id %}">
         {% csrf_token %}
-        <button class="btn btn-sm btn-outline-primary" type="submit">Unsubscribe</button>       
+        <button class="btn btn-sm btn-outline-primary pl-3 pr-3" type="submit">Unsubscribe</button>       
     </form>
 </div>
