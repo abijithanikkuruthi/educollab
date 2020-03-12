@@ -487,7 +487,9 @@ h1, h2, h3, h4, h5, h6 {
   .sticky-wrapper .site-navbar {
     -webkit-transition: .3s all ease;
     -o-transition: .3s all ease;
-    transition: .3s all ease; }
+    transition: .3s all ease; 
+    background-color: white;
+  }
     .sticky-wrapper .site-navbar a.active {
       color: #fff; }
   .sticky-wrapper.is-sticky .site-navbar {
@@ -984,9 +986,78 @@ h1, h2, h3, h4, h5, h6 {
 .profile-feed-item {
   background: white;
   margin: 15px 0px;
-  padding: 30px;
+  padding: 20px 40px 10px 40px;
 }
 
 .profile-edit {
   float: right;
 }
+
+.profile-feed-title{
+  color: #000;
+  font-weight: 500;
+  line-height: 17px;
+}
+
+.profile-feed-time{
+  font-size: 13px;
+  margin-top: 8px;
+}
+
+.m-lr-5{
+  margin: 0 5px;
+}
+
+.profile-university-icon {
+  color: #5f9ea0;
+  margin-left: 10px;
+}
+
+.profile-designation-icon{
+  color: #4682b4;
+}
+
+.feed-profile-pic {
+  margin-top: -70px;
+}
+
+.feed-content {
+  font-size: 14px;
+  font-weight: normal;
+}
+
+.edit-profile label, #bit-form label {
+  margin-bottom: 2px;
+}
+
+.edit-profile .form-row, #bit-form .form-row{
+  margin-bottom: 30px;
+}
+
+.edit-profile input[type=file], #bit-form input[type=file]{
+  margin-left: 20px;
+  cursor: pointer;
+}
+
+.highlight-card {
+  background: #fff;
+  border: 1px solid #eee;
+  -webkit-transition: .3s all ease-in-out;
+  -o-transition: .3s all ease-in-out;
+  transition: .3s all ease-in-out;
+  position: relative;
+  top: 0;
+}
+.highlight-card:hover, .highlight-card:focus {
+  -webkit-box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
+  border: 1px solid transparent;
+  top: -2px; }
+.highlight-card *:last-child {
+  margin-bottom: 0; }
+.highlight-card h3 {
+  font-size: 1.1rem;
+  color: #000; }
+.highlight-card p {
+  color: #999999;
+  font-size: 1rem; }
