@@ -10,6 +10,7 @@ def check_user_id(user):
             u_id=user,
             username=user.username,
             email=user.email,
+            full_name=user.username
         )
         m_obj.save()
     return 1

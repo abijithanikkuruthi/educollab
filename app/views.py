@@ -11,7 +11,6 @@ def index(request):
         return render(request, 'index.html', {})
     return home.feed(request)
 
-
 def myprofile(request):
     if not request.user.is_authenticated:
         return redirect('login')

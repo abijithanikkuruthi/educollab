@@ -14,15 +14,17 @@
           </div>
         </div>
       </div>
-  
+
       <div id="bit-{{bit.id}}" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
         <div class="card-body">
+          <div class="col-12">
           <p>
             {{ bit.description }}
           </p>
-          <p>
-            {{ bit.text }}
-          </p>
+        </div>
+        <div class="col-12 text-right">
+          <a href="{% url 'bit_show' c_id=curriculum.id b_id=bit.id %}" class="btn btn-primary btn-sm pl-4 pr-4">View</a>
+        </div>
         </div>
       </div>
     </div>

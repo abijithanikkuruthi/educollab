@@ -41,7 +41,7 @@ def createcurriculum(request):
 
         log_obj = ChangeLog(
             member=current_user,
-            description='New Curriculum Created + more details ',
+            description='New Curriculum Created for subject ' + get_object_or_404(Subject, id=data['subjects']).title,
             curriculum=Curriculum(id=c_obj.id),
             operation='create'
         )
@@ -165,9 +165,9 @@ def showcurriculum(request, c_id):
                 user_teach.delete()
 
                 # Updating Change Log for the change
-                reason = str(current_user) + 'is not teaching ' + \
+                reason = str(current_user.full_name) + ' is not teaching ' + \
                     str(curriculum.title) + ' at their university - ' + \
-                    str(current_user.institution) + ' anymore'
+                    str(current_user.institution) + ' anymore.'
 
                 log_obj = ChangeLog(
                     member=current_user,
@@ -194,7 +194,7 @@ def showcurriculum(request, c_id):
                 teach_obj.save()
 
                 # Updating Change Log for the change
-                reason = str(current_user) + 'is teaching ' + \
+                reason = str(current_user.full_name) + ' is teaching ' + \
                     str(curriculum.title) + ' at their university - ' + \
                     str(current_user.institution)
 
@@ -221,7 +221,7 @@ def showcurriculum(request, c_id):
             teach_obj.save()
 
             # Updating Change Log for the change
-            reason = str(current_user) + 'is teaching ' + \
+            reason = str(current_user.full_name) + ' is teaching ' + \
                 str(curriculum.title) + ' at their university - ' + \
                 str(current_user.institution)
 
@@ -244,6 +244,7 @@ def showcurriculum(request, c_id):
         else:
             subscribe_button_status = 'Subscribe'
 
+        institutions_teaching = [ teach.member.institution for teach in Teach.objects.filter(curriculum=curriculum)]
         context = {'curriculum': curriculum,
                    'teach_status': teach_status,
                    'teach_button_status': teach_button_status,
@@ -303,7 +304,7 @@ def updatecurriculum(request, c_id):
         curriculum.save()
         log_obj = ChangeLog(
             member=current_user,
-            description='Curriculum Updated + more details ',
+            description='Curriculum ' + curriculum.title + ' of  subject ' + get_object_or_404(Subject, id=data['subjects']).title + ' has been updated.',
             curriculum=Curriculum(id=curriculum.id),
             subject=curriculum.subject,
             operation='update'
@@ -372,7 +373,7 @@ def createbit(request, c_id):
 
         log_obj = ChangeLog(
             member=current_user,
-            description='Bit Added + more details ',
+            description=b_obj.title + ' was added to ' + curriculum.title,
             curriculum=curriculum,
             subject=curriculum.subject,
             bit=Bit(id=b_obj.id),
@@ -444,7 +445,7 @@ def updatebit(request, c_id, b_id):
 
         log_obj = ChangeLog(
             member=current_user,
-            description='Bit Updated + more details ',
+            description=bit.title + ' of ' + curriculum.title + ' was updated.',
             bit=Bit(id=bit.id),
             curriculum=curriculum,
             subject=curriculum.subject,
@@ -484,6 +485,7 @@ def showbit(request, c_id, b_id):
             'form': form,
             'type': form_type,
             'bit': bit,
+            'member': current_user
         }
         return render(request, 'bit/show.html', context)
 
