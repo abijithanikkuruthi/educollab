@@ -629,12 +629,12 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   color: #b3b3b3; }
 
-  .section-title .sub-title2 {
-    font-size: 1.6em;
-    text-transform: uppercase;
-    letter-spacing: .1rem;
-    font-weight: 500;
-    color: #9b9b9b; }
+.section-title .sub-title2 {
+  font-size: 1.6em;
+  text-transform: uppercase;
+  letter-spacing: .1rem;
+  font-weight: 500;
+  color: #9b9b9b; }
 
 .section-title .title {
   font-size: 2.2rem;
@@ -650,17 +650,19 @@ h1, h2, h3, h4, h5, h6 {
   padding: 30px;
   background: #fff;
   border: 1px solid #eee;
-  border-top: 2px solid #007bff;
+  border-top: 2px solid #1FB299;
   -webkit-transition: .3s all ease-in-out;
   -o-transition: .3s all ease-in-out;
   transition: .3s all ease-in-out;
   position: relative;
   top: 0; }
+  .service .icon{
+    color: rgb(29, 201, 172) }
   .service:hover, .service:focus {
     -webkit-box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
     box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.4);
     border: 1px solid transparent;
-    border-top: 2px solid #007bff;
+    border-top: 2px solid #1FB299;
     top: -2px; }
   .service *:last-child {
     margin-bottom: 0; }
@@ -668,8 +670,8 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 1.1rem;
     color: #000; }
   .service p {
-    color: #999999;
-    font-size: 1rem; }
+    color: #8a8a8a;
+    font-size: 1.05rem; }
 
 .readmore {
   position: relative;
