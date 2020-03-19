@@ -150,8 +150,8 @@ h1, h2, h3, h4, h5, h6 {
   border-top: 1px solid #ced4da !important; }
 
 .site-footer {
-  padding-top: 17rem;
-  padding-bottom: 4rem;
+  padding-top: 6rem;
+  padding-bottom: 2rem;
   background: #333333; }
   .site-footer p {
     color: #8c8c8c; }
@@ -162,7 +162,7 @@ h1, h2, h3, h4, h5, h6 {
     .site-footer a:hover {
       color: white; }
   .site-footer ul li {
-    margin-bottom: 10px; }
+    margin-bottom: 2px; }
   .site-footer .footer-heading {
     font-size: 20px;
     color: #fff; }
@@ -629,8 +629,22 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 400;
   color: #b3b3b3; }
 
+  .section-title .sub-title2 {
+    font-size: 1.6em;
+    text-transform: uppercase;
+    letter-spacing: .1rem;
+    font-weight: 500;
+    color: #9b9b9b; }
+
 .section-title .title {
-  font-size: 2.2rem; }
+  font-size: 2.2rem;
+  color: rgb(69, 86, 100); }
+
+.section-title .para {
+  font-size: 1.1rem;
+  color: #727272;
+  /* text-align: justify; */
+}
 
 .service {
   padding: 30px;
