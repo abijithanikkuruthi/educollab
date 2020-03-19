@@ -150,12 +150,12 @@
                             <div class="row p-3">
                                 <div class="col-1 p-0">
                                     <a href="{% url 'profile_view' uname=current_user.username %}">
-                                        {% if member.image.url != '' %}
+                                        {% if current_user.image %}
                                         <img height="50px" width="50px" class="rounded-circle mt-auto"
                                             src="{{current_user.image.url }}" />
                                         {% else %}
                                         <img height="50px" width="50px" class="rounded-circle mt-auto"
-                                            src="media/avatar.png" />
+                                            src="/media/avatar.png" />
                                         {% endif %}
                                     </a>
                                 </div>
