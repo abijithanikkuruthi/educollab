@@ -4,7 +4,7 @@
 <div class="container pt-4">
     <div class="container mb-5">
         <div class="row pt-4">
-            <div class="col-4">
+            <div class="col-4 d-none d-sm-block">
                 <div class="row p-4">
                     <div class="col-12 card mt-5">
                         <div class="w-100 text-center">
@@ -21,13 +21,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col-md-8 col-sm-12">
                 <div class="row mb-4">
-                    <div class="col-8">
+                    <div class="col-6">
                         <h5>My Curricula</h5>
                     </div>
-                    <div class="col-4 text-right">
-                        <a class="btn btn-primary btn-sm pl-4 pr-4" href="{% url 'curriculum_create' %}" role="button">Create New Curriculum</a>
+                    <div class="col-6 text-right">
+                        <a class="btn btn-primary btn-sm pl-md-4 pr-md-4" href="{% url 'curriculum_create' %}" role="button">Create Curriculum</a>
                     </div>
                 </div>
                 {% if curriculums_created_by_user %}
