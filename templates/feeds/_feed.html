@@ -44,9 +44,9 @@
             <div>
                 <h5 class="card-title mt-3">
                     {% if changelog.bit %}
-                    Curriculum {{changelog.bit.curriculum.title}} Updated - [Updated / Created] {{changelog.bit.bit_type}}
+                    {{changelog.bit.curriculum.title}} Updated - {{changelog.bit.bit_type}} {% if changelog.operation %} {{ changelog.operation.title }}d {% endif %}
                     {% else %}
-                    Curriculum {{changelog.curriculum.title}} [Updated / Created]
+                    {{changelog.curriculum.title}} {% if changelog.operation %} {{ changelog.operation.title }}d {% else %} Updated {% endif %}
                     {% endif %}
                 </h5>
 
