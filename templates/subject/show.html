@@ -4,20 +4,24 @@
 <div class="container pt-4">
     <div class="container">
         <div class="row">
-            <h5 class="m-0">Explore {{subject.topic}} - {{subject.title}}</h5>
-            {% if user_subscription %}
-            <form class="form-inline d-inline ml-3" method="post"
-                action="{% url 'subscription_delete' sid=user_subscription.id %}">
-                {% csrf_token %}
-                <button class="btn btn-sm btn-outline-primary" type="submit">Unsubscribe</button>
-            </form>
-            {% else %}
-            <form class="form-inline d-inline ml-3" method="post"
-                action="{% url 'subject_subscription_create' sid=subject.id %}">
-                {% csrf_token %}
-                <button class="btn btn-sm btn-outline-primary" type="submit">Subscribe</button>
-            </form>
-            {% endif %}
+            <div class="col-8 col-md-10 p-0 align-self-center">
+                <h5 class="m-0">Explore {{subject.topic}} - {{subject.title}}</h5>
+            </div>
+            <div class="col-4 col-md-2 text-right p-0 align-self-center">
+                {% if user_subscription %}
+                <form class="form-inline d-inline ml-3" method="post"
+                    action="{% url 'subscription_delete' sid=user_subscription.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-primary" type="submit">Unsubscribe</button>
+                </form>
+                {% else %}
+                <form class="form-inline d-inline ml-3" method="post"
+                    action="{% url 'subject_subscription_create' sid=subject.id %}">
+                    {% csrf_token %}
+                    <button class="btn btn-sm btn-outline-primary" type="submit">Subscribe</button>
+                </form>
+                {% endif %}
+            </div>
         </div>
         <div class="row">
             <div class="col-12 mt-3 p-0">
