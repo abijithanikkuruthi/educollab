@@ -4,7 +4,7 @@
     <p class="text-secondary mb-0">Type: Subject</p>
     </a>
 </div>
-<div class="col-3 text-right">
+<div class="col-3 text-right d-none d-sm-block">
     <form class="form-inline d-inline" method="post" action="{% url 'subscription_delete' sid=sub.id %}">
         {% csrf_token %}
         <button class="btn btn-sm btn-outline-primary pl-3 pr-3" type="submit">Unsubscribe</button>       
