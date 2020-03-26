@@ -298,17 +298,22 @@ jQuery(document).ready(function($) {
 
 	 $(window).scroll(function() {
 
-		var st = $(this).scrollTop();
-
-		if (st > 300) {
-			$('.js-sticky-header').addClass('shrink');
-		} else {
-			$('.js-sticky-header').removeClass('shrink');
-		}
-
-		if ( $('body').hasClass('offcanvas-menu') ) {
-			$('body').removeClass('offcanvas-menu');
-		}
+		   var st = $(this).scrollTop();
+		   if (st > 300) {
+				$('.js-sticky-header').addClass('shrink');
+			} else {
+				$('.js-sticky-header').removeClass('shrink');
+			}
+		   if(st > position) {
+			   if ( $('body').hasClass('offcanvas-menu') ) {
+				   $('body').removeClass('offcanvas-menu');
+			   }
+		   } else {
+			   if ( $('body').hasClass('offcanvas-menu') ) {
+				   $('body').addClass('offcanvas-menu');
+			   }
+		   }
+		   position = st;
 	 }) 
  };
  siteScroll();
@@ -338,6 +343,7 @@ jQuery(document).ready(function($) {
    stickyFillInit();
 
    $('.component-explore').find('.field-buttons').on('click', function (e) {
+	   //console.log("test")
 	   $('.component-explore').find(".subject-list.active.show").each(function (index) {
 		   $(this).removeClass('active');
 		   $(this).removeClass('show');
@@ -345,7 +351,7 @@ jQuery(document).ready(function($) {
 	   $('.component-explore').find(".topic-list-item.active").each(function (index) {
 		   $(this).removeClass('active');
 	   })
-	   // e.preventDefault()
+	//    e.preventDefault()
    })
 
 });
