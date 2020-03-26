@@ -9,11 +9,11 @@
             </div>
         </div>
         {% for field in fields %}
-        <div class="row component-explore pl-4">
+        <div class="row component-explore pl-md-4 mt-2 m-md-0">
             <div class="col-12">
                 <h5>{{field.title}}</h5>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12">
                 <div class="list-group" id="list-fields" role="tablist">
                     <a class="card field-buttons mb-4" id="list-field-{{field.id}}" data-toggle="list"
                         href="#field-{{field.id}}" role="tab" aria-controls="home">
@@ -25,7 +25,7 @@
                     </a>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12">
                 <div class="tab-pane" id="field-{{field.id}}" role="tabpanel" aria-labelledby="list-field-{{field.id}}">
                     <div class="list-group" id="list-tab" role="tablist">
                         {% for topic in field.topic.all %}
@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4">
+            <div class="col-md-4 col-12 mt-3 mb-3 m-md-0">
                 <div class="tab-content" id="nav-tabContent">
                     {% for topic in field.topic.all %}
                     <div class="tab-pane fade subject-list" id="list-field-{{field.id}}-topic-{{topic.id}}-subjects"
