@@ -1,11 +1,11 @@
 <span>
 {% if changelog.is_upvoted %}
     <a class="d-inline mr-2 text-danger" href="{% url 'feeds_upvote_delete' u_id=changelog.id %}">
-        <span class="far fa-thumbs-up"></span><span class="m-lr-5">Liked&nbsp;{{ changelog.upvote.all|length }}</span>
+        <span class="far fa-thumbs-up"></span><span class="m-lr-5"><span class="d-none d-sm-inline">Liked&nbsp;</span>{{ changelog.upvote.all|length }}</span>
     </a>
     {% else %}
     <a class="d-inline mr-2 text-secondary" href="{% url 'feeds_upvote_create' u_id=changelog.id %}">
-        <span class="far fa-thumbs-up"></span><span class="m-lr-5">Like&nbsp;{{ changelog.upvote.all|length }}</span>
+        <span class="far fa-thumbs-up"></span><span class="m-lr-5"><span class="d-none d-sm-inline">Liked&nbsp;</span>{{ changelog.upvote.all|length }}</span>
     </a>
 {% endif %}
 </span>

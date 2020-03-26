@@ -33,7 +33,7 @@
             {% for c in changelogs %}
             <div class="profile-feed-item">
                 <div class="conatiner row">
-                    <div class="col-1 p-0">
+                    <div class="col-2 col-sm-1 p-0">
                         <div class="profile-feed-icon">
                         {% if c.member.image.url != '' %}
                         <img height="50px" width="50px" class="rounded-circle mt-auto"
@@ -44,9 +44,9 @@
                         {% endif %}
                         </div>
                     </div>
-                    <div class="col-11 p-0">
-                        <div class="profile-feed-title">{{c.member.full_name}}</div>
-                        <div class="profile-feed-time">
+                    <div class="col-10 col-sm-11 p-0">
+                        <div class="ml-1 profile-feed-title">{{c.member.full_name}}</div>
+                        <div class="ml-1 profile-feed-time">
                             <span class="far fa-clock"></span>
                             <span>{{c.created_on}}</span>
                         </div>

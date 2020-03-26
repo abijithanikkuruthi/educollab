@@ -25,13 +25,10 @@
                     <li class="list-group-item">
                         <div class="container">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-6 col-md-3">
                                     Votes & Contributors
                                 </div>
-                                <div class="col-7">Curriculum</div>
-                                <div class="col-2">
-                                    
-                                </div>
+                                <div class="col-6 col-md-7">Curriculum</div>
                             </div>
                         </div>
                     </li>
@@ -39,16 +36,16 @@
                     <li class="list-group-item">
                         <div class="container">
                             <div class="row">
-                                <div class="col-3">
+                                <div class="col-6 col-md-3">
                                     <span class="far fa-thumbs-up"></span><span class="m-lr-5">{{upvote_count}}</span>
                                     <span class="fas fa-users ml-3"></span><span class="m-lr-5">{{contributors|get_item:curriculum}}</span>
                                 </div>
-                                <div class="col-7">
+                                <div class="col-6 col-md-7">
                                     <a class="" href="{% url 'curriculum_show' c_id=curriculum.id %}">
                                     <h6 class="mb-0">{{curriculum.title}}</h6>
                                     </a>
                                 </div>
-                                <div class="col-2 text-right">
+                                <div class="col-2 text-right d-none d-sm-block">
                                     {% if curriculum.user_subscription %}
                                     <form class="form-inline d-inline" method="post"
                                         action="{% url 'subscription_delete' sid=curriculum.user_subscription.id %}">

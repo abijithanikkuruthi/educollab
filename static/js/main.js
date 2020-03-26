@@ -349,3 +349,12 @@ jQuery(document).ready(function($) {
    })
 
 });
+
+var backButton = function(){
+	if(document.referrer==="" || document.referrer.indexOf("/new")!==-1 || document.referrer.indexOf("/edit")!==-1){
+		window.location.href = window.location.origin;
+	}
+	else{
+		history.back()
+	}
+}
