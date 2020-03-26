@@ -37,7 +37,7 @@
                             <!-- Curriculum Description -->
                             <p class="card-text">{{curriculum.description}}</p>
                             <div class="row">
-                                <div class="col-4 align-self-center">
+                                <div class="col-4 align-self-center pr-0">
                                     {% if curriculum.is_upvoted %}
                                     <a class="d-inline mr-2 text-danger" href="{% url 'curriculum_upvote_delete' c_id=curriculum.id %}">
                                         <span class="far fa-thumbs-up"></span><span class="m-lr-5">Liked&nbsp;{{ curriculum.upvote.all|length }}</span>
