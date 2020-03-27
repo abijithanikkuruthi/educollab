@@ -10,7 +10,10 @@ jQuery(document).ready(function($) {
 
    "use strict";
 
-   
+   function setVisible(selector, visible) {
+		document.querySelector(selector).style.display = visible ? 'block' : 'none';
+	}
+
    var siteMenuClone = function() {
 
 	   $('.js-clone-nav').each(function() {
@@ -353,6 +356,9 @@ jQuery(document).ready(function($) {
 	   })
 	//    e.preventDefault()
    })
+
+   setVisible('#loading', false);
+	setVisible('.loaded', true);
 
 });
 
