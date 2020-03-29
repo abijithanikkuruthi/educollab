@@ -43,7 +43,7 @@
       </div>
       <div class="site-mobile-menu-body"></div>
     </div> <!-- .site-mobile-menu -->
-    <div class="site-navbar-wrap bg-light border-bottom">
+    <header class="site-navbar-wrap bg-light border-bottom">
       <div class="site-navbar site-navbar-target js-sticky-header">
         <div class="container">
           <div class="row align-items-center">
@@ -82,7 +82,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </header>
     <div class="container">
       {% if not request.META.PATH_INFO in '/' and not request.META.PATH_INFO == '/subject/' and not request.META.PATH_INFO == '/profile/' and not request.META.PATH_INFO == '/curriculum/' and not request.META.PATH_INFO == '/signup/' and not request.META.PATH_INFO == '/accounts/login/'  %}
       <div class="pt-3">
