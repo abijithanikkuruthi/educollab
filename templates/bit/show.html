@@ -18,17 +18,17 @@
             <div class="row col-12 mt-4">
                 <h6>Description</h6>
             </div>
-            <div class="card container p-4">
+            <article class="card container p-4">
                 {{bit.description}}
-            </div>
+            </article>
             {% endif %}
             {% if bit.text %}
             <div class="row col-12 mt-4">
                 <h6>Text Content</h6>
             </div>
-            <div class="card container p-4">
+            <article class="card container p-4">
                 {{bit.text}}
-            </div>
+            </article>
             {% endif %}
             {% if bit.file %}
             <div class="row col-12 mt-4">
@@ -48,7 +48,7 @@
             <div class="row col-12 mt-4">
                 <h6>Discussion</h6>
             </div>
-            <div class="card container pl-5 mb-5">
+            <section class="card container pl-5 mb-5">
                 {% for comment in bit.comment.all %}
                 <div class="row pt-4">
                     <div class="col-2 col-sm-1 text-center p-0">
@@ -111,11 +111,11 @@
                         </form>                                    
                     </div>
                 </div>
-            </div>
+            </section>
             
             
         </div>
-        <div class="col-md-4 col-sm-12">
+        <aside class="col-md-4 col-sm-12">
             <div class="row col-12 mt-4">
                 <h6>Other Information</h6>
             </div>
@@ -191,7 +191,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </aside>
     </div>
 </div>
 {% endblock %}
